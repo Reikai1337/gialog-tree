@@ -3,9 +3,9 @@ import {
   signInWithPopup,
   onAuthStateChanged as _onAuthStateChanged,
   onIdTokenChanged as _onIdTokenChanged,
-  NextOrObserver,
-  User,
-  UserCredential,
+  type NextOrObserver,
+  type User,
+  type UserCredential,
 } from "firebase/auth";
 
 import { auth } from "./clientApp";
@@ -24,9 +24,13 @@ export async function signInWithGoogle() {
 
   try {
     const result = await signInWithPopup(auth, provider);
+    console.log("name=>", result.user.displayName);
+
     await createUserIfNotExists(result.user); // ← вызов здесь
   } catch (error) {
-    console.error("Error signing in with Google", error);
+    console.log("ER", error instanceof Error ? error.message : "asd");
+
+    // console.error("Error signing in with Google", error);
   }
 }
 

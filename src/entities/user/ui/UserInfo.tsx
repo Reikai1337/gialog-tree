@@ -19,56 +19,21 @@ export const UserInfo = () => {
     signInWithGoogle();
   };
 
+  if (isLoading) return <div>isLoading</div>;
+
+  if (!user) return <div>none</div>;
+
   return (
     <div>
-      {/* {isLoading ? <p>...................</p> : <p>Done</p>} */}
-      {user ? (
-        <>
-          <div className="profile">
-            <p>
-              <Image
-                height={40}
-                width={40}
-                src={user.photoURL || "/file.svg"}
-                alt={user.email || ""}
-              />
-              {user.displayName}
-            </p>
-
-            <div className="menu">
-              <li>
-                <Button onClick={handleSignOut}>Sign Out</Button>
-              </li>
-            </div>
-          </div>
-        </>
-      ) : (
-        <div className="profile">
-          <Button onClick={handleSignIn}>
-            {/* <img src="/profile.svg" alt="A placeholder user image" /> */}
-            Sign In with Google
-          </Button>
-        </div>
-      )}
+      <p>
+        <Image
+          height={40}
+          width={40}
+          src={user.photoURL || "/file.svg"}
+          alt={user.email || ""}
+        />
+        {user.displayName}
+      </p>
     </div>
   );
 };
-
-// ("use client");
-
-// import {
-//   onIdTokenChanged,
-//   signInWithGoogle,
-//   signOut,
-// } from "@shared/api/firebase/auth";
-// import { Button } from "@shared/ui/button";
-// import { setCookie, deleteCookie } from "cookies-next";
-// import { User } from "firebase/auth";
-// import Image from "next/image";
-// import { useEffect } from "react";
-
-// export const AuthUser = () => {
-//   const user = useUserSession();
-
-//   return <div></div>;
-// };

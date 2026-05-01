@@ -4,7 +4,8 @@ import { Layout } from "@shared/ui/layout";
 import { SidebarProvider, SidebarTrigger } from "@shared/ui/sidebar";
 import Image from "next/image";
 import Link from "next/link";
-import { Sidebar } from "./Sidebar";
+import { Sidebar } from "./ui/Sidebar";
+import { DropdownMenuIcons } from "./ui/UserDropdownMenu";
 
 type Props = {
   children?: React.ReactNode;
@@ -29,13 +30,15 @@ export const LandingLayout: React.FC<Props> = ({ children }) => {
                 />
               </Link>
             </Button>
-            <ThemeSelect />
+            <div className="flex items-center gap-2">
+              <ThemeSelect />
+              <DropdownMenuIcons />
+            </div>
           </>
         }
-        // renderFooter={<div>Landing Footer</div>}
       >
         <Sidebar />
-        <main>{children}</main>
+        <main className="flex-1">{children}</main>
       </Layout>
     </SidebarProvider>
   );

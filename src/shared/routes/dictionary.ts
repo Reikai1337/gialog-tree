@@ -12,23 +12,31 @@ const HOME: StaticRoute = {
   href: "/",
 };
 
-const STUDIO: StaticRoute = {
-  href: "/studio",
+const LOGIN: StaticRoute = {
+  href: "/login",
 };
 
-const GENRE: DynamicRoute = {
-  href: (name) => `/genre/${name}`,
+const DASHBOARD: StaticRoute = {
+  href: "/dashboard",
 };
 
-const SERVER_RENDER: DynamicRoute = {
-  href: (name) => `/render/${name}`,
+const NEW_DASHBOARD: StaticRoute = {
+  href: "/new-dashboard",
+};
+
+const SCRIPT_USE: DynamicRoute = {
+  href: (id) => `/scripts/${id}/use`,
+};
+
+const SCRIPT_EDIT: DynamicRoute = {
+  href: (id) => `/scripts/${id}/edit`,
 };
 
 export const ROUTES = {
   HOME,
-  GENRE,
-
-  SERVER_RENDER,
-
-  STUDIO,
+  DASHBOARD,
+  NEW_DASHBOARD,
+  SCRIPT_USE,
+  SCRIPT_EDIT,
+  LOGIN,
 };
