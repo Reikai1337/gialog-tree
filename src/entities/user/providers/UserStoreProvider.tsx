@@ -1,7 +1,11 @@
 "use client";
 
 import { createZustandContext } from "@shared/lib/utils/createZustandContext";
-import { createUserStore, UserStore, UserState } from "../model/user.store";
+import {
+  createUserStore,
+  type UserStore,
+  type UserState,
+} from "../model/user.store";
 /**
  * Мы передаём фабрику createUserStore — при Provider'е будет создаваться отдельный store-экземпляр.
  * Тип State в createZustandContext — UserStore

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-
 import { ThemeProvider } from "@app/providers/theme";
+import { TooltipProvider } from "@shared/ui/tooltip";
+import { LandingLayout } from "@app/layouts/Landing";
+import { UserStoreProvider } from "@entities/user/providers";
 
 import { geistSans, geistMono } from "@app/styles/fonts";
 import "@app/styles/globals.css";
-import { TooltipProvider } from "@shared/ui/tooltip";
+import "@xyflow/react/dist/style.css";
 
 export const metadata: Metadata = {
   title: "App name",
@@ -21,9 +23,15 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider>
-          <TooltipProvider>{children}</TooltipProvider>
-        </ThemeProvider>
+        <UserStoreProvider
+          initState={{ isLoading: true, user: null, hasUser: false }}
+        >
+          <ThemeProvider>
+            <LandingLayout>
+              <TooltipProvider>{children}</TooltipProvider>
+            </LandingLayout>
+          </ThemeProvider>
+        </UserStoreProvider>
       </body>
     </html>
   );
