@@ -13,7 +13,7 @@ export const SaveButton = () => {
   };
 
   return (
-    <Button onClick={handleSave} size="icon-sm">
+    <Button onClick={handleSave} size="icon-xs">
       <Save />
     </Button>
   );

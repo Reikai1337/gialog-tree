@@ -16,7 +16,7 @@ export const DeleteNodeButton = () => {
       disabled={!selectedNodeId}
       variant="destructive"
       onClick={handleDelete}
-      size="icon-sm"
+      size="icon-xs"
     >
       <Trash />
     </Button>

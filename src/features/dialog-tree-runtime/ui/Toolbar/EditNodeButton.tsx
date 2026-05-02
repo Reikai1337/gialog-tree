@@ -65,7 +65,7 @@ export const EditNodeButton = () => {
           onClick={handleOpen}
           disabled={!selectedNodeId}
           variant="secondary"
-          size="icon-sm"
+          size="icon-xs"
         >
           <Edit />
         </Button>

@@ -5,8 +5,6 @@ import {
   type QuestionNodeType,
   AnswerNodeSchema,
   type AnswerNodeType,
-  SpeechNodeSchema,
-  type SpeechNodeType,
 } from "@entities/dialog-tree";
 import {
   Form,
@@ -116,19 +114,10 @@ const QuestionNodeForm = ({
   );
 };
 
-const ANSWER_COLOR_OPTIONS: SelectFieldOption<AnswerNodeType["color"]>[] = [
-  { value: "default", label: "Default" },
-  { value: "purple", label: "Purple" },
-  { value: "green", label: "Green" },
-  { value: "amber", label: "Amber" },
-  { value: "red", label: "Red" },
-];
-
 const ANSWER_INTERNAL_DEFAULTS: AnswerNodeType = {
   type: "answer",
-  text: "",
-  hint: "",
-  color: "default",
+  title: "",
+  description: "",
   meta: [],
 };
 
@@ -141,56 +130,17 @@ const AnswerNodeForm = ({ onSubmit, defaults }: FormProps<AnswerNodeType>) => {
       className="flex flex-col gap-4"
     >
       <TextField<AnswerNodeType>
-        name="text"
-        label="Text"
-        placeholder="Not now, im busy"
-      />
-      <TextField<AnswerNodeType>
-        name="hint"
-        label="Hint"
-        placeholder="Try to persuade"
+        name="title"
+        label="Title"
+        placeholder="Played at our casinos"
       />
 
-      <SelectField<ScenarioNodeType, AnswerNodeType["color"]>
-        name="color"
-        label="Color"
-        options={ANSWER_COLOR_OPTIONS}
-      />
-
-      <NodeMetaField />
-
-      <SubmitButton>Save</SubmitButton>
-    </Form>
-  );
-};
-
-const SPEECH_INTERNAL_DEFAULTS: SpeechNodeType = {
-  type: "speech",
-  hint: "",
-  text: "",
-  meta: [],
-};
-
-const SpeechNodeForm = ({ onSubmit, defaults }: FormProps<SpeechNodeType>) => {
-  return (
-    <Form
-      schema={SpeechNodeSchema}
-      defaults={defaults || SPEECH_INTERNAL_DEFAULTS}
-      onSubmit={onSubmit}
-      className="flex flex-col gap-4"
-    >
-      <TextareaField<SpeechNodeType>
-        name="text"
-        label="What needs to be said"
-        placeholder="Hello, what about some money?"
-        rows={4}
+      <TextareaField<AnswerNodeType>
+        name="description"
+        label="Description"
+        placeholder="Find out what he liked."
+        rows={3}
         className="max-h-60"
-      />
-
-      <TextField<SpeechNodeType>
-        name="hint"
-        label="Hint"
-        placeholder="Don`t forget give coco to client"
       />
 
       <NodeMetaField />
@@ -204,5 +154,4 @@ export const EDIT_NODE_FORM = {
   scenario: ScenarioNodeForm,
   answer: AnswerNodeForm,
   question: QuestionNodeForm,
-  speech: SpeechNodeForm,
 } as const;

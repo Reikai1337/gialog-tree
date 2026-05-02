@@ -8,13 +8,11 @@ import type {
   AnswerNode as AnswerNodeType,
   QuestionNode as QuestionNodeType,
   ScenarioNode as ScenarioNodeType,
-  SpeechNode as SpeechNodeType,
 } from "../model";
 import {
   ScenarioNode as BaseScenarioNode,
   AnswerNode as BaseAnswerNode,
   QuestionNode as BaseQuestionNode,
-  SpeechNode as BaseSpeechNode,
 } from "@entities/dialog-tree";
 import { cn } from "@shared/lib/utils";
 
@@ -80,39 +78,14 @@ const AnswerNode = ({ data, selected }: NodeProps<AnswerNodeType>) => {
       beforeSlot={
         <Handle
           type="target"
-          position={Position.Left}
+          position={Position.Top}
           className={cn(HANDLE_BASE, "bg-green-400 border-green-900")}
         />
       }
       afterSlot={
         <Handle
           type="source"
-          position={Position.Right}
-          className={cn(HANDLE_BASE, "bg-green-400 border-green-900")}
-        />
-      }
-    />
-  );
-};
-
-// ─── Speech ───────────────────────────────────────────────────────────────────
-
-const SpeechNode = ({ data, selected }: NodeProps<SpeechNodeType>) => {
-  return (
-    <BaseSpeechNode
-      {...data}
-      selected={selected}
-      beforeSlot={
-        <Handle
-          type="target"
-          position={Position.Left}
-          className={cn(HANDLE_BASE, "bg-green-400 border-green-900")}
-        />
-      }
-      afterSlot={
-        <Handle
-          type="source"
-          position={Position.Right}
+          position={Position.Bottom}
           className={cn(HANDLE_BASE, "bg-green-400 border-green-900")}
         />
       }
@@ -126,5 +99,4 @@ export const nodeTypes: NodeTypes = {
   scenario: ScenarioNode,
   question: QuestionNode,
   answer: AnswerNode,
-  speech: SpeechNode,
 };

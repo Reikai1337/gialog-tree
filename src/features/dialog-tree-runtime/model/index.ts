@@ -2,6 +2,5 @@ export type {
   AnswerNode,
   QuestionNode,
   ScenarioNode,
-  SpeechNode,
   AnyRFNode,
 } from "./types";

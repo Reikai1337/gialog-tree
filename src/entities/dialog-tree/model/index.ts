@@ -13,10 +13,27 @@ export const QuestionNodeSchema = z.object({
   meta: z.array(NodeMetaSchema),
 });
 
+export const SpeechNodeSchema = z.object({
+  type: z.literal("speech"),
+  text: z.string().min(1, "Required").max(1000, "Too long"),
+  hint: z.string().max(500, "Too long"),
+
+  meta: z.array(NodeMetaSchema),
+});
+
+const AnswerNodeColorKeySchema = z.enum([
+  "green",
+  "amber",
+  "red",
+  "purple",
+  "default",
+]);
+
 export const AnswerNodeSchema = z.object({
   type: z.literal("answer"),
-  title: z.string().min(1, "Required").max(100, "Too long"),
-  description: z.string().max(500, "Too long"),
+  text: z.string().min(1, "Required").max(100, "Too long"),
+  hint: z.string().max(500, "Too long"),
+  color: AnswerNodeColorKeySchema,
 
   meta: z.array(NodeMetaSchema),
 });
@@ -37,17 +54,14 @@ export const ScenarioNodeSchema = z.object({
   meta: z.array(NodeMetaSchema),
 });
 
-const AnyNodeSchema = z.discriminatedUnion("type", [
-  QuestionNodeSchema,
-  AnswerNodeSchema,
-  ScenarioNodeSchema,
-]);
-
 export type NodeMeta = z.infer<typeof NodeMetaSchema>;
 
 export type QuestionNode = z.infer<typeof QuestionNodeSchema>;
+export type AnswerNodeColor = z.infer<typeof AnswerNodeColorKeySchema>;
 export type AnswerNode = z.infer<typeof AnswerNodeSchema>;
 export type ScenarioNodeColor = z.infer<typeof ScenarioNodeColorKeySchema>;
 export type ScenarioNode = z.infer<typeof ScenarioNodeSchema>;
+export type SpeechNode = z.infer<typeof SpeechNodeSchema>;
 
-export type AnyNode = z.infer<typeof AnyNodeSchema>;
+export type AnyNode = SpeechNode | AnswerNode;
+export type AnyNodeType = (SpeechNode | AnswerNode)["type"];

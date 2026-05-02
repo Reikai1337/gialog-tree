@@ -9,7 +9,6 @@ import {
 } from "@xyflow/react";
 import { createStore } from "zustand/vanilla";
 import type { AnyRFNode } from "./types";
-import { ALLOWED_NODE_CONNECTION_MAP } from "@entities/dialog-tree/model/const";
 
 type NodeDataByType<T extends AnyRFNode["type"]> = Extract<
   AnyRFNode,
@@ -129,17 +128,6 @@ export const createEditorStore = (
     },
 
     onConnect: (connection) => {
-      const { nodes } = get();
-
-      const sourceNode = nodes.find((n) => n.id === connection.source);
-      const targetNode = nodes.find((n) => n.id === connection.target);
-
-      if (!sourceNode || !targetNode) return;
-      if (connection.source === connection.target) return;
-
-      const allowed = ALLOWED_NODE_CONNECTION_MAP[sourceNode.type] ?? [];
-      if (!allowed.includes(targetNode.type)) return;
-
       set((s) => ({ edges: addEdge(connection, s.edges) }));
     },
 

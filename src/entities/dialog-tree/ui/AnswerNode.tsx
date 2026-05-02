@@ -1,6 +1,10 @@
-import { ChevronRight, MessageSquareReply } from "lucide-react";
+import { Layers } from "lucide-react";
 import { cn } from "@shared/lib/utils";
-import type { AnswerNode as AnswerNodeType, ScenarioNodeColor } from "../model";
+import type {
+  AnswerNodeColor,
+  AnswerNode as AnswerNodeType,
+  AnswerNode,
+} from "../model";
 import type { ReactNode } from "react";
 
 type Palette = {
@@ -11,7 +15,7 @@ type Palette = {
   text: string;
 };
 
-const ANSWER_COLORS: Record<ScenarioNodeColor, Palette> = {
+const ANSWER_COLORS: Record<AnswerNodeColor, Palette> = {
   green: {
     bg: "bg-[#052e16]",
     border: "border-[#166534]",
@@ -50,51 +54,70 @@ const ANSWER_COLORS: Record<ScenarioNodeColor, Palette> = {
 };
 
 type Props = AnswerNodeType & {
-  selected?: boolean;
   beforeSlot?: ReactNode;
   afterSlot?: ReactNode;
+  selected?: boolean;
 };
 
 export function AnswerNode({
-  description,
-  title,
+  color,
+  hint,
+  text,
+  selected,
   afterSlot,
   beforeSlot,
-  selected,
 }: Props) {
+  const colors = ANSWER_COLORS[color];
+
   return (
     <div
       className={cn(
-        "bg-[#0c1a2e] rounded-[10px] px-3.5 py-2.5 min-w-40 max-w-60 border-[1.5px] transition-all duration-150",
-        selected ? "border-cyan-400" : "border-cyan-900",
+        "relative rounded-xl px-4 py-3 min-w-50 max-w-70 border transition-all duration-150",
+        colors.bg,
+
+        selected ? colors.border : colors.accent,
       )}
     >
       {beforeSlot}
-      <div className="flex items-center gap-2">
+
+      <div className="flex items-start gap-2.5">
         <div
-          className={
-            "rounded-lg p-1.5 border shrink-0 bg-white/5 border-gray-700"
-          }
+          className={cn(
+            "rounded-lg p-1.5 border shrink-0",
+            colors.border,
+            "bg-white/5",
+          )}
         >
-          <MessageSquareReply className="text-gray-400" size={14} />
+          <Layers className={colors.accent} size={14} />
         </div>
 
         <div>
-          <div className="text-xs font-semibold tracking-widest text-cyan-400 uppercase mb-1">
+          <div
+            className={cn(
+              "text-[10px] font-semibold tracking-wider uppercase mb-1",
+              colors.accent,
+            )}
+          >
             Ответ
           </div>
-          <div className="text-sm font-medium text-slate-200 leading-[1.3]">
-            {title}
-          </div>
-          <div className="text-xs text-slate-500 mt-1 leading-snug">
-            {description}
-          </div>
-        </div>
 
-        <ChevronRight
-          size={14}
-          className="ml-auto shrink-0 text-cyan-400 opacity-60"
-        />
+          <div
+            className={cn("text-[13px] font-medium leading-snug", colors.text)}
+          >
+            {text}
+          </div>
+
+          {hint && (
+            <div
+              className={cn(
+                "text-[11px] mt-1 leading-snug opacity-70",
+                colors.accent,
+              )}
+            >
+              {hint}
+            </div>
+          )}
+        </div>
       </div>
       {afterSlot}
     </div>
