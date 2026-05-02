@@ -1,13 +1,6 @@
 import { Button } from "@shared/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@shared/ui/dropdown-menu";
 import { useReactFlow } from "@xyflow/react";
-import { Layers, MessageSquare, MessageSquareReply, Plus } from "lucide-react";
+import { MessageSquare, MessageSquareReply } from "lucide-react";
 import { useCallback, useState, type FC, type ReactNode } from "react";
 import {
   Dialog,
@@ -33,20 +26,12 @@ type EditNodeDialog = {
 
 const EDIT_NODE_DIALOGS: EditNodeDialog[] = [
   {
-    type: "scenario",
+    type: "speech",
     trigger: {
-      text: "Scenario",
-      icon: <Layers />,
-    },
-    ContentForm: EDIT_NODE_FORM.scenario,
-  },
-  {
-    type: "question",
-    trigger: {
-      text: "Question",
+      text: "Speech",
       icon: <MessageSquare />,
     },
-    ContentForm: EDIT_NODE_FORM.question,
+    ContentForm: EDIT_NODE_FORM.speech,
   },
   {
     type: "answer",
@@ -86,13 +71,10 @@ export const AddNodeButtons = () => {
       } as const;
 
       switch (formData.type) {
-        case "scenario":
-          addNode({ ...base, type: formData.type, data: formData });
-          break;
-        case "question":
-          addNode({ ...base, type: formData.type, data: formData });
-          break;
         case "answer":
+          addNode({ ...base, type: formData.type, data: formData });
+          break;
+        case "speech":
           addNode({ ...base, type: formData.type, data: formData });
           break;
       }
@@ -107,7 +89,7 @@ export const AddNodeButtons = () => {
       <div className="flex flex-col gap-2">
         {EDIT_NODE_DIALOGS.map((dialog, i) => (
           <Button
-            size="icon-xs"
+            size="icon-sm"
             variant="outline"
             key={i}
             onClick={() => openEditFormDialog(dialog.type)}

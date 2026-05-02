@@ -1,11 +1,10 @@
 import { Layers } from "lucide-react";
 import { cn } from "@shared/lib/utils";
-import type {
-  ScenarioNodeColor,
-  ScenarioNode as ScenarioNodeType,
-  ScenarioNode,
-} from "../model";
+import type { AnswerNodeColor, AnswerNode as AnswerNodeType } from "../model";
 import type { ReactNode } from "react";
+import { NodeMetaBadgesList } from "./NodeMetaBadgesList";
+import { Separator } from "@shared/ui/separator";
+import { Card } from "@shared/ui/card";
 
 type Palette = {
   bg: string;
@@ -15,7 +14,7 @@ type Palette = {
   text: string;
 };
 
-const SCENARIO_COLORS: Record<ScenarioNodeColor, Palette> = {
+const ANSWER_COLORS: Record<AnswerNodeColor, Palette> = {
   green: {
     bg: "bg-[#052e16]",
     border: "border-[#166534]",
@@ -53,21 +52,22 @@ const SCENARIO_COLORS: Record<ScenarioNodeColor, Palette> = {
   },
 };
 
-type Props = ScenarioNodeType & {
+type Props = AnswerNodeType & {
   beforeSlot?: ReactNode;
   afterSlot?: ReactNode;
   selected?: boolean;
 };
 
-export function ScenarioNode({
+export function AnswerNodeCard({
   color,
-  description,
-  title,
+  hint,
+  text,
   selected,
   afterSlot,
   beforeSlot,
+  meta,
 }: Props) {
-  const colors = SCENARIO_COLORS[color];
+  const colors = ANSWER_COLORS[color];
 
   return (
     <div
@@ -79,45 +79,34 @@ export function ScenarioNode({
       )}
     >
       {beforeSlot}
-
-      <div className="flex items-start gap-2.5">
+      <div className="flex flex-col gap-2">
         <div
           className={cn(
-            "rounded-lg p-1.5 border shrink-0",
-            colors.border,
-            "bg-white/5",
+            "text-[10px] font-semibold tracking-wider uppercase",
+            colors.accent,
           )}
         >
-          <Layers className={colors.accent} size={14} />
+          Ответ
+        </div>
+        <Separator />
+
+        {!!meta.length && <NodeMetaBadgesList items={meta} />}
+        <div
+          className={cn("text-[13px] font-medium leading-snug", colors.text)}
+        >
+          {text}
         </div>
 
-        <div>
+        {hint && (
           <div
             className={cn(
-              "text-[10px] font-semibold tracking-wider uppercase mb-1",
+              "text-[11px] mt-1 leading-snug opacity-70",
               colors.accent,
             )}
           >
-            Сценарий
+            {hint}
           </div>
-
-          <div
-            className={cn("text-[13px] font-medium leading-snug", colors.text)}
-          >
-            {title}
-          </div>
-
-          {description && (
-            <div
-              className={cn(
-                "text-[11px] mt-1 leading-snug opacity-70",
-                colors.accent,
-              )}
-            >
-              {description}
-            </div>
-          )}
-        </div>
+        )}
       </div>
       {afterSlot}
     </div>

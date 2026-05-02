@@ -1,6 +1,1 @@
-export type {
-  AnswerNode,
-  QuestionNode,
-  ScenarioNode,
-  AnyRFNode,
-} from "./types";
+export type { RFAnswerNode, RFAnyNode, RFSpeechNode } from "./types";

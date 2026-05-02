@@ -1,9 +1,8 @@
 "use client";
 
 import { signInWithGoogle, signOut } from "@shared/api/firebase/auth";
-import { useUserStore, useUserStoreApi } from "../providers";
+import { useUserStore } from "../providers";
 import Image from "next/image";
-import { Button } from "@shared/ui/button";
 
 export const UserInfo = () => {
   const user = useUserStore((s) => s.user);

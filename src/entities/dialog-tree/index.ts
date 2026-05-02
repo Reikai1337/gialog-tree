@@ -1,12 +1,10 @@
 export {
-  type ScenarioNode as ScenarioNodeType,
-  type AnswerNode as AnswerNodeType,
-  type QuestionNode as QuestionNodeType,
   type AnyNode,
+  type AnswerNode,
   AnswerNodeSchema,
-  QuestionNodeSchema,
-  ScenarioNodeSchema,
+  type SpeechNode,
+  SpeechNodeSchema,
 } from "./model";
-export { ScenarioNode } from "./ui/ScenarioNode";
-export { AnswerNode } from "./ui/AnswerNode";
-export { QuestionNode } from "./ui/QuestionNode";
+export { ALLOWED_NODE_CONNECTION_MAP } from "./model/const";
+export { AnswerNodeCard } from "./ui/AnswerNodeCard";
+export { SpeechNodeCard } from "./ui/SpeechNodeCard";

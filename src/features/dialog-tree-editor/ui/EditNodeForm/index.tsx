@@ -1,10 +1,8 @@
 import {
-  ScenarioNodeSchema,
-  type ScenarioNodeType,
-  QuestionNodeSchema,
-  type QuestionNodeType,
   AnswerNodeSchema,
-  type AnswerNodeType,
+  type AnswerNode,
+  SpeechNodeSchema,
+  type SpeechNode,
 } from "@entities/dialog-tree";
 import {
   Form,
@@ -21,7 +19,7 @@ type FormProps<T> = {
   defaults?: T;
 };
 
-const SCENARIO_COLOR_OPTIONS: SelectFieldOption<ScenarioNodeType["color"]>[] = [
+const ANSWER_COLOR_OPTIONS: SelectFieldOption<AnswerNode["color"]>[] = [
   { value: "default", label: "Default" },
   { value: "purple", label: "Purple" },
   { value: "green", label: "Green" },
@@ -29,99 +27,15 @@ const SCENARIO_COLOR_OPTIONS: SelectFieldOption<ScenarioNodeType["color"]>[] = [
   { value: "red", label: "Red" },
 ];
 
-const SCENARIO_INTERNAL_DEFAULTS: ScenarioNodeType = {
-  type: "scenario",
-  color: "purple",
-  title: "",
-  description: "",
-  meta: [],
-};
-
-const ScenarioNodeForm = ({
-  onSubmit,
-  defaults,
-}: FormProps<ScenarioNodeType>) => {
-  return (
-    <Form
-      schema={ScenarioNodeSchema}
-      defaults={defaults || SCENARIO_INTERNAL_DEFAULTS}
-      onSubmit={onSubmit}
-      className="flex flex-col gap-4"
-    >
-      <TextField<ScenarioNodeType>
-        name="title"
-        label="Title"
-        placeholder="Greeting"
-      />
-
-      <TextareaField<ScenarioNodeType>
-        name="description"
-        label="Description"
-        placeholder="Good afternoon! My name is Sanya, I am a representative of the online project ‘Phoenix’"
-        rows={3}
-        className="max-h-60"
-      />
-
-      <SelectField<ScenarioNodeType, ScenarioNodeType["color"]>
-        name="color"
-        label="Color"
-        options={SCENARIO_COLOR_OPTIONS}
-      />
-
-      <NodeMetaField />
-
-      <SubmitButton>Save</SubmitButton>
-    </Form>
-  );
-};
-
-const QUESTION_INTERNAL_DEFAULTS: QuestionNodeType = {
-  type: "question",
-  title: "",
-  description: "",
-  meta: [],
-};
-
-const QuestionNodeForm = ({
-  onSubmit,
-  defaults,
-}: FormProps<QuestionNodeType>) => {
-  return (
-    <Form
-      schema={QuestionNodeSchema}
-      defaults={defaults || QUESTION_INTERNAL_DEFAULTS}
-      onSubmit={onSubmit}
-      className="flex flex-col gap-4"
-    >
-      <TextField<QuestionNodeType>
-        name="title"
-        label="Title"
-        placeholder="Where did you play?"
-      />
-
-      <TextareaField<QuestionNodeType>
-        name="description"
-        label="Description"
-        placeholder="Ask about your favorite slots"
-        rows={3}
-        className="max-h-60"
-      />
-
-      <NodeMetaField />
-
-      <SubmitButton>Save</SubmitButton>
-    </Form>
-  );
-};
-
-const ANSWER_INTERNAL_DEFAULTS: AnswerNodeType = {
+const ANSWER_INTERNAL_DEFAULTS: AnswerNode = {
   type: "answer",
-  title: "",
-  description: "",
+  text: "",
+  hint: "",
+  color: "default",
   meta: [],
 };
 
-const AnswerNodeForm = ({ onSubmit, defaults }: FormProps<AnswerNodeType>) => {
+const AnswerNodeForm = ({ onSubmit, defaults }: FormProps<AnswerNode>) => {
   return (
     <Form
       schema={AnswerNodeSchema}
@@ -129,18 +43,57 @@ const AnswerNodeForm = ({ onSubmit, defaults }: FormProps<AnswerNodeType>) => {
       onSubmit={onSubmit}
       className="flex flex-col gap-4"
     >
-      <TextField<AnswerNodeType>
-        name="title"
-        label="Title"
-        placeholder="Played at our casinos"
+      <TextField<AnswerNode>
+        name="text"
+        label="Text"
+        placeholder="Not now, im busy"
+      />
+      <TextField<AnswerNode>
+        name="hint"
+        label="Hint"
+        placeholder="Try to persuade"
       />
 
-      <TextareaField<AnswerNodeType>
-        name="description"
-        label="Description"
-        placeholder="Find out what he liked."
-        rows={3}
+      <SelectField<AnswerNode, AnswerNode["color"]>
+        name="color"
+        label="Color"
+        options={ANSWER_COLOR_OPTIONS}
+      />
+
+      <NodeMetaField />
+
+      <SubmitButton>Save</SubmitButton>
+    </Form>
+  );
+};
+
+const SPEECH_INTERNAL_DEFAULTS: SpeechNode = {
+  type: "speech",
+  hint: "",
+  text: "",
+  meta: [],
+};
+
+const SpeechNodeForm = ({ onSubmit, defaults }: FormProps<SpeechNode>) => {
+  return (
+    <Form
+      schema={SpeechNodeSchema}
+      defaults={defaults || SPEECH_INTERNAL_DEFAULTS}
+      onSubmit={onSubmit}
+      className="flex flex-col gap-4"
+    >
+      <TextareaField<SpeechNode>
+        name="text"
+        label="What needs to be said"
+        placeholder="Hello, what about some money?"
+        rows={4}
         className="max-h-60"
+      />
+
+      <TextField<SpeechNode>
+        name="hint"
+        label="Hint"
+        placeholder="Don`t forget give coco to client"
       />
 
       <NodeMetaField />
@@ -151,7 +104,6 @@ const AnswerNodeForm = ({ onSubmit, defaults }: FormProps<AnswerNodeType>) => {
 };
 
 export const EDIT_NODE_FORM = {
-  scenario: ScenarioNodeForm,
   answer: AnswerNodeForm,
-  question: QuestionNodeForm,
+  speech: SpeechNodeForm,
 } as const;
