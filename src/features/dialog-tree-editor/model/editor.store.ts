@@ -8,16 +8,16 @@ import {
   addEdge,
 } from "@xyflow/react";
 import { createStore } from "zustand/vanilla";
-import type { AnyRFNode } from "./types";
-import { ALLOWED_NODE_CONNECTION_MAP } from "@entities/dialog-tree/model/const";
+import { ALLOWED_NODE_CONNECTION_MAP } from "@entities/dialog-tree";
+import type { RFAnyNode } from "./types";
 
-type NodeDataByType<T extends AnyRFNode["type"]> = Extract<
-  AnyRFNode,
+type NodeDataByType<T extends RFAnyNode["type"]> = Extract<
+  RFAnyNode,
   { type: T }
 >["data"];
 
 export type EditorState = {
-  nodes: AnyRFNode[];
+  nodes: RFAnyNode[];
   edges: Edge[];
   selectedNodeId: string | null;
   selectedEdgeId: string | null;
@@ -25,20 +25,20 @@ export type EditorState = {
 };
 
 export type EditorActions = {
-  addNode: (node: AnyRFNode) => void;
-  updateNodeData: <T extends AnyRFNode["type"]>(
+  addNode: (node: RFAnyNode) => void;
+  updateNodeData: <T extends RFAnyNode["type"]>(
     id: string,
     patch: Partial<NodeDataByType<T>>,
   ) => void;
   deleteNode: (id: string) => void;
   deleteEdge: (id: string) => void;
   deleteSelected: () => void;
-  onNodesChange: (changes: NodeChange<AnyRFNode>[]) => void;
+  onNodesChange: (changes: NodeChange<RFAnyNode>[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
   onConnect: (connection: Connection) => void;
   setSelectedNode: (id: string | null) => void;
   setSelectedEdge: (id: string | null) => void;
-  getSelectedNode: () => AnyRFNode | null;
+  getSelectedNode: () => RFAnyNode | null;
 };
 
 export type EditorStore = EditorState & EditorActions;
@@ -55,7 +55,7 @@ export const createEditorStore = (
       set((s) => ({
         nodes: s.nodes.map((n) =>
           n.id === id
-            ? ({ ...n, data: { ...n.data, ...patch } } as AnyRFNode)
+            ? ({ ...n, data: { ...n.data, ...patch } } as RFAnyNode)
             : n,
         ),
       }));

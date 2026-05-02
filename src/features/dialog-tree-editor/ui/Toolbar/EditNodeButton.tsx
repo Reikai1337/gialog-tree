@@ -11,13 +11,13 @@ import {
 import type { AnyNode } from "@entities/dialog-tree";
 import { useMemo, useState, type ReactNode } from "react";
 import { EDIT_NODE_FORM } from "../EditNodeForm";
-import type { AnyRFNode } from "@features/dialog-tree-editor/model";
+import type { RFAnyNode } from "@features/dialog-tree-editor/model";
 
 export const EditNodeButton = () => {
   const selectedNodeId = useEditorStore((s) => s.selectedNodeId);
   const getSelectedNode = useEditorStore((s) => s.getSelectedNode);
   const updateNodeData = useEditorStore((s) => s.updateNodeData);
-  const [nodeData, setNodeData] = useState<AnyRFNode["data"] | null>(null);
+  const [nodeData, setNodeData] = useState<RFAnyNode["data"] | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const EditForm = useMemo<ReactNode>(() => {
@@ -33,14 +33,11 @@ export const EditNodeButton = () => {
       const Form = EDIT_NODE_FORM[nodeData.type];
       return <Form onSubmit={onSubmit} defaults={nodeData} />;
     }
-    if (nodeData.type === "question") {
+    if (nodeData.type === "speech") {
       const Form = EDIT_NODE_FORM[nodeData.type];
       return <Form onSubmit={onSubmit} defaults={nodeData} />;
     }
-    if (nodeData.type === "scenario") {
-      const Form = EDIT_NODE_FORM[nodeData.type];
-      return <Form onSubmit={onSubmit} defaults={nodeData} />;
-    }
+
     return null;
   }, [nodeData, selectedNodeId, updateNodeData]);
 
@@ -52,7 +49,7 @@ export const EditNodeButton = () => {
   const handleOpen = () => {
     if (!selectedNodeId) return;
     const selectedNode = getSelectedNode();
-    if (!selectedNode) return;
+    if (!selectedNode || !EDIT_NODE_FORM[selectedNode.type]) return;
 
     setNodeData(selectedNode.data);
     setIsOpen(true);
@@ -72,7 +69,7 @@ export const EditNodeButton = () => {
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{"trigger.text"}</DialogTitle>
+          <DialogTitle className="capitalize">{nodeData?.type}</DialogTitle>
         </DialogHeader>
         {EditForm}
       </DialogContent>

@@ -1,19 +1,6 @@
 import { Button } from "@shared/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@shared/ui/dropdown-menu";
 import { useReactFlow } from "@xyflow/react";
-import {
-  Layers,
-  MessageSquare,
-  MessageSquareReply,
-  Plus,
-  Speech,
-} from "lucide-react";
+import { MessageSquare, MessageSquareReply } from "lucide-react";
 import { useCallback, useState, type FC, type ReactNode } from "react";
 import {
   Dialog,
@@ -46,22 +33,6 @@ const EDIT_NODE_DIALOGS: EditNodeDialog[] = [
     },
     ContentForm: EDIT_NODE_FORM.speech,
   },
-  // {
-  //   type: "scenario",
-  //   trigger: {
-  //     text: "Scenario",
-  //     icon: <Layers />,
-  //   },
-  //   ContentForm: EDIT_NODE_FORM.scenario,
-  // },
-  // {
-  //   type: "question",
-  //   trigger: {
-  //     text: "Question",
-  //     icon: <MessageSquare />,
-  //   },
-  //   ContentForm: EDIT_NODE_FORM.question,
-  // },
   {
     type: "answer",
     trigger: {
@@ -100,12 +71,6 @@ export const AddNodeButtons = () => {
       } as const;
 
       switch (formData.type) {
-        case "scenario":
-          addNode({ ...base, type: formData.type, data: formData });
-          break;
-        case "question":
-          addNode({ ...base, type: formData.type, data: formData });
-          break;
         case "answer":
           addNode({ ...base, type: formData.type, data: formData });
           break;

@@ -19,7 +19,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 380,
-        height: 192,
+        height: 173,
       },
       selected: false,
       dragging: false,
@@ -81,7 +81,7 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 220,
+        width: 200,
         height: 63,
       },
       selected: false,
@@ -102,8 +102,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 280,
-        height: 81,
+        width: 269,
+        height: 63,
       },
       selected: false,
       dragging: false,
@@ -144,7 +144,7 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 211,
+        width: 200,
         height: 63,
       },
       selected: false,
@@ -182,11 +182,16 @@ export const PH_SC_IS: EditorState = {
         type: "answer",
         text: "Так там вейджер (бездеп ФС)",
         hint: "",
-        color: "default",
-        meta: [],
+        color: "green",
+        meta: [
+          {
+            id: "c32a8888-f869-4a8f-b499-7e7e42c4a402",
+            title: "asd",
+          },
+        ],
       },
       measured: {
-        width: 258,
+        width: 220,
         height: 63,
       },
       selected: false,
@@ -227,7 +232,7 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 220,
+        width: 200,
         height: 63,
       },
       selected: false,
@@ -248,7 +253,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 380,
-        height: 203,
+        height: 185,
       },
       selected: false,
       dragging: false,
@@ -268,8 +273,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 280,
-        height: 81,
+        width: 272,
+        height: 63,
       },
       selected: false,
       dragging: false,
@@ -289,7 +294,7 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 249,
+        width: 211,
         height: 63,
       },
       selected: false,
@@ -351,7 +356,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 380,
-        height: 355,
+        height: 319,
       },
       selected: false,
       dragging: false,
@@ -434,7 +439,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 380,
-        height: 246,
+        height: 228,
       },
       selected: false,
       dragging: false,
@@ -454,7 +459,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 380,
-        height: 519,
+        height: 446,
       },
       selected: false,
       dragging: false,
@@ -494,7 +499,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 380,
-        height: 264,
+        height: 246,
       },
       selected: false,
       dragging: false,
@@ -514,7 +519,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 380,
-        height: 337,
+        height: 319,
       },
       selected: false,
       dragging: false,
@@ -534,7 +539,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 380,
-        height: 264,
+        height: 228,
       },
       selected: false,
       dragging: false,
@@ -554,7 +559,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 380,
-        height: 173,
+        height: 155,
       },
       selected: false,
       dragging: false,
@@ -594,7 +599,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 380,
-        height: 137,
+        height: 119,
       },
       selected: false,
       dragging: false,
@@ -602,19 +607,40 @@ export const PH_SC_IS: EditorState = {
     {
       id: "023bb7d2-e7e1-4870-b326-07afd4509dea",
       position: {
-        x: 1201.2864500044439,
-        y: 706.9659967747867,
+        x: 1204.0877584520888,
+        y: 720.797001831968,
       },
       type: "speech",
       data: {
         type: "speech",
         text: "Всё верно, вейджер есть в любом казино и его реально отыгрывают учитывая то что он х15 и отдача у нового проекта всегда топовая. Бонусом , я Вам скину наши топ-5 сегодняшних горячих слотов, и благодаря этой информации у Вас будут максимальные шансы его отыграть, давайте попробуем? \n \nЕсли нет, напомнить, что бонусы можно не забирать",
         hint: "",
-        meta: [],
+        meta: [
+          {
+            id: "3d313ca2-437e-4a40-aaa7-4771e2c80f4a",
+            title: "asd",
+          },
+          {
+            id: "a827dfa7-614b-4420-97e8-24b8062307a0",
+            title: "asdasd",
+          },
+          {
+            id: "66219833-000b-4ecf-b41b-76f55abf291a",
+            title: "asda",
+          },
+          {
+            id: "f61f0ca1-377e-4ff4-a186-1855c3cbe0e0",
+            title: "asd",
+          },
+          {
+            id: "babb12fb-948e-4e0b-8e60-ed9cbf89f10c",
+            title: "asd",
+          },
+        ],
       },
       measured: {
         width: 380,
-        height: 210,
+        height: 223,
       },
       selected: false,
       dragging: false,

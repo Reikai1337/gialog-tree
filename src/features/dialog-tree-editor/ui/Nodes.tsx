@@ -4,118 +4,99 @@ import {
   type NodeProps,
   type NodeTypes,
 } from "@xyflow/react";
-import type {
-  AnswerNode as AnswerNodeType,
-  QuestionNode as QuestionNodeType,
-  ScenarioNode as ScenarioNodeType,
-  SpeechNode as SpeechNodeType,
-} from "../model";
+import type { RFAnswerNode, RFSpeechNode } from "../model";
 import {
-  ScenarioNode as BaseScenarioNode,
-  AnswerNode as BaseAnswerNode,
-  QuestionNode as BaseQuestionNode,
-  SpeechNode as BaseSpeechNode,
+  AnswerNodeCard as BaseAnswerNodeCard,
+  SpeechNodeCard as BaseSpeechNodeCard,
 } from "@entities/dialog-tree";
 import { cn } from "@shared/lib/utils";
+import { memo } from "react";
 
 const HANDLE_BASE = "w-2.5 h-2.5 border-2 rounded-full";
 
-// ─── Scenario ────────────────────────────────────────────────────────────────
+const TargetHandle = (
+  <Handle
+    type="target"
+    position={Position.Left}
+    className={cn(HANDLE_BASE, "bg-green-400 border-green-900")}
+  />
+);
 
-const ScenarioNode = ({ data, id, selected }: NodeProps<ScenarioNodeType>) => {
-  return (
-    <BaseScenarioNode
-      {...data}
-      selected={selected}
-      beforeSlot={
-        <Handle
-          type="target"
-          position={Position.Top}
-          className={cn(HANDLE_BASE, "bg-purple-400 border-purple-900")}
-        />
-      }
-      afterSlot={
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          className={cn(HANDLE_BASE, "bg-purple-400 border-purple-900")}
-        />
-      }
-    />
-  );
-};
-
-// ─── Question ─────────────────────────────────────────────────────────────────
-
-const QuestionNode = ({ data, selected }: NodeProps<QuestionNodeType>) => {
-  return (
-    <BaseQuestionNode
-      {...data}
-      selected={selected}
-      beforeSlot={
-        <Handle
-          type="target"
-          position={Position.Top}
-          className={cn(HANDLE_BASE, "bg-blue-400 border-blue-900")}
-        />
-      }
-      afterSlot={
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          className={cn(HANDLE_BASE, "bg-blue-400 border-blue-900")}
-        />
-      }
-    />
-  );
-};
+const SourceHandle = (
+  <Handle
+    type="source"
+    position={Position.Right}
+    className={cn(HANDLE_BASE, "bg-green-400 border-green-900")}
+  />
+);
 
 // ─── Answer ───────────────────────────────────────────────────────────────────
+type RFAnswerNodeProps = NodeProps<RFAnswerNode>;
+const areAnswerPropsEqual = (
+  prev: RFAnswerNodeProps,
+  next: RFAnswerNodeProps,
+): boolean => {
+  if (prev.selected !== next.selected) return false;
 
-const AnswerNode = ({ data, selected }: NodeProps<AnswerNodeType>) => {
+  const pd = prev.data;
+  const nd = next.data;
+
+  if (pd.color !== nd.color) return false;
+  if (pd.hint !== nd.hint) return false;
+  if (pd.text !== nd.text) return false;
+  if (pd.type !== nd.type) return false;
+
+  if (pd.meta.length !== nd.meta.length) return false;
+  for (let i = 0; i < pd.meta.length; i++) {
+    if (pd.meta[i].id !== nd.meta[i].id) return false;
+    if (pd.meta[i].title !== nd.meta[i].title) return false;
+  }
+
+  return true;
+};
+
+const AnswerNode = ({ data, selected }: RFAnswerNodeProps) => {
   return (
-    <BaseAnswerNode
+    <BaseAnswerNodeCard
       {...data}
       selected={selected}
-      beforeSlot={
-        <Handle
-          type="target"
-          position={Position.Left}
-          className={cn(HANDLE_BASE, "bg-green-400 border-green-900")}
-        />
-      }
-      afterSlot={
-        <Handle
-          type="source"
-          position={Position.Right}
-          className={cn(HANDLE_BASE, "bg-green-400 border-green-900")}
-        />
-      }
+      beforeSlot={TargetHandle}
+      afterSlot={SourceHandle}
     />
   );
 };
 
 // ─── Speech ───────────────────────────────────────────────────────────────────
+type RFSpeechNodeProps = NodeProps<RFSpeechNode>;
+const areSpeechPropsEqual = (
+  prev: RFSpeechNodeProps,
+  next: RFSpeechNodeProps,
+): boolean => {
+  if (prev.selected !== next.selected) return false;
 
-const SpeechNode = ({ data, selected }: NodeProps<SpeechNodeType>) => {
+  const pd = prev.data;
+  const nd = next.data;
+
+  if (pd.hint !== nd.hint) return false;
+  if (pd.text !== nd.text) return false;
+  if (pd.type !== nd.type) return false;
+
+  if (pd.meta.length !== nd.meta.length) return false;
+  for (let i = 0; i < pd.meta.length; i++) {
+    if (pd.meta[i].id !== nd.meta[i].id) return false;
+    if (pd.meta[i].title !== nd.meta[i].title) return false;
+  }
+
+  return true;
+};
+
+const SpeechNode = ({ data, selected }: RFSpeechNodeProps) => {
   return (
-    <BaseSpeechNode
+    <BaseSpeechNodeCard
       {...data}
       selected={selected}
-      beforeSlot={
-        <Handle
-          type="target"
-          position={Position.Left}
-          className={cn(HANDLE_BASE, "bg-green-400 border-green-900")}
-        />
-      }
-      afterSlot={
-        <Handle
-          type="source"
-          position={Position.Right}
-          className={cn(HANDLE_BASE, "bg-green-400 border-green-900")}
-        />
-      }
+      beforeSlot={TargetHandle}
+      afterSlot={SourceHandle}
     />
   );
 };
@@ -123,8 +104,6 @@ const SpeechNode = ({ data, selected }: NodeProps<SpeechNodeType>) => {
 // ─── Registry ─────────────────────────────────────────────────────────────────
 
 export const nodeTypes: NodeTypes = {
-  scenario: ScenarioNode,
-  question: QuestionNode,
-  answer: AnswerNode,
-  speech: SpeechNode,
+  answer: memo(AnswerNode, areAnswerPropsEqual),
+  speech: memo(SpeechNode, areSpeechPropsEqual),
 };

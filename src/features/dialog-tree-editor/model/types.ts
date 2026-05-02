@@ -1,14 +1,10 @@
 import type {
-  QuestionNodeType,
-  AnswerNodeType,
-  ScenarioNodeType,
-  SpeechNodeType,
+  AnswerNode as BaseAnswerNode,
+  SpeechNode as BaseSpeechNode,
 } from "@entities/dialog-tree";
 import type { Node } from "@xyflow/react";
 
-export type QuestionNode = Node<QuestionNodeType, QuestionNodeType["type"]>;
-export type AnswerNode = Node<AnswerNodeType, AnswerNodeType["type"]>;
-export type ScenarioNode = Node<ScenarioNodeType, ScenarioNodeType["type"]>;
-export type SpeechNode = Node<SpeechNodeType, SpeechNodeType["type"]>;
+export type RFAnswerNode = Node<BaseAnswerNode, BaseAnswerNode["type"]>;
+export type RFSpeechNode = Node<BaseSpeechNode, BaseSpeechNode["type"]>;
 
-export type AnyRFNode = AnswerNode | SpeechNode;
+export type RFAnyNode = RFAnswerNode | RFSpeechNode;
