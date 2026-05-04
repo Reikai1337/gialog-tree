@@ -8,8 +8,10 @@ import {
   addEdge,
 } from "@xyflow/react";
 import { createStore } from "zustand/vanilla";
-import { ALLOWED_NODE_CONNECTION_MAP } from "@entities/dialog-tree";
-import type { RFAnyNode } from "./types";
+import {
+  ALLOWED_NODE_CONNECTION_MAP,
+  type RFAnyNode,
+} from "@entities/dialog-tree";
 
 type NodeDataByType<T extends RFAnyNode["type"]> = Extract<
   RFAnyNode,

@@ -71,7 +71,6 @@ export function TextareaField<T>({
   return (
     <Controller
       name={name}
-      // @ts-ignore
       control={form.control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid} className={className}>
@@ -81,6 +80,7 @@ export function TextareaField<T>({
             placeholder={placeholder}
             rows={rows}
             aria-invalid={fieldState.invalid}
+            className="resize-none"
           />
           {description && <FieldDescription>{description}</FieldDescription>}
           {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

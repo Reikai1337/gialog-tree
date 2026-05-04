@@ -4,10 +4,11 @@ import {
   type NodeProps,
   type NodeTypes,
 } from "@xyflow/react";
-import type { RFAnswerNode, RFSpeechNode } from "../model";
 import {
   AnswerNodeCard as BaseAnswerNodeCard,
   SpeechNodeCard as BaseSpeechNodeCard,
+  type RFAnswerNode,
+  type RFSpeechNode,
 } from "@entities/dialog-tree";
 import { cn } from "@shared/lib/utils";
 import { memo } from "react";

@@ -86,7 +86,6 @@ const SpeechNodeForm = ({ onSubmit, defaults }: FormProps<SpeechNode>) => {
         name="text"
         label="What needs to be said"
         placeholder="Hello, what about some money?"
-        rows={4}
         className="max-h-60"
       />
 

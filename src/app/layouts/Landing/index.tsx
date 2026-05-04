@@ -38,7 +38,7 @@ export const LandingLayout: React.FC<Props> = ({ children }) => {
         }
       >
         <Sidebar />
-        <main className="flex-1">{children}</main>
+        {children}
       </Layout>
     </SidebarProvider>
   );

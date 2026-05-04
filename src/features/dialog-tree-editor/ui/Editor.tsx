@@ -8,13 +8,13 @@ import {
   useEditorStore,
   useEditorStoreApi,
 } from "../providers/EditorStoreProvider";
-import type { EditorState } from "../model/editor.store";
+import type { EditorState } from "../model/store";
 import { ReactFlow } from "@xyflow/react";
 import { nodeTypes } from "./Nodes";
-import type { AnyRFNode } from "../model";
 import { Toolbar } from "./Toolbar";
 import { edgeTypes } from "./Edges";
-import { PH_SC_IS } from "./IS";
+import { PH_SC_IS } from "../IS";
+import type { RFAnyNode } from "@entities/dialog-tree";
 
 type DialogTreeEditorProps = Pick<EditorState, "onSubmitCallback"> & {
   className?: string;
@@ -37,7 +37,7 @@ const DialogTreeEditorInner: FC<DialogTreeEditorProps> = ({
 
   return (
     <Card className={cn("h-full w-full p-0", className)}>
-      <ReactFlow<AnyRFNode>
+      <ReactFlow<RFAnyNode>
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}

@@ -1,4 +1,4 @@
-import type { EditorState } from "../model/editor.store";
+import type { EditorState } from "./model/store";
 
 export const PH_SC_IS: EditorState = {
   selectedEdgeId: null,

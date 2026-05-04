@@ -1,3 +1,4 @@
+import type { Node } from "@xyflow/react";
 import * as z from "zod";
 
 const NodeMetaSchema = z.object({
@@ -38,3 +39,8 @@ export type SpeechNode = z.infer<typeof SpeechNodeSchema>;
 
 export type AnyNode = SpeechNode | AnswerNode;
 export type AnyNodeType = AnyNode["type"];
+
+export type RFAnswerNode = Node<AnswerNode, AnswerNode["type"]>;
+export type RFSpeechNode = Node<SpeechNode, SpeechNode["type"]>;
+
+export type RFAnyNode = RFAnswerNode | RFSpeechNode;

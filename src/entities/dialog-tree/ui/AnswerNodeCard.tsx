@@ -72,7 +72,7 @@ export function AnswerNodeCard({
   return (
     <div
       className={cn(
-        "relative rounded-xl px-4 py-3 min-w-50 max-w-70 border transition-all duration-150",
+        "relative rounded-xl px-4 py-3 min-w-20 max-w-70 border transition-all duration-150",
         colors.bg,
 
         selected ? colors.border : colors.accent,
