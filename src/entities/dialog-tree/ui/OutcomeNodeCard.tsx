@@ -1,6 +1,9 @@
 import { Layers } from "lucide-react";
 import { cn } from "@shared/lib/utils";
-import type { AnswerNodeColor, AnswerNode as AnswerNodeType } from "../model";
+import type {
+  OutcomeNodeColor,
+  OutcomeNode as OutcomeNodeType,
+} from "../model";
 import type { ReactNode } from "react";
 import { NodeMetaBadgesList } from "./NodeMetaBadgesList";
 import { Separator } from "@shared/ui/separator";
@@ -14,7 +17,7 @@ type Palette = {
   text: string;
 };
 
-const ANSWER_COLORS: Record<AnswerNodeColor, Palette> = {
+const OUTCOME_COLORS: Record<OutcomeNodeColor, Palette> = {
   green: {
     bg: "bg-[#052e16]",
     border: "border-[#166534]",
@@ -52,13 +55,13 @@ const ANSWER_COLORS: Record<AnswerNodeColor, Palette> = {
   },
 };
 
-type Props = AnswerNodeType & {
+type Props = OutcomeNodeType & {
   beforeSlot?: ReactNode;
   afterSlot?: ReactNode;
   selected?: boolean;
 };
 
-export function AnswerNodeCard({
+export function OutcomeNodeCard({
   color,
   hint,
   text,
@@ -67,7 +70,7 @@ export function AnswerNodeCard({
   beforeSlot,
   meta,
 }: Props) {
-  const colors = ANSWER_COLORS[color];
+  const colors = OUTCOME_COLORS[color];
 
   return (
     <div
@@ -86,7 +89,7 @@ export function AnswerNodeCard({
             colors.accent,
           )}
         >
-          Ответ
+          Outcome
         </div>
         <Separator />
 

@@ -3,13 +3,13 @@
 import type { RFAnyNode, RFSpeechNode } from "@entities/dialog-tree";
 import type { Edge } from "@xyflow/react";
 
-/** Find the single speech node that is the target of a given answer */
-export function findSpeechAfterAnswer(
-  answerId: string,
+/** Find the single speech node that is the target of a given Outcome */
+export function findSpeechAfterOutcome(
+  outcomeId: string,
   nodes: RFAnyNode[],
   edges: Edge[],
 ): RFSpeechNode | null {
-  const edge = edges.find((e) => e.source === answerId);
+  const edge = edges.find((e) => e.source === outcomeId);
   if (!edge) return null;
 
   const target = nodes.find(
@@ -19,7 +19,7 @@ export function findSpeechAfterAnswer(
   return (target as RFSpeechNode) ?? null;
 }
 
-/** Find the root speech node (no incoming edges from any answer) */
+/** Find the root speech node (no incoming edges from any Outcome) */
 export function findRootSpeech(
   nodes: RFAnyNode[],
   edges: Edge[],

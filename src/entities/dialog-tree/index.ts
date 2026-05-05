@@ -1,12 +1,13 @@
-export { AnswerNodeSchema, SpeechNodeSchema } from "./model";
+export { OutcomeNodeSchema, SpeechNodeSchema } from "./model";
 export type {
   AnyNode,
-  AnswerNode,
-  RFAnswerNode,
+  OutcomeNode,
+  RFOutcomeNode,
   RFSpeechNode,
   RFAnyNode,
   SpeechNode,
+  OutcomeNodeColor,
 } from "./model";
 export { ALLOWED_NODE_CONNECTION_MAP } from "./model/const";
-export { AnswerNodeCard } from "./ui/AnswerNodeCard";
+export { OutcomeNodeCard } from "./ui/OutcomeNodeCard";
 export { SpeechNodeCard } from "./ui/SpeechNodeCard";

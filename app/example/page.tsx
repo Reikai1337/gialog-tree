@@ -1,7 +1,7 @@
 import { PH_SC_IS } from "@features/dialog-tree-editor/IS";
 import {
   CurrentSpeechText,
-  AnswersList,
+  OutcomesList,
   Actions,
 } from "@features/dialog-tree-runtime";
 import { RuntimeStoreProvider } from "@features/dialog-tree-runtime/providers/RuntimeStoreProvider";
@@ -16,10 +16,10 @@ const Page = () => {
         history: [],
       }}
     >
-      <main className="p-1 flex-1 min-h-0 grid grid-rows-[50px_1fr_150px] grid-cols-1 gap-2">
+      <main className="p-1 flex-1 min-h-0 grid grid-rows-[50px_1fr_190px] grid-cols-1 gap-2">
         <Actions />
         <CurrentSpeechText />
-        <AnswersList />
+        <OutcomesList />
       </main>
     </RuntimeStoreProvider>
   );

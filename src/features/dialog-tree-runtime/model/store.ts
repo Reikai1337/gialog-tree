@@ -3,24 +3,20 @@ import { createStore } from "zustand/vanilla";
 import type {
   RFAnyNode,
   RFSpeechNode,
-  RFAnswerNode,
+  RFOutcomeNode,
 } from "@entities/dialog-tree";
-import {
-  findRootSpeech,
-  findSpeechAfterAnswer,
-  getChoicesForSpeech,
-} from "../lib";
+import { findRootSpeech, findSpeechAfterOutcome } from "../lib";
 
-// ─── History entry ──────────────────────────────────────────────────────────
+// ─── Types ───────────────────────────────────────────────────────────────────
+
 type HistoryEntry = {
   speechId: string;
-  answerId: string | null; // null for the very first entry (no answer chosen yet)
+  outcomeId: string | null;
 };
 
 export type RuntimeState = {
   nodes: RFAnyNode[];
   edges: Edge[];
-
   activeSpeechId: string | null;
   history: HistoryEntry[];
 };
@@ -28,24 +24,34 @@ export type RuntimeState = {
 export type RuntimeActions = {
   /** Start or restart the dialog from scratch */
   start: () => void;
-
-  /** User picks an answer node → find the next speech and advance */
-  pickAnswer: (answerId: string) => void;
-
+  /** User picks an Outcome node → find the next speech and advance */
+  pickOutcome: (outcomeId: string) => void;
   /** Go one step back in history */
   goBack: () => void;
-
-  /** Derived helpers */
+  /** Whether goBack() can be called */
+  canGoBack: () => boolean;
+  /** Get the currently active Speech node */
   getActiveSpeech: () => RFSpeechNode | null;
-  getConnectedChoices: (speechID: string) => RFAnyNode[];
+  /** Get all Outcome nodes connected to a given Speech */
+  getSpeechOutcomes: (speechId: string) => RFOutcomeNode[];
 };
 
 export type RuntimeStore = RuntimeState & RuntimeActions;
 
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+const getNodeById = <T extends RFAnyNode>(nodes: RFAnyNode[], id: string) =>
+  nodes.find((n) => n.id === id) as T | undefined;
+
+const getConnectedTargetIds = (edges: Edge[], sourceId: string) =>
+  edges.filter((e) => e.source === sourceId).map((e) => e.target);
+
+// ─── Store ───────────────────────────────────────────────────────────────────
+
 export const createRuntimeStore = (
   initState: Pick<RuntimeState, "nodes" | "edges">,
-) => {
-  return createStore<RuntimeStore>()((set, get) => ({
+) =>
+  createStore<RuntimeStore>()((set, get) => ({
     ...initState,
     activeSpeechId: null,
     history: [],
@@ -56,34 +62,33 @@ export const createRuntimeStore = (
 
       set({
         activeSpeechId: root?.id ?? null,
-        history: root ? [{ speechId: root.id, answerId: null }] : [],
+        history: root ? [{ speechId: root.id, outcomeId: null }] : [],
       });
     },
 
-    pickAnswer: (answerId) => {
+    pickOutcome: (outcomeId) => {
       const { nodes, edges, activeSpeechId, history } = get();
       if (!activeSpeechId) return;
 
-      const nextSpeech = findSpeechAfterAnswer(answerId, nodes, edges);
+      const nextSpeech = findSpeechAfterOutcome(outcomeId, nodes, edges);
 
-      // Answer leads to another speech
-      if (nextSpeech) {
-        set({
-          activeSpeechId: nextSpeech.id,
-          history: [...history, { speechId: nextSpeech.id, answerId }],
-        });
-        return;
-      }
-
-      // Answer is a dead-end (leaf) — record it but don't advance speech
       set({
-        history: [...history, { speechId: activeSpeechId, answerId }],
+        activeSpeechId: nextSpeech?.id ?? activeSpeechId,
+        history: [
+          ...history,
+          {
+            speechId: nextSpeech?.id ?? activeSpeechId,
+            outcomeId,
+          },
+        ],
       });
     },
 
+    canGoBack: () => get().history.length > 1,
+
     goBack: () => {
       const { history } = get();
-      if (history.length <= 1) return; // already at root
+      if (history.length <= 1) return;
 
       const prev = history[history.length - 2];
       set({
@@ -94,20 +99,15 @@ export const createRuntimeStore = (
 
     getActiveSpeech: () => {
       const { nodes, activeSpeechId } = get();
-      return (
-        (nodes.find((n) => n.id === activeSpeechId) as RFSpeechNode) ?? null
-      );
+      if (!activeSpeechId) return null;
+      return getNodeById<RFSpeechNode>(nodes, activeSpeechId) ?? null;
     },
 
-    getConnectedChoices: (speechId) => {
-      const { nodes, edges, activeSpeechId } = get();
-      if (!activeSpeechId) return [];
-
-      const connectedIds = edges
-        .filter((e) => e.source === speechId)
-        .map((e) => e.target);
-
-      return nodes.filter((n) => connectedIds.includes(n.id));
+    getSpeechOutcomes: (speechId) => {
+      const { nodes, edges } = get();
+      const targetIds = getConnectedTargetIds(edges, speechId);
+      return nodes.filter(
+        (n) => n.type === "outcome" && targetIds.includes(n.id),
+      ) as RFOutcomeNode[];
     },
   }));
-};
