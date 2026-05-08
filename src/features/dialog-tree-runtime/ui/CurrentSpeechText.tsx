@@ -40,7 +40,7 @@ function EmptyState() {
         <EmptyDescription>Start a conversation to continue</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-        <Button onClick={start} variant="outline" size="sm">
+        <Button onClick={start} size="sm">
           Start
         </Button>
       </EmptyContent>

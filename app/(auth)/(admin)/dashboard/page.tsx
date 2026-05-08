@@ -1,7 +1,5 @@
-import { Editor } from "./Editor";
-
 export const DashboardPage = () => {
-  return <Editor />;
+  return <div>DashboardPage</div>;
 };
 
 export default DashboardPage;

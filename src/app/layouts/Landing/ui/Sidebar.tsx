@@ -24,16 +24,16 @@ const LINKS: NavLink[] = [
     href: ROUTES.HOME.href,
   },
   {
-    label: "EX",
-    href: "/example",
-  },
-  {
     label: "DASHBOARD",
     href: ROUTES.DASHBOARD.href,
   },
   {
-    label: "NEW DASHBOARD",
-    href: ROUTES.NEW_DASHBOARD.href,
+    label: "EX_EDIT",
+    href: ROUTES.EX_EDIT.href,
+  },
+  {
+    label: "EX_USE",
+    href: ROUTES.EX_USE.href,
   },
   {
     label: "LOGIN",

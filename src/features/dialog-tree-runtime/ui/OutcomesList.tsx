@@ -4,14 +4,7 @@ import { ScrollArea } from "@shared/ui/scroll-area";
 import { useRuntimeStore } from "../providers/RuntimeStoreProvider";
 import { useMemo } from "react";
 import { Button } from "@shared/ui/button";
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from "@shared/ui/empty";
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle } from "@shared/ui/empty";
 import { GitBranch } from "lucide-react";
 import type { OutcomeNodeColor } from "@entities/dialog-tree";
 

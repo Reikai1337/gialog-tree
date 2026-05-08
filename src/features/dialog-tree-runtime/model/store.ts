@@ -5,13 +5,28 @@ import type {
   RFSpeechNode,
   RFOutcomeNode,
 } from "@entities/dialog-tree";
-import { findRootSpeech, findSpeechAfterOutcome } from "../lib";
+import {
+  findRootSpeech,
+  findSpeechAfterOutcome,
+  extractMeta,
+  getConnectedTargetIds,
+  getNodeById,
+  removeMetaKeys,
+} from "../lib";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
+
+export type MetaField = {
+  id: string;
+  title: string;
+  value?: string;
+};
 
 type HistoryEntry = {
   speechId: string;
   outcomeId: string | null;
+  /** nodeIds whose meta-fields were added with this step */
+  metaNodeIds: string[];
 };
 
 export type RuntimeState = {
@@ -19,32 +34,27 @@ export type RuntimeState = {
   edges: Edge[];
   activeSpeechId: string | null;
   history: HistoryEntry[];
+  /**
+   * Accumulated meta-fields keyed by the node that introduced them.
+   * Preserved as a Map so insertion order = collection order.
+   */
+  metaFields: Map<string, MetaField[]>;
 };
 
 export type RuntimeActions = {
-  /** Start or restart the dialog from scratch */
   start: () => void;
-  /** User picks an Outcome node → find the next speech and advance */
   pickOutcome: (outcomeId: string) => void;
-  /** Go one step back in history */
   goBack: () => void;
-  /** Whether goBack() can be called */
   canGoBack: () => boolean;
-  /** Get the currently active Speech node */
   getActiveSpeech: () => RFSpeechNode | null;
-  /** Get all Outcome nodes connected to a given Speech */
   getSpeechOutcomes: (speechId: string) => RFOutcomeNode[];
+  /** Flat list of all currently collected meta-fields (in collection order) */
+  getMetaFields: () => MetaField[];
+  /** Update the stored value for a specific meta-field */
+  setMetaFieldValue: (nodeId: string, fieldId: string, value: string) => void;
 };
 
 export type RuntimeStore = RuntimeState & RuntimeActions;
-
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-const getNodeById = <T extends RFAnyNode>(nodes: RFAnyNode[], id: string) =>
-  nodes.find((n) => n.id === id) as T | undefined;
-
-const getConnectedTargetIds = (edges: Edge[], sourceId: string) =>
-  edges.filter((e) => e.source === sourceId).map((e) => e.target);
 
 // ─── Store ───────────────────────────────────────────────────────────────────
 
@@ -55,22 +65,57 @@ export const createRuntimeStore = (
     ...initState,
     activeSpeechId: null,
     history: [],
+    metaFields: new Map(),
 
     start: () => {
       const { nodes, edges } = get();
       const root = findRootSpeech(nodes, edges);
+      if (!root) {
+        set({ activeSpeechId: null, history: [], metaFields: new Map() });
+        return;
+      }
+
+      const rootMeta = extractMeta(root);
+      const metaFields = new Map<string, MetaField[]>();
+      if (rootMeta.length) metaFields.set(root.id, rootMeta);
 
       set({
-        activeSpeechId: root?.id ?? null,
-        history: root ? [{ speechId: root.id, outcomeId: null }] : [],
+        activeSpeechId: root.id,
+        history: [
+          {
+            speechId: root.id,
+            outcomeId: null,
+            metaNodeIds: rootMeta.length ? [root.id] : [],
+          },
+        ],
+        metaFields,
       });
     },
 
     pickOutcome: (outcomeId) => {
-      const { nodes, edges, activeSpeechId, history } = get();
+      const { nodes, edges, activeSpeechId, history, metaFields } = get();
       if (!activeSpeechId) return;
 
+      const outcomeNode = getNodeById(nodes, outcomeId);
       const nextSpeech = findSpeechAfterOutcome(outcomeId, nodes, edges);
+
+      // Collect meta-fields from the outcome and the next speech node
+      const addedNodeIds: string[] = [];
+      const updatedMeta = new Map(metaFields);
+
+      const outcomeMeta = extractMeta(outcomeNode);
+      if (outcomeMeta.length) {
+        updatedMeta.set(outcomeId, outcomeMeta);
+        addedNodeIds.push(outcomeId);
+      }
+
+      if (nextSpeech) {
+        const speechMeta = extractMeta(nextSpeech);
+        if (speechMeta.length) {
+          updatedMeta.set(nextSpeech.id, speechMeta);
+          addedNodeIds.push(nextSpeech.id);
+        }
+      }
 
       set({
         activeSpeechId: nextSpeech?.id ?? activeSpeechId,
@@ -79,21 +124,26 @@ export const createRuntimeStore = (
           {
             speechId: nextSpeech?.id ?? activeSpeechId,
             outcomeId,
+            metaNodeIds: addedNodeIds,
           },
         ],
+        metaFields: updatedMeta,
       });
     },
 
     canGoBack: () => get().history.length > 1,
 
     goBack: () => {
-      const { history } = get();
+      const { history, metaFields } = get();
       if (history.length <= 1) return;
 
+      const leaving = history[history.length - 1];
       const prev = history[history.length - 2];
+
       set({
         activeSpeechId: prev.speechId,
         history: history.slice(0, -1),
+        metaFields: removeMetaKeys(metaFields, leaving.metaNodeIds),
       });
     },
 
@@ -109,5 +159,21 @@ export const createRuntimeStore = (
       return nodes.filter(
         (n) => n.type === "outcome" && targetIds.includes(n.id),
       ) as RFOutcomeNode[];
+    },
+
+    getMetaFields: () => {
+      const { metaFields } = get();
+      return Array.from(metaFields.values()).flat();
+    },
+
+    setMetaFieldValue: (nodeId, fieldId, value) => {
+      const { metaFields } = get();
+      const fields = metaFields.get(nodeId);
+      if (!fields) return;
+
+      const updated = fields.map((f) =>
+        f.id === fieldId ? { ...f, value } : f,
+      );
+      set({ metaFields: new Map(metaFields).set(nodeId, updated) });
     },
   }));

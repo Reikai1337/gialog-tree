@@ -1,3 +1,5 @@
 export { CurrentSpeechText } from "./ui/CurrentSpeechText";
 export { OutcomesList } from "./ui/OutcomesList";
-export { Actions } from "./ui/Actions";
+export { GoBackButton, RestartButton } from "./ui/Actions";
+export { EditMetaButton } from "./ui/EditMetaButton";
+export { RuntimeStoreProvider } from "./providers/RuntimeStoreProvider";

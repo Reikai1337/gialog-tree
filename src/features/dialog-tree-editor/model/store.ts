@@ -131,7 +131,7 @@ export const createEditorStore = (
     },
 
     onConnect: (connection) => {
-      const { nodes } = get();
+      const { nodes, edges } = get();
 
       const sourceNode = nodes.find((n) => n.id === connection.source);
       const targetNode = nodes.find((n) => n.id === connection.target);
@@ -141,6 +141,11 @@ export const createEditorStore = (
 
       const allowed = ALLOWED_NODE_CONNECTION_MAP[sourceNode.type] ?? [];
       if (!allowed.includes(targetNode.type)) return;
+
+      const alreadyHasOutgoing = edges.some(
+        (e) => e.source === connection.source && sourceNode.type === "outcome",
+      );
+      if (alreadyHasOutgoing) return;
 
       set((s) => ({ edges: addEdge(connection, s.edges) }));
     },

@@ -2,6 +2,7 @@
 
 import type { RFAnyNode, RFSpeechNode } from "@entities/dialog-tree";
 import type { Edge } from "@xyflow/react";
+import type { MetaField } from "./model/store";
 
 /** Find the single speech node that is the target of a given Outcome */
 export function findSpeechAfterOutcome(
@@ -32,15 +33,32 @@ export function findRootSpeech(
   );
 }
 
-/** Get all nodes directly connected FROM a given speech node */
-export function getChoicesForSpeech(
-  speechId: string,
+export const getNodeById = <T extends RFAnyNode>(
   nodes: RFAnyNode[],
-  edges: Edge[],
-): RFAnyNode[] {
-  const connectedIds = edges
-    .filter((e) => e.source === speechId)
-    .map((e) => e.target);
+  id: string,
+) => nodes.find((n) => n.id === id) as T | undefined;
 
-  return nodes.filter((n) => connectedIds.includes(n.id));
-}
+export const getConnectedTargetIds = (edges: Edge[], sourceId: string) =>
+  edges.filter((e) => e.source === sourceId).map((e) => e.target);
+
+/** Extract meta-fields from a node's data, if present */
+export const extractMeta = (node: RFAnyNode | undefined): MetaField[] => {
+  if (!node) return [];
+  const meta = (node.data as Record<string, unknown>)?.meta;
+  if (!Array.isArray(meta)) return [];
+  return meta as MetaField[];
+};
+
+/**
+ * Return a new Map with the given nodeIds removed.
+ * Uses structural sharing — only creates a new Map when something actually changes.
+ */
+export const removeMetaKeys = (
+  map: Map<string, MetaField[]>,
+  nodeIds: string[],
+): Map<string, MetaField[]> => {
+  if (nodeIds.length === 0) return map;
+  const next = new Map(map);
+  nodeIds.forEach((id) => next.delete(id));
+  return next;
+};
