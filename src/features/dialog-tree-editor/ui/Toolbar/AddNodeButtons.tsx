@@ -34,12 +34,12 @@ const EDIT_NODE_DIALOGS: EditNodeDialog[] = [
     ContentForm: EDIT_NODE_FORM.speech,
   },
   {
-    type: "answer",
+    type: "outcome",
     trigger: {
-      text: "Answer",
+      text: "Outcome",
       icon: <MessageSquareReply />,
     },
-    ContentForm: EDIT_NODE_FORM.answer,
+    ContentForm: EDIT_NODE_FORM.outcome,
   },
 ];
 
@@ -71,7 +71,7 @@ export const AddNodeButtons = () => {
       } as const;
 
       switch (formData.type) {
-        case "answer":
+        case "outcome":
           addNode({ ...base, type: formData.type, data: formData });
           break;
         case "speech":
@@ -90,7 +90,7 @@ export const AddNodeButtons = () => {
         {EDIT_NODE_DIALOGS.map((dialog, i) => (
           <Button
             size="icon-sm"
-            variant="outline"
+            variant="secondary"
             key={i}
             onClick={() => openEditFormDialog(dialog.type)}
           >
@@ -104,11 +104,10 @@ export const AddNodeButtons = () => {
           open={activeDialog === type}
           onOpenChange={handleEditNodeDialogOpen}
         >
-          <DialogContent className="max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-h-[90vh] overflow-y-auto md:max-w-md">
             <DialogHeader>
               <DialogTitle>{trigger.text}</DialogTitle>
             </DialogHeader>
-
             <ContentForm onSubmit={handleSubmit} />
           </DialogContent>
         </Dialog>

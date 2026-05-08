@@ -4,10 +4,11 @@ import {
   type NodeProps,
   type NodeTypes,
 } from "@xyflow/react";
-import type { RFAnswerNode, RFSpeechNode } from "../model";
 import {
-  AnswerNodeCard as BaseAnswerNodeCard,
+  OutcomeNodeCard as BaseOutcomeNodeCard,
   SpeechNodeCard as BaseSpeechNodeCard,
+  type RFOutcomeNode,
+  type RFSpeechNode,
 } from "@entities/dialog-tree";
 import { cn } from "@shared/lib/utils";
 import { memo } from "react";
@@ -30,11 +31,11 @@ const SourceHandle = (
   />
 );
 
-// ─── Answer ───────────────────────────────────────────────────────────────────
-type RFAnswerNodeProps = NodeProps<RFAnswerNode>;
-const areAnswerPropsEqual = (
-  prev: RFAnswerNodeProps,
-  next: RFAnswerNodeProps,
+// ─── Outcome ───────────────────────────────────────────────────────────────────
+type RFOutcomeNodeProps = NodeProps<RFOutcomeNode>;
+const areOutcomePropsEqual = (
+  prev: RFOutcomeNodeProps,
+  next: RFOutcomeNodeProps,
 ): boolean => {
   if (prev.selected !== next.selected) return false;
 
@@ -55,9 +56,9 @@ const areAnswerPropsEqual = (
   return true;
 };
 
-const AnswerNode = ({ data, selected }: RFAnswerNodeProps) => {
+const OutcomeNode = ({ data, selected }: RFOutcomeNodeProps) => {
   return (
-    <BaseAnswerNodeCard
+    <BaseOutcomeNodeCard
       {...data}
       selected={selected}
       beforeSlot={TargetHandle}
@@ -104,6 +105,6 @@ const SpeechNode = ({ data, selected }: RFSpeechNodeProps) => {
 // ─── Registry ─────────────────────────────────────────────────────────────────
 
 export const nodeTypes: NodeTypes = {
-  answer: memo(AnswerNode, areAnswerPropsEqual),
+  outcome: memo(OutcomeNode, areOutcomePropsEqual),
   speech: memo(SpeechNode, areSpeechPropsEqual),
 };

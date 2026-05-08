@@ -1,6 +1,6 @@
 import {
-  AnswerNodeSchema,
-  type AnswerNode,
+  OutcomeNodeSchema,
+  type OutcomeNode,
   SpeechNodeSchema,
   type SpeechNode,
 } from "@entities/dialog-tree";
@@ -19,7 +19,7 @@ type FormProps<T> = {
   defaults?: T;
 };
 
-const ANSWER_COLOR_OPTIONS: SelectFieldOption<AnswerNode["color"]>[] = [
+const OUTCOME_COLOR_OPTIONS: SelectFieldOption<OutcomeNode["color"]>[] = [
   { value: "default", label: "Default" },
   { value: "purple", label: "Purple" },
   { value: "green", label: "Green" },
@@ -27,37 +27,37 @@ const ANSWER_COLOR_OPTIONS: SelectFieldOption<AnswerNode["color"]>[] = [
   { value: "red", label: "Red" },
 ];
 
-const ANSWER_INTERNAL_DEFAULTS: AnswerNode = {
-  type: "answer",
+const OUTCOME_INTERNAL_DEFAULTS: OutcomeNode = {
+  type: "outcome",
   text: "",
   hint: "",
   color: "default",
   meta: [],
 };
 
-const AnswerNodeForm = ({ onSubmit, defaults }: FormProps<AnswerNode>) => {
+const OutcomeNodeForm = ({ onSubmit, defaults }: FormProps<OutcomeNode>) => {
   return (
     <Form
-      schema={AnswerNodeSchema}
-      defaults={defaults || ANSWER_INTERNAL_DEFAULTS}
+      schema={OutcomeNodeSchema}
+      defaults={defaults || OUTCOME_INTERNAL_DEFAULTS}
       onSubmit={onSubmit}
       className="flex flex-col gap-4"
     >
-      <TextField<AnswerNode>
+      <TextField<OutcomeNode>
         name="text"
         label="Text"
         placeholder="Not now, im busy"
       />
-      <TextField<AnswerNode>
+      <TextField<OutcomeNode>
         name="hint"
         label="Hint"
         placeholder="Try to persuade"
       />
 
-      <SelectField<AnswerNode, AnswerNode["color"]>
+      <SelectField<OutcomeNode, OutcomeNode["color"]>
         name="color"
         label="Color"
-        options={ANSWER_COLOR_OPTIONS}
+        options={OUTCOME_COLOR_OPTIONS}
       />
 
       <NodeMetaField />
@@ -86,7 +86,6 @@ const SpeechNodeForm = ({ onSubmit, defaults }: FormProps<SpeechNode>) => {
         name="text"
         label="What needs to be said"
         placeholder="Hello, what about some money?"
-        rows={4}
         className="max-h-60"
       />
 
@@ -104,6 +103,6 @@ const SpeechNodeForm = ({ onSubmit, defaults }: FormProps<SpeechNode>) => {
 };
 
 export const EDIT_NODE_FORM = {
-  answer: AnswerNodeForm,
+  outcome: OutcomeNodeForm,
   speech: SpeechNodeForm,
 } as const;

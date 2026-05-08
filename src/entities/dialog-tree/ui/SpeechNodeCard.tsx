@@ -22,7 +22,7 @@ export function SpeechNodeCard({
   return (
     <div
       className={cn(
-        "bg-[#0c1a2e] rounded-[10px] px-3.5 py-2.5 min-w-40 max-w-160 border-[1.5px] transition-all duration-150",
+        "bg-[#0c1a2e] rounded-[10px] px-3.5 py-2.5 min-w-20 max-w-150 border-[1.5px] transition-all duration-150",
         selected ? "border-cyan-400" : "border-cyan-900",
       )}
     >

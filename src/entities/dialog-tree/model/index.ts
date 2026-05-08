@@ -1,3 +1,4 @@
+import type { Node } from "@xyflow/react";
 import * as z from "zod";
 
 const NodeMetaSchema = z.object({
@@ -13,7 +14,7 @@ export const SpeechNodeSchema = z.object({
   meta: z.array(NodeMetaSchema),
 });
 
-const AnswerNodeColorKeySchema = z.enum([
+const OutcomeNodeColorKeySchema = z.enum([
   "green",
   "amber",
   "red",
@@ -21,20 +22,25 @@ const AnswerNodeColorKeySchema = z.enum([
   "default",
 ]);
 
-export const AnswerNodeSchema = z.object({
-  type: z.literal("answer"),
+export const OutcomeNodeSchema = z.object({
+  type: z.literal("outcome"),
   text: z.string().min(1, "Required").max(100, "Too long"),
   hint: z.string().max(500, "Too long"),
-  color: AnswerNodeColorKeySchema,
+  color: OutcomeNodeColorKeySchema,
 
   meta: z.array(NodeMetaSchema),
 });
 
 export type NodeMeta = z.infer<typeof NodeMetaSchema>;
 
-export type AnswerNodeColor = z.infer<typeof AnswerNodeColorKeySchema>;
-export type AnswerNode = z.infer<typeof AnswerNodeSchema>;
+export type OutcomeNodeColor = z.infer<typeof OutcomeNodeColorKeySchema>;
+export type OutcomeNode = z.infer<typeof OutcomeNodeSchema>;
 export type SpeechNode = z.infer<typeof SpeechNodeSchema>;
 
-export type AnyNode = SpeechNode | AnswerNode;
+export type AnyNode = SpeechNode | OutcomeNode;
 export type AnyNodeType = AnyNode["type"];
+
+export type RFOutcomeNode = Node<OutcomeNode, OutcomeNode["type"]>;
+export type RFSpeechNode = Node<SpeechNode, SpeechNode["type"]>;
+
+export type RFAnyNode = RFOutcomeNode | RFSpeechNode;

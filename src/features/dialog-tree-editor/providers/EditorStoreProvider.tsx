@@ -5,7 +5,7 @@ import {
   createEditorStore,
   type EditorStore,
   type EditorState,
-} from "../model/editor.store";
+} from "../model/store";
 
 export const {
   Provider: EditorStoreProvider,

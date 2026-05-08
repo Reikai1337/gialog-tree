@@ -11,16 +11,16 @@ export default async function AdminRoutesLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const authIdToken = (await cookies()).get("__session")?.value;
-  if (!authIdToken) return redirect(ROUTES.LOGIN.href);
+  // const authIdToken = (await cookies()).get("__session")?.value;
+  // if (!authIdToken) return redirect(ROUTES.LOGIN.href);
 
-  const { currentUser } = await getAuthenticatedAppForUser();
-  if (!currentUser) redirect(ROUTES.LOGIN.href);
+  // const { currentUser } = await getAuthenticatedAppForUser();
+  // if (!currentUser) redirect(ROUTES.LOGIN.href);
 
-  const idTokenResult = await currentUser.getIdTokenResult();
-  const isAdmin = idTokenResult.claims?.admin || false;
+  // const idTokenResult = await currentUser.getIdTokenResult();
+  // const isAdmin = idTokenResult.claims?.admin || false;
 
-  if (!isAdmin) redirect(ROUTES.LOGIN.href);
+  // if (!isAdmin) redirect(ROUTES.LOGIN.href);
 
   return <AuthProvider>{children}</AuthProvider>;
 }

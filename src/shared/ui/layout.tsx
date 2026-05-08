@@ -16,7 +16,7 @@ export const Layout: React.FC<Props> = ({
   return (
     <div
       data-slot="layout"
-      className="relative z-10 flex min-h-svh min-w-full flex-col"
+      className="relative z-10 flex h-svh min-w-full flex-col"
     >
       <header className="sticky top-0 z-50 w-full bg-background">
         <div
@@ -29,7 +29,7 @@ export const Layout: React.FC<Props> = ({
         </div>
       </header>
       {children}
-      <footer>{renderFooter}</footer>
+      {renderFooter && <footer>{renderFooter}</footer>}
     </div>
   );
 };

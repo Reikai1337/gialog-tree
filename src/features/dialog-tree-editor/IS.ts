@@ -1,4 +1,4 @@
-import type { EditorState } from "../model/editor.store";
+import type { EditorState } from "./model/store";
 
 export const PH_SC_IS: EditorState = {
   selectedEdgeId: null,
@@ -7,8 +7,8 @@ export const PH_SC_IS: EditorState = {
     {
       id: "99b39aeb-37a2-40a3-b8fc-12f4753cdaa8",
       position: {
-        x: 186.38355046041923,
-        y: 193.321388751994,
+        x: -389.6164495395808,
+        y: 331.321388751994,
       },
       type: "speech",
       data: {
@@ -18,8 +18,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 173,
+        width: 600,
+        height: 132,
       },
       selected: false,
       dragging: false,
@@ -30,17 +30,17 @@ export const PH_SC_IS: EditorState = {
         x: 746.5651735046257,
         y: -273.89497134903456,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "СМС или ТГ",
         hint: "",
         color: "green",
         meta: [],
       },
       measured: {
-        width: 200,
-        height: 63,
+        width: 107,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -48,20 +48,20 @@ export const PH_SC_IS: EditorState = {
     {
       id: "9714430f-e45b-4047-bc96-6058c3b6be25",
       position: {
-        x: 830.8323149708491,
-        y: -132.36374598698134,
+        x: 1276.832314970849,
+        y: -254.36374598698134,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Могу сейчас",
         hint: "",
         color: "green",
         meta: [],
       },
       measured: {
-        width: 200,
-        height: 63,
+        width: 111,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -69,20 +69,20 @@ export const PH_SC_IS: EditorState = {
     {
       id: "4aca2b73-3a53-4ad1-b66a-3aa7d02213c3",
       position: {
-        x: 892.6004706698784,
-        y: 28.248917178732817,
+        x: 1326.6004706698784,
+        y: -47.75108282126718,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Сегодня (Вечером и тд)",
         hint: "",
         color: "green",
         meta: [],
       },
       measured: {
-        width: 200,
-        height: 63,
+        width: 182,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -93,9 +93,9 @@ export const PH_SC_IS: EditorState = {
         x: 871.411420544382,
         y: 155.54420357453378,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Не интересно, (никогда, сомневаюсь)",
         hint: "",
         color: "default",
@@ -103,7 +103,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 269,
-        height: 63,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -111,20 +111,20 @@ export const PH_SC_IS: EditorState = {
     {
       id: "1b4d0fce-1233-4250-aa07-e76249c71cab",
       position: {
-        x: 944.3838350101084,
-        y: 299.42979540242453,
+        x: 853.3838350101084,
+        y: 1055.4297954024246,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Я не играю в казино",
         hint: "",
         color: "default",
         meta: [],
       },
       measured: {
-        width: 200,
-        height: 63,
+        width: 161,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -135,17 +135,17 @@ export const PH_SC_IS: EditorState = {
         x: 964.8901906822792,
         y: 403.10833303761416,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Бонусы мне не нужны",
         hint: "",
         color: "default",
         meta: [],
       },
       measured: {
-        width: 200,
-        height: 63,
+        width: 173,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -156,17 +156,17 @@ export const PH_SC_IS: EditorState = {
         x: 875.9053722227936,
         y: 522.9748169922376,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Нет времени",
         hint: "",
         color: "default",
         meta: [],
       },
       measured: {
-        width: 200,
-        height: 63,
+        width: 115,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -174,12 +174,12 @@ export const PH_SC_IS: EditorState = {
     {
       id: "7caf2773-8d8a-4077-ae2e-5cfc7c7a5c52",
       position: {
-        x: 809.2113634107634,
-        y: 722.1074684045016,
+        x: 843.2113634107634,
+        y: 704.1074684045016,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Так там вейджер (бездеп ФС)",
         hint: "",
         color: "green",
@@ -192,7 +192,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 220,
-        height: 63,
+        height: 114,
       },
       selected: false,
       dragging: false,
@@ -211,8 +211,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 119,
+        width: 600,
+        height: 95,
       },
       selected: false,
       dragging: false,
@@ -220,20 +220,20 @@ export const PH_SC_IS: EditorState = {
     {
       id: "0476386f-3316-489f-b178-505a02ed31ba",
       position: {
-        x: 1363.2154946140488,
-        y: -194.94958474748864,
+        x: 1745.2154946140488,
+        y: -380.94958474748864,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Сегодня (Вечером и тд)",
         hint: "",
         color: "green",
         meta: [],
       },
       measured: {
-        width: 200,
-        height: 63,
+        width: 182,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -241,8 +241,8 @@ export const PH_SC_IS: EditorState = {
     {
       id: "df24594a-576a-4a5d-8ff5-c41c69ba6da1",
       position: {
-        x: 1747.4464173064123,
-        y: -71.21070123818669,
+        x: 2525.9464173064125,
+        y: 174.7892987618133,
       },
       type: "speech",
       data: {
@@ -252,8 +252,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 185,
+        width: 600,
+        height: 159,
       },
       selected: false,
       dragging: false,
@@ -261,12 +261,12 @@ export const PH_SC_IS: EditorState = {
     {
       id: "b18c051f-f221-4062-a5af-5f54264e29b2",
       position: {
-        x: 2341.7099192080805,
-        y: -244.19628078953153,
+        x: 3233.7099192080805,
+        y: -112.19628078953153,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Никак (очень плохая, ужастно, плохо)",
         hint: "",
         color: "default",
@@ -274,7 +274,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 272,
-        height: 63,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -282,12 +282,12 @@ export const PH_SC_IS: EditorState = {
     {
       id: "61db866c-1f81-4ef3-8c52-98a7930a4507",
       position: {
-        x: 2352.9431380666497,
-        y: -129.83859995970406,
+        x: 3306.9431380666497,
+        y: 200.16140004029594,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Все нравится (весь позитив)",
         hint: "",
         color: "default",
@@ -295,7 +295,7 @@ export const PH_SC_IS: EditorState = {
       },
       measured: {
         width: 211,
-        height: 63,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -303,20 +303,20 @@ export const PH_SC_IS: EditorState = {
     {
       id: "1ab06a73-c432-4e44-87ba-de67dbe845bf",
       position: {
-        x: 2335.6913000176255,
-        y: 47.67056003051406,
+        x: 3365.6913000176255,
+        y: 549.670560030514,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Не играю вообще",
         hint: "",
         color: "default",
         meta: [],
       },
       measured: {
-        width: 200,
-        height: 63,
+        width: 146,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -324,8 +324,8 @@ export const PH_SC_IS: EditorState = {
     {
       id: "d6171b43-2f59-406b-a124-234cd3e59a6a",
       position: {
-        x: 2685.1767079416513,
-        y: -424.5525584934717,
+        x: 3633.1767079416513,
+        y: -118.55255849347168,
       },
       type: "speech",
       data: {
@@ -335,8 +335,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 173,
+        width: 600,
+        height: 132,
       },
       selected: false,
       dragging: false,
@@ -344,8 +344,8 @@ export const PH_SC_IS: EditorState = {
     {
       id: "b1aa3f82-a840-461f-b49b-b59d634611fa",
       position: {
-        x: 3136.91818975991,
-        y: -401.3290886412427,
+        x: 4506.16818975991,
+        y: -37.32908864124272,
       },
       type: "speech",
       data: {
@@ -355,8 +355,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 319,
+        width: 600,
+        height: 223,
       },
       selected: false,
       dragging: false,
@@ -364,20 +364,20 @@ export const PH_SC_IS: EditorState = {
     {
       id: "e394eb80-6ead-4066-ad75-990613649bc9",
       position: {
-        x: 3627.8811174993357,
-        y: -425.1811214989738,
+        x: 5240.881117499335,
+        y: -343.1811214989738,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Нет (Там вейджер)",
         hint: "",
         color: "default",
         meta: [],
       },
       measured: {
-        width: 200,
-        height: 63,
+        width: 152,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -385,20 +385,20 @@ export const PH_SC_IS: EditorState = {
     {
       id: "3ce5ce10-5600-4585-8823-885986134553",
       position: {
-        x: 3637.81472514599,
-        y: -279.5834190237937,
+        x: 5241.81472514599,
+        y: -101.58341902379368,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Да (А кто не любит)",
         hint: "",
         color: "default",
         meta: [],
       },
       measured: {
-        width: 200,
-        height: 63,
+        width: 158,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -406,20 +406,20 @@ export const PH_SC_IS: EditorState = {
     {
       id: "6dc85ffd-5d39-4e7e-b11f-881f8928223b",
       position: {
-        x: 3624.3918162414047,
-        y: -38.771461577171564,
+        x: 5285.141816241405,
+        y: 169.22853842282842,
       },
-      type: "answer",
+      type: "outcome",
       data: {
-        type: "answer",
+        type: "outcome",
         text: "Смотря какой",
         hint: "",
         color: "default",
         meta: [],
       },
       measured: {
-        width: 200,
-        height: 63,
+        width: 121,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -427,8 +427,8 @@ export const PH_SC_IS: EditorState = {
     {
       id: "3d8a2986-f31a-4fbf-879c-6a1bae27d69d",
       position: {
-        x: 3919.943421881423,
-        y: -654.1090276631118,
+        x: 5637.193421881423,
+        y: -532.1090276631118,
       },
       type: "speech",
       data: {
@@ -438,8 +438,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 228,
+        width: 600,
+        height: 168,
       },
       selected: false,
       dragging: false,
@@ -447,8 +447,8 @@ export const PH_SC_IS: EditorState = {
     {
       id: "3b6fbccf-1d82-4c72-a4be-3c4ec68ffc9b",
       position: {
-        x: 4532.892573287042,
-        y: -459.7207374742618,
+        x: 6685.642573287042,
+        y: -217.7207374742618,
       },
       type: "speech",
       data: {
@@ -458,8 +458,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 446,
+        width: 600,
+        height: 295,
       },
       selected: false,
       dragging: false,
@@ -467,8 +467,8 @@ export const PH_SC_IS: EditorState = {
     {
       id: "196b910e-c7b9-4676-928c-c39abee24569",
       position: {
-        x: 2680.15275275399,
-        y: -192.02592467237514,
+        x: 3599.40275275399,
+        y: 167.97407532762486,
       },
       type: "speech",
       data: {
@@ -478,8 +478,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 173,
+        width: 600,
+        height: 132,
       },
       selected: false,
       dragging: false,
@@ -487,8 +487,8 @@ export const PH_SC_IS: EditorState = {
     {
       id: "350f148d-7c50-47cc-8cb5-a0f2f78acaea",
       position: {
-        x: 3912.5038199890473,
-        y: -357.1121718173255,
+        x: 5596.253819989048,
+        y: -119.11217181732547,
       },
       type: "speech",
       data: {
@@ -498,8 +498,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 246,
+        width: 600,
+        height: 168,
       },
       selected: false,
       dragging: false,
@@ -507,8 +507,8 @@ export const PH_SC_IS: EditorState = {
     {
       id: "176dcd09-eb29-49ff-94cf-f94aa321d19e",
       position: {
-        x: 3912.3853321922334,
-        y: -8.485376864794915,
+        x: 5564.635332192233,
+        y: 255.51462313520506,
       },
       type: "speech",
       data: {
@@ -518,8 +518,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 319,
+        width: 600,
+        height: 205,
       },
       selected: false,
       dragging: false,
@@ -527,8 +527,8 @@ export const PH_SC_IS: EditorState = {
     {
       id: "f5b88b2e-5b94-4cf4-8088-c1c38b3748de",
       position: {
-        x: 2034.1888872947197,
-        y: 216.82788766122775,
+        x: 1999.1888872947202,
+        y: 1070.8278876612278,
       },
       type: "speech",
       data: {
@@ -538,8 +538,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 228,
+        width: 600,
+        height: 168,
       },
       selected: false,
       dragging: false,
@@ -558,8 +558,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 155,
+        width: 600,
+        height: 132,
       },
       selected: false,
       dragging: false,
@@ -578,8 +578,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 119,
+        width: 600,
+        height: 95,
       },
       selected: false,
       dragging: false,
@@ -598,8 +598,8 @@ export const PH_SC_IS: EditorState = {
         meta: [],
       },
       measured: {
-        width: 380,
-        height: 119,
+        width: 600,
+        height: 114,
       },
       selected: false,
       dragging: false,
@@ -639,8 +639,71 @@ export const PH_SC_IS: EditorState = {
         ],
       },
       measured: {
-        width: 380,
-        height: 223,
+        width: 600,
+        height: 188,
+      },
+      selected: false,
+      dragging: false,
+    },
+    {
+      id: "5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
+      position: {
+        x: 2150.218356139111,
+        y: 541.8450388193894,
+      },
+      type: "outcome",
+      data: {
+        type: "outcome",
+        text: "перейти на спич",
+        hint: "",
+        color: "default",
+        meta: [],
+      },
+      measured: {
+        width: 136,
+        height: 76,
+      },
+      selected: false,
+      dragging: false,
+    },
+    {
+      id: "ce50c20e-3ebe-48fb-80aa-e90f7bd8c618",
+      position: {
+        x: 4304.8677307530725,
+        y: 35.3694954308403,
+      },
+      type: "outcome",
+      data: {
+        type: "outcome",
+        text: "какой-то спич",
+        hint: "",
+        color: "default",
+        meta: [],
+      },
+      measured: {
+        width: 121,
+        height: 76,
+      },
+      selected: false,
+      dragging: false,
+    },
+    {
+      id: "0d893b70-c689-44b3-a296-690c213a93bf",
+      position: {
+        x: 6383.841472458326,
+        y: -103.71368991182426,
+      },
+      type: "outcome",
+      data: {
+        type: "outcome",
+        text: "конечный спич",
+        hint: "",
+        color: "default",
+        meta: [],
+      },
+      measured: {
+        width: 129,
+        height: 76,
       },
       selected: false,
       dragging: false,
@@ -729,11 +792,6 @@ export const PH_SC_IS: EditorState = {
       id: "xy-edge__b18c051f-f221-4062-a5af-5f54264e29b2-d6171b43-2f59-406b-a124-234cd3e59a6a",
     },
     {
-      source: "d6171b43-2f59-406b-a124-234cd3e59a6a",
-      target: "b1aa3f82-a840-461f-b49b-b59d634611fa",
-      id: "xy-edge__d6171b43-2f59-406b-a124-234cd3e59a6a-b1aa3f82-a840-461f-b49b-b59d634611fa",
-    },
-    {
       source: "b1aa3f82-a840-461f-b49b-b59d634611fa",
       target: "3ce5ce10-5600-4585-8823-885986134553",
       id: "xy-edge__b1aa3f82-a840-461f-b49b-b59d634611fa-3ce5ce10-5600-4585-8823-885986134553",
@@ -754,20 +812,9 @@ export const PH_SC_IS: EditorState = {
       id: "xy-edge__e394eb80-6ead-4066-ad75-990613649bc9-3d8a2986-f31a-4fbf-879c-6a1bae27d69d",
     },
     {
-      source: "3d8a2986-f31a-4fbf-879c-6a1bae27d69d",
-      target: "3b6fbccf-1d82-4c72-a4be-3c4ec68ffc9b",
-      id: "xy-edge__3d8a2986-f31a-4fbf-879c-6a1bae27d69d-3b6fbccf-1d82-4c72-a4be-3c4ec68ffc9b",
-      selected: false,
-    },
-    {
       source: "61db866c-1f81-4ef3-8c52-98a7930a4507",
       target: "196b910e-c7b9-4676-928c-c39abee24569",
       id: "xy-edge__61db866c-1f81-4ef3-8c52-98a7930a4507-196b910e-c7b9-4676-928c-c39abee24569",
-    },
-    {
-      source: "196b910e-c7b9-4676-928c-c39abee24569",
-      target: "b1aa3f82-a840-461f-b49b-b59d634611fa",
-      id: "xy-edge__196b910e-c7b9-4676-928c-c39abee24569-b1aa3f82-a840-461f-b49b-b59d634611fa",
     },
     {
       source: "3ce5ce10-5600-4585-8823-885986134553",
@@ -775,30 +822,14 @@ export const PH_SC_IS: EditorState = {
       id: "xy-edge__3ce5ce10-5600-4585-8823-885986134553-350f148d-7c50-47cc-8cb5-a0f2f78acaea",
     },
     {
-      source: "350f148d-7c50-47cc-8cb5-a0f2f78acaea",
-      target: "3b6fbccf-1d82-4c72-a4be-3c4ec68ffc9b",
-      id: "xy-edge__350f148d-7c50-47cc-8cb5-a0f2f78acaea-3b6fbccf-1d82-4c72-a4be-3c4ec68ffc9b",
-    },
-    {
       source: "6dc85ffd-5d39-4e7e-b11f-881f8928223b",
       target: "176dcd09-eb29-49ff-94cf-f94aa321d19e",
       id: "xy-edge__6dc85ffd-5d39-4e7e-b11f-881f8928223b-176dcd09-eb29-49ff-94cf-f94aa321d19e",
     },
     {
-      source: "176dcd09-eb29-49ff-94cf-f94aa321d19e",
-      target: "3b6fbccf-1d82-4c72-a4be-3c4ec68ffc9b",
-      id: "xy-edge__176dcd09-eb29-49ff-94cf-f94aa321d19e-3b6fbccf-1d82-4c72-a4be-3c4ec68ffc9b",
-    },
-    {
       source: "1ab06a73-c432-4e44-87ba-de67dbe845bf",
       target: "f5b88b2e-5b94-4cf4-8088-c1c38b3748de",
       id: "xy-edge__1ab06a73-c432-4e44-87ba-de67dbe845bf-f5b88b2e-5b94-4cf4-8088-c1c38b3748de",
-      selected: false,
-    },
-    {
-      source: "f5b88b2e-5b94-4cf4-8088-c1c38b3748de",
-      target: "df24594a-576a-4a5d-8ff5-c41c69ba6da1",
-      id: "xy-edge__f5b88b2e-5b94-4cf4-8088-c1c38b3748de-df24594a-576a-4a5d-8ff5-c41c69ba6da1",
       selected: false,
     },
     {
@@ -810,6 +841,7 @@ export const PH_SC_IS: EditorState = {
       source: "9714430f-e45b-4047-bc96-6058c3b6be25",
       target: "df24594a-576a-4a5d-8ff5-c41c69ba6da1",
       id: "xy-edge__9714430f-e45b-4047-bc96-6058c3b6be25-df24594a-576a-4a5d-8ff5-c41c69ba6da1",
+      selected: false,
     },
     {
       source: "0d017355-dc0c-48c2-adb6-8e8d46714587",
@@ -817,20 +849,9 @@ export const PH_SC_IS: EditorState = {
       id: "xy-edge__0d017355-dc0c-48c2-adb6-8e8d46714587-6a1045ad-818f-4dd0-9b11-c1b108152b25",
     },
     {
-      source: "6a1045ad-818f-4dd0-9b11-c1b108152b25",
-      target: "df24594a-576a-4a5d-8ff5-c41c69ba6da1",
-      id: "xy-edge__6a1045ad-818f-4dd0-9b11-c1b108152b25-df24594a-576a-4a5d-8ff5-c41c69ba6da1",
-      selected: false,
-    },
-    {
       source: "1b4d0fce-1233-4250-aa07-e76249c71cab",
       target: "f5b88b2e-5b94-4cf4-8088-c1c38b3748de",
       id: "xy-edge__1b4d0fce-1233-4250-aa07-e76249c71cab-f5b88b2e-5b94-4cf4-8088-c1c38b3748de",
-    },
-    {
-      source: "b1dc6479-ec4e-4131-979c-a189e90dee21",
-      target: "df24594a-576a-4a5d-8ff5-c41c69ba6da1",
-      id: "xy-edge__b1dc6479-ec4e-4131-979c-a189e90dee21-df24594a-576a-4a5d-8ff5-c41c69ba6da1",
     },
     {
       source: "6419abfe-03ae-467d-9063-bbb730f54136",
@@ -844,19 +865,75 @@ export const PH_SC_IS: EditorState = {
       id: "xy-edge__d1dae80f-eb99-4059-a399-8b3e2feed691-b2e50ac2-9cbd-4054-ae06-55e6cbea7109",
     },
     {
-      source: "b2e50ac2-9cbd-4054-ae06-55e6cbea7109",
-      target: "df24594a-576a-4a5d-8ff5-c41c69ba6da1",
-      id: "xy-edge__b2e50ac2-9cbd-4054-ae06-55e6cbea7109-df24594a-576a-4a5d-8ff5-c41c69ba6da1",
-    },
-    {
       source: "7caf2773-8d8a-4077-ae2e-5cfc7c7a5c52",
       target: "023bb7d2-e7e1-4870-b326-07afd4509dea",
       id: "xy-edge__7caf2773-8d8a-4077-ae2e-5cfc7c7a5c52-023bb7d2-e7e1-4870-b326-07afd4509dea",
     },
     {
       source: "023bb7d2-e7e1-4870-b326-07afd4509dea",
+      target: "5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
+      id: "xy-edge__023bb7d2-e7e1-4870-b326-07afd4509dea-5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
+    },
+    {
+      source: "5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
       target: "df24594a-576a-4a5d-8ff5-c41c69ba6da1",
-      id: "xy-edge__023bb7d2-e7e1-4870-b326-07afd4509dea-df24594a-576a-4a5d-8ff5-c41c69ba6da1",
+      id: "xy-edge__5e99f66b-46d7-49b9-821c-1e4b1fcd39e9-df24594a-576a-4a5d-8ff5-c41c69ba6da1",
+    },
+    {
+      source: "b2e50ac2-9cbd-4054-ae06-55e6cbea7109",
+      target: "5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
+      id: "xy-edge__b2e50ac2-9cbd-4054-ae06-55e6cbea7109-5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
+    },
+    {
+      source: "b1dc6479-ec4e-4131-979c-a189e90dee21",
+      target: "5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
+      id: "xy-edge__b1dc6479-ec4e-4131-979c-a189e90dee21-5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
+    },
+    {
+      source: "6a1045ad-818f-4dd0-9b11-c1b108152b25",
+      target: "5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
+      id: "xy-edge__6a1045ad-818f-4dd0-9b11-c1b108152b25-5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
+    },
+    {
+      source: "f5b88b2e-5b94-4cf4-8088-c1c38b3748de",
+      target: "5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
+      id: "xy-edge__f5b88b2e-5b94-4cf4-8088-c1c38b3748de-5e99f66b-46d7-49b9-821c-1e4b1fcd39e9",
+      selected: false,
+    },
+    {
+      source: "196b910e-c7b9-4676-928c-c39abee24569",
+      target: "ce50c20e-3ebe-48fb-80aa-e90f7bd8c618",
+      id: "xy-edge__196b910e-c7b9-4676-928c-c39abee24569-ce50c20e-3ebe-48fb-80aa-e90f7bd8c618",
+    },
+    {
+      source: "d6171b43-2f59-406b-a124-234cd3e59a6a",
+      target: "ce50c20e-3ebe-48fb-80aa-e90f7bd8c618",
+      id: "xy-edge__d6171b43-2f59-406b-a124-234cd3e59a6a-ce50c20e-3ebe-48fb-80aa-e90f7bd8c618",
+    },
+    {
+      source: "ce50c20e-3ebe-48fb-80aa-e90f7bd8c618",
+      target: "b1aa3f82-a840-461f-b49b-b59d634611fa",
+      id: "xy-edge__ce50c20e-3ebe-48fb-80aa-e90f7bd8c618-b1aa3f82-a840-461f-b49b-b59d634611fa",
+    },
+    {
+      source: "176dcd09-eb29-49ff-94cf-f94aa321d19e",
+      target: "0d893b70-c689-44b3-a296-690c213a93bf",
+      id: "xy-edge__176dcd09-eb29-49ff-94cf-f94aa321d19e-0d893b70-c689-44b3-a296-690c213a93bf",
+    },
+    {
+      source: "350f148d-7c50-47cc-8cb5-a0f2f78acaea",
+      target: "0d893b70-c689-44b3-a296-690c213a93bf",
+      id: "xy-edge__350f148d-7c50-47cc-8cb5-a0f2f78acaea-0d893b70-c689-44b3-a296-690c213a93bf",
+    },
+    {
+      source: "3d8a2986-f31a-4fbf-879c-6a1bae27d69d",
+      target: "0d893b70-c689-44b3-a296-690c213a93bf",
+      id: "xy-edge__3d8a2986-f31a-4fbf-879c-6a1bae27d69d-0d893b70-c689-44b3-a296-690c213a93bf",
+    },
+    {
+      source: "0d893b70-c689-44b3-a296-690c213a93bf",
+      target: "3b6fbccf-1d82-4c72-a4be-3c4ec68ffc9b",
+      id: "xy-edge__0d893b70-c689-44b3-a296-690c213a93bf-3b6fbccf-1d82-4c72-a4be-3c4ec68ffc9b",
     },
   ],
 };

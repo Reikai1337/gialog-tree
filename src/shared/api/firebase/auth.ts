@@ -45,7 +45,6 @@ export async function signOut() {
 async function createUserIfNotExists(user: UserCredential["user"]) {
   const existingUser = await getUser(user.uid); // ← getUser из users.js
   if (existingUser) return;
-
   await createUser(user.uid, {
     // ← createUser из users.js
     email: user.email || "unknown",

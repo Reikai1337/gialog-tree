@@ -20,23 +20,25 @@ const DASHBOARD: StaticRoute = {
   href: "/dashboard",
 };
 
-const NEW_DASHBOARD: StaticRoute = {
-  href: "/new-dashboard",
+const EX_USE: StaticRoute = {
+  href: "/example-use",
+};
+const EX_EDIT: StaticRoute = {
+  href: "/example-edit",
 };
 
-const SCRIPT_USE: DynamicRoute = {
-  href: (id) => `/scripts/${id}/use`,
-};
+// const SCRIPT_USE: DynamicRoute = {
+//   href: (id) => `/scripts/${id}/use`,
+// };
 
-const SCRIPT_EDIT: DynamicRoute = {
-  href: (id) => `/scripts/${id}/edit`,
-};
+// const SCRIPT_EDIT: DynamicRoute = {
+//   href: (id) => `/scripts/${id}/edit`,
+// };
 
 export const ROUTES = {
   HOME,
   DASHBOARD,
-  NEW_DASHBOARD,
-  SCRIPT_USE,
-  SCRIPT_EDIT,
   LOGIN,
+  EX_USE,
+  EX_EDIT,
 };
