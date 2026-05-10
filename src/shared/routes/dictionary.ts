@@ -27,6 +27,13 @@ const EX_EDIT: StaticRoute = {
   href: "/example-edit",
 };
 
+const SPEECH: StaticRoute = {
+  href: "/speech/uid",
+};
+const SPEECH_NO_ACCESS: StaticRoute = {
+  href: "/speech/no-access",
+};
+
 // const SCRIPT_USE: DynamicRoute = {
 //   href: (id) => `/scripts/${id}/use`,
 // };
@@ -41,4 +48,6 @@ export const ROUTES = {
   LOGIN,
   EX_USE,
   EX_EDIT,
+  SPEECH_NO_ACCESS,
+  SPEECH,
 };

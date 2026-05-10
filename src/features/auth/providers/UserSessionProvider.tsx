@@ -10,6 +10,7 @@ import {
 } from "@shared/api/new-firebase/sessions";
 import { uuid } from "@shared/lib/utils/uuid";
 import { SESSION_COOKIE_NAME, SESSION_UUID_STORAGE_KEY } from "../constants";
+import { syncUserAccess } from "@shared/api/new-firebase/user-access";
 
 export const UserSessionProvider = ({ children }: PropsWithChildren) => {
   const setUser = useUserStore((s) => s.setUser);
@@ -30,6 +31,11 @@ export const UserSessionProvider = ({ children }: PropsWithChildren) => {
 
       const idToken = await user.getIdToken();
       await setCookie(SESSION_COOKIE_NAME, idToken);
+      await syncUserAccess({
+        uid: user.uid,
+        email: user.email ?? "",
+        displayName: user.displayName ?? "",
+      });
 
       // новая сессия только при смене пользователя
       if (currentUser?.uid !== user.uid) {

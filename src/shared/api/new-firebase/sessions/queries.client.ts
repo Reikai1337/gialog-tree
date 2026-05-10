@@ -1,9 +1,10 @@
 import { setDoc, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { sessionDoc } from "./refs";
 import type { Session } from "./types";
+import { db } from "../clientApp";
 
 export async function upsertSession(uid: string, sessionId: string) {
-  await setDoc(sessionDoc(uid), {
+  await setDoc(sessionDoc(uid, db), {
     sessionId,
     createdAt: serverTimestamp(),
   });
@@ -13,7 +14,7 @@ export function subscribeToSession(
   uid: string,
   cb: (session: Session | null) => void,
 ) {
-  return onSnapshot(sessionDoc(uid), (snap) => {
+  return onSnapshot(sessionDoc(uid, db), (snap) => {
     if (!snap.exists()) {
       cb(null);
       return;

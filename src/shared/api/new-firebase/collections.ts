@@ -1,5 +1,5 @@
 export const COLLECTIONS = {
-  // restaurants: "restaurants",
-  // ratings: (restaurantId: string) => `restaurants/${restaurantId}/ratings`,
+  dialogTree: "dialog_tree",
   sessions: "sessions",
+  userAccess: "user_access",
 } as const;

@@ -28,12 +28,8 @@ const LINKS: NavLink[] = [
     href: ROUTES.DASHBOARD.href,
   },
   {
-    label: "EX_EDIT",
-    href: ROUTES.EX_EDIT.href,
-  },
-  {
-    label: "EX_USE",
-    href: ROUTES.EX_USE.href,
+    label: "SPEECH",
+    href: ROUTES.SPEECH.href,
   },
   {
     label: "LOGIN",
