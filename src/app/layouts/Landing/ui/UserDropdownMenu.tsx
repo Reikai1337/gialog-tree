@@ -14,7 +14,19 @@ import { useUserStore } from "@entities/user";
 import { Spinner } from "@shared/ui/spinner";
 import { useAuth } from "@features/auth";
 
-const Trigger = () => {
+export function UserDropdownMenu() {
+  return (
+    <DropdownMenu>
+      <Trigger />
+      <DropdownMenuContent>
+        <AuthMenuItems />
+        <GuestItems />
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function Trigger() {
   const isLoading = useUserStore((s) => s.isLoading);
 
   return (
@@ -24,9 +36,9 @@ const Trigger = () => {
       </Button>
     </DropdownMenuTrigger>
   );
-};
+}
 
-const AuthMenuItems = () => {
+function AuthMenuItems() {
   const isLoading = useUserStore((s) => s.isLoading);
   const user = useUserStore((s) => s.user);
   const { signOut } = useAuth();
@@ -49,9 +61,9 @@ const AuthMenuItems = () => {
       </DropdownMenuItem>
     </>
   );
-};
+}
 
-const GuestItems = () => {
+function GuestItems() {
   const isLoading = useUserStore((s) => s.isLoading);
   const user = useUserStore((s) => s.user);
   const { signIn } = useAuth();
@@ -65,17 +77,5 @@ const GuestItems = () => {
         Log in
       </DropdownMenuItem>
     </>
-  );
-};
-
-export function DropdownMenuIcons() {
-  return (
-    <DropdownMenu>
-      <Trigger />
-      <DropdownMenuContent>
-        <AuthMenuItems />
-        <GuestItems />
-      </DropdownMenuContent>
-    </DropdownMenu>
   );
 }

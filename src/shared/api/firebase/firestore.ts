@@ -16,25 +16,6 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "./clientApp";
-import { User } from "firebase/auth";
-
-async function createUserIfNotExists(user: User) {
-  // const db = getFirestore(firebaseApp);
-  const userRef = doc(db, "users", user.uid);
-  const userSnap = await getDoc(userRef);
-  // если документ уже есть — ничего не делаем
-  if (userSnap.exists()) return;
-  // первый вход — создаём документ
-  await setDoc(userRef, {
-    email: user.email,
-    displayName: user.displayName,
-    firstName: "",
-    lastName: "",
-    photoURL: user.photoURL,
-    role: "user", // по умолчанию обычный юзер
-    createdAt: new Date(),
-  });
-}
 
 // import { db } from "./clientApp";
 

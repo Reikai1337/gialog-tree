@@ -1,3 +1,2 @@
-export { AuthButton } from "./ui/AuthButton";
-export { AuthProvider } from "./providers/AuthProvider";
+export { UserSessionProvider } from "./providers/UserSessionProvider";
 export { useAuth } from "./hooks/useAuth";
