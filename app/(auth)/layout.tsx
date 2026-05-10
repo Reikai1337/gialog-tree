@@ -1,5 +1,5 @@
 import { getAuthenticatedAppForUser } from "@shared/api/firebase/serverApp";
-import { AuthProvider } from "@features/auth";
+// import { AuthProvider } from "@features/auth";
 import { ROUTES } from "@shared/routes";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -17,5 +17,5 @@ export default async function PrivateRoutesLayout({
   // const { currentUser } = await getAuthenticatedAppForUser();
   // if (!currentUser) redirect(ROUTES.LOGIN.href);
 
-  return <AuthProvider>{children}</AuthProvider>;
+  return <>{children}</>;
 }

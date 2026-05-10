@@ -15,7 +15,7 @@ export const {
   useStore: useUserStore,
   useStoreApi: useUserStoreApi,
 } = createZustandContext<UserStore, UserState>((init) => {
-  console.log("Creating user store with init:", init);
+  // console.log("Creating user store with init:", init);
 
   return createUserStore(init);
 }, "UserStore");

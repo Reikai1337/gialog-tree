@@ -5,7 +5,7 @@ import { SidebarProvider, SidebarTrigger } from "@shared/ui/sidebar";
 import Image from "next/image";
 import Link from "next/link";
 import { Sidebar } from "./ui/Sidebar";
-import { DropdownMenuIcons } from "./ui/UserDropdownMenu";
+import { UserDropdownMenu } from "./ui/UserDropdownMenu";
 
 type Props = {
   children?: React.ReactNode;
@@ -21,7 +21,7 @@ export const LandingLayout: React.FC<Props> = ({ children }) => {
             <SidebarTrigger />
             <div className="flex items-center gap-2">
               <ThemeSelect />
-              <DropdownMenuIcons />
+              <UserDropdownMenu />
             </div>
           </>
         }
