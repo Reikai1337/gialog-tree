@@ -1,4 +1,3 @@
-// import { AuthProvider } from "@features/auth";
 import { SignInButton } from "./SignInButton";
 
 export const LoginPage = () => {

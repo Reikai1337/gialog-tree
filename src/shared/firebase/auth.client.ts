@@ -5,11 +5,10 @@ import {
   onIdTokenChanged as _onIdTokenChanged,
   type NextOrObserver,
   type User,
-  type UserCredential,
 } from "firebase/auth";
 
 import { auth } from "./clientApp";
-import { createUser, getUser } from "./firestore/users";
+import { syncUserAccess } from "./user-access";
 
 export function onAuthStateChanged(cb: NextOrObserver<User>) {
   return _onAuthStateChanged(auth, cb);
@@ -23,14 +22,14 @@ export async function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
 
   try {
-    const result = await signInWithPopup(auth, provider);
-    console.log("name=>", result.user.displayName);
-
-    await createUserIfNotExists(result.user); // ← вызов здесь
+    const { user } = await signInWithPopup(auth, provider);
+    await syncUserAccess({
+      uid: user.uid,
+      email: user.email as string,
+      displayName: user.displayName,
+    });
   } catch (error) {
     console.log("ER", error instanceof Error ? error.message : "asd");
-
-    // console.error("Error signing in with Google", error);
   }
 }
 
@@ -42,13 +41,7 @@ export async function signOut() {
   }
 }
 
-async function createUserIfNotExists(user: UserCredential["user"]) {
-  const existingUser = await getUser(user.uid); // ← getUser из users.js
-  if (existingUser) return;
-  await createUser(user.uid, {
-    // ← createUser из users.js
-    email: user.email || "unknown",
-    displayName: user.displayName || "unknown",
-    photoURL: user.photoURL || "unknown",
-  });
+export async function isAdmin(user: User): Promise<boolean> {
+  const idTokenResult = await user.getIdTokenResult();
+  return idTokenResult.claims?.admin === true;
 }

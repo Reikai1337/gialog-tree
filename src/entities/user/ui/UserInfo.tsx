@@ -1,22 +1,11 @@
 "use client";
 
-import { signInWithGoogle, signOut } from "@shared/api/firebase/auth";
 import { useUserStore } from "../providers";
 import Image from "next/image";
 
 export const UserInfo = () => {
   const user = useUserStore((s) => s.user);
   const isLoading = useUserStore((s) => s.isLoading);
-
-  console.log("user STORE", user);
-
-  const handleSignOut = () => {
-    signOut();
-  };
-
-  const handleSignIn = () => {
-    signInWithGoogle();
-  };
 
   if (isLoading) return <div>isLoading</div>;
 

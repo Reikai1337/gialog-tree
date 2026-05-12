@@ -26,7 +26,7 @@ const mapUserAccess = (
 type Params = {
   uid: string;
   email: string;
-  displayName: string;
+  displayName: string | null;
 };
 
 // вызывается при логине — создаёт запись если её нет

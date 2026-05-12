@@ -2,6 +2,7 @@ type HrefGetterFn = (slug: string) => string;
 
 type StaticRoute = {
   href: string;
+  label: string;
 };
 
 type DynamicRoute = {
@@ -10,44 +11,52 @@ type DynamicRoute = {
 
 const HOME: StaticRoute = {
   href: "/",
+  label: "Home",
 };
 
 const LOGIN: StaticRoute = {
   href: "/login",
+  label: "Login",
 };
 
-const DASHBOARD: StaticRoute = {
-  href: "/dashboard",
+const ACCESS_MANAGEMENT: StaticRoute = {
+  href: "/studio/access",
+  label: "Access",
 };
-
-const EX_USE: StaticRoute = {
-  href: "/example-use",
-};
-const EX_EDIT: StaticRoute = {
-  href: "/example-edit",
+const SCENARIOS: StaticRoute = {
+  href: "/studio/scenarios",
+  label: "Scenarios",
 };
 
 const SPEECH: StaticRoute = {
   href: "/speech/uid",
-};
-const SPEECH_NO_ACCESS: StaticRoute = {
-  href: "/speech/no-access",
+  label: "Speech",
 };
 
-// const SCRIPT_USE: DynamicRoute = {
-//   href: (id) => `/scripts/${id}/use`,
-// };
+const NO_ACCESS: StaticRoute = {
+  href: "/no-access",
+  label: "No access",
+};
+const NOT_FOUND: StaticRoute = {
+  href: "/404",
+  label: "Not found",
+};
 
-// const SCRIPT_EDIT: DynamicRoute = {
-//   href: (id) => `/scripts/${id}/edit`,
-// };
-
-export const ROUTES = {
+export const PUBLIC_ROUTES = {
   HOME,
-  DASHBOARD,
   LOGIN,
-  EX_USE,
-  EX_EDIT,
-  SPEECH_NO_ACCESS,
+};
+
+export const AUTH_ROUTES = {
   SPEECH,
+};
+
+export const ADMIN_ROUTES = {
+  ACCESS_MANAGEMENT,
+  SCENARIOS,
+};
+
+export const FALLBACK_ROUTES = {
+  NO_ACCESS,
+  NOT_FOUND,
 };
