@@ -1,1 +1,2 @@
-export { syncUserAccess } from "./queries.client";
+export { getUsers, syncUserAccess, changeUserAccess } from "./queries.client";
+export * from "./types";

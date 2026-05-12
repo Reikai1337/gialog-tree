@@ -1,3 +1,34 @@
+/**
+ * userAccess.ts
+ *
+ * Best-practice Firestore pagination с поиском по email и сортировкой по hasAccess.
+ *
+ * Архитектурные решения:
+ * 1. Сортировка: orderBy("hasAccess") + orderBy("email") — нужен составной индекс в Firebase Console.
+ * 2. Пагинация: cursor-based (startAfter / endBefore). Для "назад" используем limitToLast + endBefore.
+ * 3. hasNextPage / hasPrevPage: определяются через стек курсоров, который хранит вызывающий код (см. usePagination хук ниже).
+ * 4. Поиск по email: range-запрос (>= / <= \uf8ff) — стандартный Firestore workaround для prefix-search.
+ *    Важно: при активном поиске составной индекс должен включать email первым полем.
+ *
+ * Требуемые индексы в firestore.indexes.json:
+ * {
+ *   "collectionGroup": "userAccess",
+ *   "queryScope": "COLLECTION",
+ *   "fields": [
+ *     { "fieldPath": "hasAccess", "order": "ASCENDING" },
+ *     { "fieldPath": "email",     "order": "ASCENDING" }
+ *   ]
+ * },
+ * {
+ *   "collectionGroup": "userAccess",
+ *   "queryScope": "COLLECTION",
+ *   "fields": [
+ *     { "fieldPath": "email",     "order": "ASCENDING" },
+ *     { "fieldPath": "hasAccess", "order": "ASCENDING" }
+ *   ]
+ * }
+ */
+
 import {
   getDoc,
   setDoc,
@@ -7,14 +38,26 @@ import {
   orderBy,
   where,
   limit,
+  limitToLast,
   startAfter,
+  endBefore,
   serverTimestamp,
   type QueryDocumentSnapshot,
   type DocumentData,
+  type Query,
 } from "firebase/firestore";
 import { userAccessCol, userAccessDoc } from "./refs";
-import type { UserAccess, GetUsersParams, GetUsersResult } from "./types";
+import type {
+  GetUsersParams,
+  GetUsersResult,
+  SortOrder,
+  UserAccess,
+} from "./types";
 import { db } from "../clientApp";
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
 
 const mapUserAccess = (
   doc: QueryDocumentSnapshot<DocumentData>,
@@ -23,18 +66,107 @@ const mapUserAccess = (
   createdAt: doc.data().createdAt?.toDate(),
 });
 
-type Params = {
+/**
+ * Строит базовый query без курсоров.
+ * При поиске — email-фильтр идёт первым (индекс: email → hasAccess).
+ * Без поиска — сортировка hasAccess идёт первым (индекс: hasAccess → email).
+ */
+function buildBaseQuery(
+  search: string,
+  accessSort: SortOrder,
+): Query<DocumentData> {
+  const col = userAccessCol(db);
+
+  if (search) {
+    // prefix-search по email; orderBy email должен идти первым из-за range-фильтра
+    return query(
+      col,
+      where("email", ">=", search),
+      where("email", "<=", search + "\uf8ff"),
+      orderBy("email", "asc"),
+      orderBy("hasAccess", accessSort),
+    );
+  }
+
+  return query(
+    col,
+    orderBy("hasAccess", accessSort),
+    orderBy("email", "asc"), // вторичный sort для стабильного курсора
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Main query
+// ---------------------------------------------------------------------------
+
+export async function getUsers({
+  search = "",
+  pageSize = 20,
+  afterDoc,
+  beforeDoc,
+  accessSort = "asc",
+}: GetUsersParams = {}): Promise<GetUsersResult> {
+  const base = buildBaseQuery(search, accessSort);
+
+  let q: Query<DocumentData>;
+
+  if (beforeDoc) {
+    // Движение "назад": берём pageSize+1 документов ДО курсора в обратном порядке
+    q = query(base, endBefore(beforeDoc), limitToLast(pageSize + 1));
+  } else if (afterDoc) {
+    // Движение "вперёд"
+    q = query(base, startAfter(afterDoc), limit(pageSize + 1));
+  } else {
+    // Первая страница
+    q = query(base, limit(pageSize + 1));
+  }
+
+  const snap = await getDocs(q);
+  const rawDocs = snap.docs;
+
+  // При движении "назад" limitToLast уже вернул docs в правильном порядке,
+  // но +1 документ будет первым — его нужно срезать.
+  let docs: typeof rawDocs;
+  let hasNextPage: boolean;
+  let hasPrevPage: boolean;
+
+  if (beforeDoc) {
+    // лишний doc — в начале (самый старый)
+    const hasExtra = rawDocs.length > pageSize;
+    docs = hasExtra ? rawDocs.slice(1) : rawDocs;
+    hasNextPage = true; // раз есть beforeDoc — точно есть следующая
+    hasPrevPage = hasExtra; // если лишний doc существует — есть ещё страницы назад
+  } else {
+    // лишний doc — в конце
+    hasNextPage = rawDocs.length > pageSize;
+    docs = hasNextPage ? rawDocs.slice(0, -1) : rawDocs;
+    hasPrevPage = !!afterDoc; // первая страница — нет prev
+  }
+
+  return {
+    users: docs.map(mapUserAccess),
+    firstDoc: docs[0] ?? null,
+    lastDoc: docs[docs.length - 1] ?? null,
+    hasNextPage,
+    hasPrevPage,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Sync & mutate
+// ---------------------------------------------------------------------------
+
+type SyncParams = {
   uid: string;
   email: string;
   displayName: string | null;
 };
 
-// вызывается при логине — создаёт запись если её нет
 export async function syncUserAccess({
   uid,
   email,
   displayName,
-}: Params): Promise<void> {
+}: SyncParams): Promise<void> {
   const ref = userAccessDoc(uid, db);
   const snap = await getDoc(ref);
   if (snap.exists()) return;
@@ -48,44 +180,6 @@ export async function syncUserAccess({
   });
 }
 
-// для data grid в админке
-export async function getUsers({
-  search = "",
-  limit: pageLimit = 20,
-  startAfterDoc,
-}: GetUsersParams = {}): Promise<GetUsersResult> {
-  let q = query(
-    userAccessCol(db),
-    orderBy("email"),
-    limit(pageLimit + 1), // +1 чтобы знать есть ли следующая страница
-  );
-
-  if (search) {
-    q = query(
-      userAccessCol(db),
-      orderBy("email"),
-      where("email", ">=", search),
-      where("email", "<=", search + "\uf8ff"),
-      limit(pageLimit + 1),
-    );
-  }
-
-  if (startAfterDoc) {
-    q = query(q, startAfter(startAfterDoc));
-  }
-
-  const snap = await getDocs(q);
-  const hasMore = snap.docs.length > pageLimit;
-  const docs = hasMore ? snap.docs.slice(0, -1) : snap.docs;
-
-  return {
-    users: docs.map(mapUserAccess),
-    lastDoc: docs[docs.length - 1] ?? null,
-    hasMore,
-  };
-}
-
-// для админки — изменить доступ юзера
 export async function changeUserAccess(
   uid: string,
   hasAccess: boolean,

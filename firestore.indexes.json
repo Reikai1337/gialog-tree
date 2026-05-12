@@ -1,115 +1,56 @@
 {
   "indexes": [
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "user_access",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "category",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "avgRating",
-          "order": "DESCENDING"
-        }
+        { "fieldPath": "hasAccess", "order": "ASCENDING" },
+        { "fieldPath": "email", "order": "ASCENDING" }
       ]
     },
+
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "user_access",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "category",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "numRatings",
-          "order": "DESCENDING"
-        }
+        { "fieldPath": "hasAccess", "order": "DESCENDING" },
+        { "fieldPath": "email", "order": "ASCENDING" }
       ]
     },
+
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "user_access",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "category",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "price",
-          "order": "ASCENDING"
-        }
+        { "fieldPath": "hasAccess", "order": "ASCENDING" },
+        { "fieldPath": "email", "order": "DESCENDING" }
       ]
     },
+
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "user_access",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "city",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "avgRating",
-          "order": "DESCENDING"
-        }
+        { "fieldPath": "hasAccess", "order": "DESCENDING" },
+        { "fieldPath": "email", "order": "DESCENDING" }
       ]
     },
+
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "user_access",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "city",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "numRatings",
-          "order": "DESCENDING"
-        }
+        { "fieldPath": "email", "order": "ASCENDING" },
+        { "fieldPath": "hasAccess", "order": "ASCENDING" }
       ]
     },
+
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "user_access",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "city",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "price",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "restaurants",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "price",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "avgRating",
-          "order": "DESCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "restaurants",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "price",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "numRatings",
-          "order": "DESCENDING"
-        }
+        { "fieldPath": "email", "order": "ASCENDING" },
+        { "fieldPath": "hasAccess", "order": "DESCENDING" }
       ]
     }
   ],

@@ -8,14 +8,27 @@ export type UserAccess = {
   createdAt: Date;
 };
 
+export type SortOrder = "asc" | "desc";
+
 export type GetUsersParams = {
   search?: string;
-  limit?: number;
-  startAfterDoc?: QueryDocumentSnapshot<DocumentData>;
+  pageSize?: number;
+  /** Курсор для следующей страницы — последний doc предыдущего запроса */
+  afterDoc?: QueryDocumentSnapshot<DocumentData>;
+  /** Курсор для предыдущей страницы — первый doc текущей страницы */
+  beforeDoc?: QueryDocumentSnapshot<DocumentData>;
+  /** Сортировка по полю hasAccess */
+  accessSort?: SortOrder;
 };
 
 export type GetUsersResult = {
   users: UserAccess[];
+  /** Первый документ страницы — сохрани для перехода "назад" */
+  firstDoc: QueryDocumentSnapshot<DocumentData> | null;
+  /** Последний документ страницы — сохрани для перехода "вперёд" */
   lastDoc: QueryDocumentSnapshot<DocumentData> | null;
-  hasMore: boolean;
+  /** Есть ли следующая страница (определяется через +1 запрос) */
+  hasNextPage: boolean;
+  /** Есть ли предыдущая страница (true когда передан beforeDoc) */
+  hasPrevPage: boolean;
 };
