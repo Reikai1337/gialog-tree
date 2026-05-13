@@ -4,12 +4,13 @@ import type { User } from "./user.schema";
 export type UserState = {
   user: User | null;
   isLoading: boolean;
-  hasUser: boolean;
+  isAdmin?: boolean;
 };
 
 export type UserActions = {
   setUser: (user: User | null) => void;
   setLoading: (value: boolean) => void;
+  setIsAdmin: (value: boolean) => void;
 };
 
 export type UserStore = UserState & UserActions;
@@ -17,12 +18,14 @@ export type UserStore = UserState & UserActions;
 export const createUserStore = (initState: UserState) => {
   return createStore<UserStore>()((set) => ({
     ...initState,
-    hasUser: Boolean(initState.user),
     setUser: (user) => {
-      set(() => ({ user, hasUser: Boolean(user) }));
+      set(() => ({ user }));
     },
     setLoading: (isLoading) => {
       set(() => ({ isLoading }));
+    },
+    setIsAdmin: (isAdmin) => {
+      set(() => ({ isAdmin }));
     },
   }));
 };

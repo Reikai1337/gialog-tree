@@ -2,17 +2,20 @@
 
 import { useUserStore } from "@entities/user/providers";
 import { type PropsWithChildren, useEffect, useRef } from "react";
-import { onIdTokenChanged, signOut } from "@shared/api/firebase/auth";
-import { deleteCookie, setCookie } from "cookies-next";
 import {
-  upsertSession,
-  subscribeToSession,
-} from "@shared/api/new-firebase/sessions";
+  isAdmin,
+  onIdTokenChanged,
+  signOut,
+} from "@shared/firebase/auth.client";
+import { deleteCookie, setCookie } from "cookies-next";
+import { upsertSession, subscribeToSession } from "@shared/firebase/sessions";
 import { uuid } from "@shared/lib/utils/uuid";
-import { SESSION_COOKIE_NAME, SESSION_UUID_STORAGE_KEY } from "../constants";
+import { SESSION_COOKIE_NAME } from "@shared/firebase/constants";
+import { SESSION_UUID_STORAGE_KEY } from "../constants";
 
 export const UserSessionProvider = ({ children }: PropsWithChildren) => {
   const setUser = useUserStore((s) => s.setUser);
+  const setIsAdmin = useUserStore((s) => s.setIsAdmin);
   const currentUser = useUserStore((s) => s.user);
   const sessionIdRef = useRef<string | null>(null);
 
@@ -28,8 +31,13 @@ export const UserSessionProvider = ({ children }: PropsWithChildren) => {
         return;
       }
 
-      const idToken = await user.getIdToken();
+      const [idToken, isUserAdministrator] = await Promise.all([
+        user.getIdToken(),
+        isAdmin(user),
+      ]);
+
       await setCookie(SESSION_COOKIE_NAME, idToken);
+      setIsAdmin(isUserAdministrator);
 
       // новая сессия только при смене пользователя
       if (currentUser?.uid !== user.uid) {
@@ -42,7 +50,7 @@ export const UserSessionProvider = ({ children }: PropsWithChildren) => {
     });
 
     return unsubscribe;
-  }, [setUser, currentUser]);
+  }, [setUser, currentUser, setIsAdmin]);
 
   useEffect(() => {
     if (!currentUser) return;

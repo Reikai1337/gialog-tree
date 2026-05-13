@@ -11,7 +11,7 @@ export const ThemeProvider: React.FC<Props> = ({ children }) => {
   return (
     <ThemesProviderPrimitive
       attribute="class"
-      defaultTheme={THEME.SYSTEM}
+      defaultTheme={THEME.DARK}
       enableSystem
       disableTransitionOnChange
     >
