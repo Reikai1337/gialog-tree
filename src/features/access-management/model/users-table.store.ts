@@ -46,8 +46,8 @@ const defaultState: UsersTableState = {
   isLoading: false,
   error: null,
   search: "",
-  accessSort: "desc",
-  pageSize: 5,
+  accessSort: "asc",
+  pageSize: 10,
   page: 1,
   hasNextPage: false,
   hasPrevPage: false,
@@ -118,7 +118,7 @@ export const createUsersTableStore = (
           hasPrevPage: true,
           page: page + 1,
           // Сохраняем lastDoc текущей страницы как курсор следующей
-          _cursorStack: [..._cursorStack, _lastDoc],
+          _cursorStack: [..._cursorStack, result.firstDoc ?? undefined],
           _lastDoc: result.lastDoc,
         });
       } catch (e) {
@@ -153,7 +153,7 @@ export const createUsersTableStore = (
           pageSize,
           accessSort,
           // Первая страница — без курсора, иначе endBefore
-          ...(prevCursor ? { beforeDoc: prevCursor } : {}),
+          ...(prevCursor ? { startAtDoc: prevCursor } : {}), // было beforeDoc
         });
         set({
           users: result.users,

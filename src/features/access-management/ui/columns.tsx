@@ -1,6 +1,5 @@
 import type { UserAccess } from "@shared/firebase/user-access";
 import { Button } from "@shared/ui/button";
-import { Toggle } from "@shared/ui/toggle";
 import type {
   CellContext,
   ColumnDef,
@@ -13,7 +12,6 @@ export const COLUMNS: ColumnDef<UserAccess>[] = [
   {
     accessorKey: "hasAccess",
     cell: AccessToggleCell,
-    // header: "AccessHeaderCell",
     header: AccessHeaderCell,
   },
   {
@@ -23,49 +21,56 @@ export const COLUMNS: ColumnDef<UserAccess>[] = [
   {
     accessorKey: "displayName",
     header: "Name",
+    meta: { className: "hidden sm:table-cell" },
   },
   {
     accessorKey: "createdAt",
     header: "Created",
+    meta: { className: "hidden sm:table-cell" },
     cell: ({ row }) => {
       const date: Date = row.getValue("createdAt");
 
-      // return date;
       return new Intl.DateTimeFormat("uk-UA", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
-      }).format(date); // → 10.05.2026
+      }).format(date);
     },
   },
 ];
 
 function AccessToggleCell({ row }: CellContext<UserAccess, unknown>) {
   const hasAccess: boolean = row.getValue("hasAccess");
+  const updateUserAccess = useUsersTableStore((s) => s.updateUserAccess);
 
   return (
-    <Toggle size="sm">
+    <Button
+      variant="outline"
+      size="icon"
+      className="max-sm:w-fit max-sm:h-fit max-sm:p-0.5"
+      onClick={() => updateUserAccess(row.original.uid, !hasAccess)}
+    >
       {hasAccess ? (
         <Check className="text-green-500" />
       ) : (
         <OctagonX className="text-orange-500" />
       )}
-    </Toggle>
+    </Button>
   );
 }
 
 function AccessHeaderCell({}: HeaderContext<UserAccess, unknown>) {
-  const isActive = useUsersTableStore((s) => s.accessSort === "desc");
+  const isActive = useUsersTableStore((s) => s.accessSort === "asc");
   const setAccessSort = useUsersTableStore((s) => s.setAccessSort);
 
   return (
     <div className="flex gap-2 items-center justify-between">
       <span>Access</span>
       <Button
-        className={isActive ? "text-green-500" : "text-gray-500"}
+        className={isActive ? "text-orange-500" : "text-green-500"}
         variant="ghost"
         size="icon-sm"
-        onClick={() => setAccessSort(isActive ? "asc" : "desc")}
+        onClick={() => setAccessSort(isActive ? "desc" : "asc")}
       >
         <ArrowUpDown />
       </Button>

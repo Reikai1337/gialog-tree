@@ -16,7 +16,7 @@ export type GetUsersParams = {
   /** Курсор для следующей страницы — последний doc предыдущего запроса */
   afterDoc?: QueryDocumentSnapshot<DocumentData>;
   /** Курсор для предыдущей страницы — первый doc текущей страницы */
-  beforeDoc?: QueryDocumentSnapshot<DocumentData>;
+  startAtDoc?: QueryDocumentSnapshot<DocumentData>;
   /** Сортировка по полю hasAccess */
   accessSort?: SortOrder;
 };

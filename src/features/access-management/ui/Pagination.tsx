@@ -1,5 +1,9 @@
+"use client";
+
 import { Button } from "@shared/ui/button";
 import { useUsersTableStore } from "../providers";
+import { ButtonGroup } from "@shared/ui/button-group";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export const Pagination = () => {
   const hasNextPage = useUsersTableStore((s) => s.hasNextPage);
@@ -7,20 +11,18 @@ export const Pagination = () => {
   const fetchNextPage = useUsersTableStore((s) => s.fetchNextPage);
   const fetchPrevPage = useUsersTableStore((s) => s.fetchPrevPage);
   const fetchFirstPage = useUsersTableStore((s) => s.fetchFirstPage);
-  const error = useUsersTableStore((s) => s.error);
 
   return (
-    <div>
-      <div className="flex gap-2">
-        <Button onClick={fetchPrevPage} disabled={!hasPrevPage}>
-          prev
-        </Button>
-        <Button onClick={fetchNextPage} disabled={!hasNextPage}>
-          next
-        </Button>
-        <Button onClick={fetchFirstPage}>f</Button>
-      </div>
-      <p>{error}</p>
-    </div>
+    <ButtonGroup>
+      <Button variant="outline" onClick={fetchPrevPage} disabled={!hasPrevPage}>
+        <ArrowLeft />
+      </Button>
+      <Button variant="outline" onClick={fetchNextPage} disabled={!hasNextPage}>
+        <ArrowRight />
+      </Button>
+      {/* <Button variant="outline" onClick={fetchFirstPage}>
+        f
+      </Button> */}
+    </ButtonGroup>
   );
 };

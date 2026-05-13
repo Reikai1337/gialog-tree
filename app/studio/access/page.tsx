@@ -1,14 +1,21 @@
-import { DataTable } from "@features/access-management";
-import { UsersTableProvider } from "@features/access-management/providers";
-import { UsersTable } from "@features/access-management/ui/UsersTable";
+import {
+  UsersDataTable,
+  UsersTableProvider,
+  Pagination,
+  SearchInput,
+} from "@features/access-management";
 
 export const AccessPage = async () => {
   return (
-    <div className="container mx-auto py-10">
-      <UsersTableProvider initState={{ pageLimit: 20 }}>
-        <UsersTable />
+    <main className="p-2 flex-1 min-h-0 grid grid-rows-[auto_1fr] grid-cols-1 gap-2">
+      <UsersTableProvider initState={{ pageSize: 20 }}>
+        <div className="flex items-center gap-2 justify-between">
+          <SearchInput />
+          <Pagination />
+        </div>
+        <UsersDataTable />
       </UsersTableProvider>
-    </div>
+    </main>
   );
 };
 

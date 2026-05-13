@@ -45,6 +45,7 @@ import {
   type QueryDocumentSnapshot,
   type DocumentData,
   type Query,
+  startAt,
 } from "firebase/firestore";
 import { userAccessCol, userAccessDoc } from "./refs";
 import type {
@@ -103,52 +104,32 @@ export async function getUsers({
   search = "",
   pageSize = 20,
   afterDoc,
-  beforeDoc,
+  startAtDoc,
   accessSort = "asc",
 }: GetUsersParams = {}): Promise<GetUsersResult> {
   const base = buildBaseQuery(search, accessSort);
 
   let q: Query<DocumentData>;
 
-  if (beforeDoc) {
-    // Движение "назад": берём pageSize+1 документов ДО курсора в обратном порядке
-    q = query(base, endBefore(beforeDoc), limitToLast(pageSize + 1));
+  if (startAtDoc) {
+    q = query(base, startAt(startAtDoc), limit(pageSize + 1));
   } else if (afterDoc) {
-    // Движение "вперёд"
     q = query(base, startAfter(afterDoc), limit(pageSize + 1));
   } else {
-    // Первая страница
     q = query(base, limit(pageSize + 1));
   }
 
   const snap = await getDocs(q);
   const rawDocs = snap.docs;
-
-  // При движении "назад" limitToLast уже вернул docs в правильном порядке,
-  // но +1 документ будет первым — его нужно срезать.
-  let docs: typeof rawDocs;
-  let hasNextPage: boolean;
-  let hasPrevPage: boolean;
-
-  if (beforeDoc) {
-    // лишний doc — в начале (самый старый)
-    const hasExtra = rawDocs.length > pageSize;
-    docs = hasExtra ? rawDocs.slice(1) : rawDocs;
-    hasNextPage = true; // раз есть beforeDoc — точно есть следующая
-    hasPrevPage = hasExtra; // если лишний doc существует — есть ещё страницы назад
-  } else {
-    // лишний doc — в конце
-    hasNextPage = rawDocs.length > pageSize;
-    docs = hasNextPage ? rawDocs.slice(0, -1) : rawDocs;
-    hasPrevPage = !!afterDoc; // первая страница — нет prev
-  }
+  const hasNextPage = rawDocs.length > pageSize;
+  const docs = hasNextPage ? rawDocs.slice(0, -1) : rawDocs;
 
   return {
     users: docs.map(mapUserAccess),
     firstDoc: docs[0] ?? null,
     lastDoc: docs[docs.length - 1] ?? null,
     hasNextPage,
-    hasPrevPage,
+    hasPrevPage: !!(afterDoc || startAtDoc),
   };
 }
 
