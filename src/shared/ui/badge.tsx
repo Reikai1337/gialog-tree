@@ -9,6 +9,7 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
+        // ── shadcn originals ──────────────────────────────────────────────
         default: "bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
         secondary:
           "bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
@@ -18,6 +19,20 @@ const badgeVariants = cva(
           "border-border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         ghost: "[a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         link: "text-primary underline-offset-4 [a&]:hover:underline",
+
+        // ── color palette ─────────────────────────────────────────────────
+        blue: "rounded-md bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300",
+        green:
+          "rounded-md bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300",
+        sky: "rounded-md bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300",
+        purple:
+          "rounded-md bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300",
+        red: "rounded-md bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300",
+        orange:
+          "rounded-md bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300",
+        yellow:
+          "rounded-md bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300",
+        pink: "rounded-md bg-pink-50 text-pink-700 dark:bg-pink-950 dark:text-pink-300",
       },
     },
     defaultVariants: {

@@ -23,7 +23,7 @@ import { Button, type buttonVariants } from "@shared/ui/button";
 
 interface BaseFieldProps<T> {
   name: Path<T>;
-  label: string;
+  label?: string;
   description?: string;
   placeholder?: string;
   className?: string;
@@ -44,7 +44,7 @@ export function TextField<T>({
       control={form.control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid} className={className}>
-          <FieldLabel>{label}</FieldLabel>
+          {label && <FieldLabel>{label}</FieldLabel>}
           <Input
             {...field}
             placeholder={placeholder}

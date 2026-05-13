@@ -6,6 +6,12 @@ const NodeMetaSchema = z.object({
   title: z.string(),
 });
 
+export const ScenarioSchema = z.object({
+  id: z.string(),
+  title: z.string().min(1, "Required").max(50, "Too long"),
+  isPublished: z.boolean(),
+});
+
 export const SpeechNodeSchema = z.object({
   type: z.literal("speech"),
   text: z.string().min(1, "Required").max(1000, "Too long"),
@@ -30,6 +36,8 @@ export const OutcomeNodeSchema = z.object({
 
   meta: z.array(NodeMetaSchema),
 });
+
+export type Scenario = z.infer<typeof ScenarioSchema>;
 
 export type NodeMeta = z.infer<typeof NodeMetaSchema>;
 

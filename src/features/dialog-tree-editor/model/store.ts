@@ -19,6 +19,8 @@ type NodeDataByType<T extends RFAnyNode["type"]> = Extract<
 >["data"];
 
 export type EditorState = {
+  title: string;
+  isPublished: boolean;
   nodes: RFAnyNode[];
   edges: Edge[];
   selectedNodeId: string | null;
@@ -41,6 +43,8 @@ export type EditorActions = {
   setSelectedNode: (id: string | null) => void;
   setSelectedEdge: (id: string | null) => void;
   getSelectedNode: () => RFAnyNode | null;
+  setTitle: (title: string) => void;
+  toggleIsPublished: () => void;
 };
 
 export type EditorStore = EditorState & EditorActions;
@@ -52,6 +56,13 @@ export const createEditorStore = (
     ...initState,
     selectedNodeId: null,
     selectedEdgeId: null,
+
+    setTitle: (title) => {
+      set({ title });
+    },
+    toggleIsPublished: () => {
+      set((s) => ({ isPublished: !s.isPublished }));
+    },
 
     updateNodeData: (id, patch) => {
       set((s) => ({
