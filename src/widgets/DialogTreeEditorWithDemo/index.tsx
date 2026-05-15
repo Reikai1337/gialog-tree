@@ -3,25 +3,29 @@
 import {
   DialogTreeEditor,
   EditorStoreProvider,
+  type DialogTreeEditorProps,
+  type EditorInitState,
 } from "@features/dialog-tree-editor";
-import { PH_SC_IS } from "@features/dialog-tree-editor/IS";
 import { RunDemoButton } from "./ui/RunDemoButton";
 
-type Props = {
-  className?: string;
+type Props = Pick<DialogTreeEditorProps, "onSubmit" | "className"> & {
+  initState?: EditorInitState;
 };
 
-export const DialogTreeEditorWithDemo = ({ className }: Props) => {
+const DEFAULT_STATE: EditorInitState = {
+  title: "Unknown",
+  isPublished: false,
+  edges: [],
+  nodes: [],
+};
+
+export const DialogTreeEditorWithDemo = ({
+  initState = DEFAULT_STATE,
+  ...editorProps
+}: Props) => {
   return (
-    <EditorStoreProvider initState={PH_SC_IS}>
-      <div className={className}>
-        <DialogTreeEditor
-          onSubmitCallback={(d) => {
-            console.log("editor1", d);
-          }}
-          rightPanelSlot={<RunDemoButton />}
-        />
-      </div>
+    <EditorStoreProvider initState={initState}>
+      <DialogTreeEditor {...editorProps} rightPanelSlot={<RunDemoButton />} />
     </EditorStoreProvider>
   );
 };

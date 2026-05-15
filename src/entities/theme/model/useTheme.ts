@@ -2,7 +2,7 @@ import {
   useTheme as useNextTheme,
   type UseThemeProps as UseThemePropsPrimitive,
 } from "next-themes";
-import { Theme, THEME } from "./schema";
+import { type Theme, THEME } from "./schema";
 
 export type UseThemeProps = Omit<
   UseThemePropsPrimitive,

@@ -1,34 +1,3 @@
-/**
- * userAccess.ts
- *
- * Best-practice Firestore pagination с поиском по email и сортировкой по hasAccess.
- *
- * Архитектурные решения:
- * 1. Сортировка: orderBy("hasAccess") + orderBy("email") — нужен составной индекс в Firebase Console.
- * 2. Пагинация: cursor-based (startAfter / endBefore). Для "назад" используем limitToLast + endBefore.
- * 3. hasNextPage / hasPrevPage: определяются через стек курсоров, который хранит вызывающий код (см. usePagination хук ниже).
- * 4. Поиск по email: range-запрос (>= / <= \uf8ff) — стандартный Firestore workaround для prefix-search.
- *    Важно: при активном поиске составной индекс должен включать email первым полем.
- *
- * Требуемые индексы в firestore.indexes.json:
- * {
- *   "collectionGroup": "userAccess",
- *   "queryScope": "COLLECTION",
- *   "fields": [
- *     { "fieldPath": "hasAccess", "order": "ASCENDING" },
- *     { "fieldPath": "email",     "order": "ASCENDING" }
- *   ]
- * },
- * {
- *   "collectionGroup": "userAccess",
- *   "queryScope": "COLLECTION",
- *   "fields": [
- *     { "fieldPath": "email",     "order": "ASCENDING" },
- *     { "fieldPath": "hasAccess", "order": "ASCENDING" }
- *   ]
- * }
- */
-
 import {
   getDoc,
   setDoc,
@@ -38,9 +7,7 @@ import {
   orderBy,
   where,
   limit,
-  limitToLast,
   startAfter,
-  endBefore,
   serverTimestamp,
   type QueryDocumentSnapshot,
   type DocumentData,

@@ -11,6 +11,7 @@ import { createStore } from "zustand/vanilla";
 import {
   ALLOWED_NODE_CONNECTION_MAP,
   type RFAnyNode,
+  type Scenario,
 } from "@entities/dialog-tree";
 
 type NodeDataByType<T extends RFAnyNode["type"]> = Extract<
@@ -19,11 +20,13 @@ type NodeDataByType<T extends RFAnyNode["type"]> = Extract<
 >["data"];
 
 export type EditorState = {
+  title: string;
+  isPublished: boolean;
   nodes: RFAnyNode[];
   edges: Edge[];
   selectedNodeId: string | null;
   selectedEdgeId: string | null;
-  onSubmitCallback?: (state: Pick<EditorState, "nodes" | "edges">) => void;
+  onSubmit?: (state: Omit<Scenario, "id">) => Promise<void>;
 };
 
 export type EditorActions = {
@@ -41,17 +44,28 @@ export type EditorActions = {
   setSelectedNode: (id: string | null) => void;
   setSelectedEdge: (id: string | null) => void;
   getSelectedNode: () => RFAnyNode | null;
+  setTitle: (title: string) => void;
+  toggleIsPublished: () => void;
 };
 
 export type EditorStore = EditorState & EditorActions;
+export type InitState = Omit<
+  EditorState,
+  "onSubmit" | "selectedNodeId" | "selectedEdgeId"
+>;
 
-export const createEditorStore = (
-  initState: Omit<EditorState, "onSubmitCallback">,
-) => {
+export const createEditorStore = (initState: InitState) => {
   return createStore<EditorStore>()((set, get) => ({
     ...initState,
     selectedNodeId: null,
     selectedEdgeId: null,
+
+    setTitle: (title) => {
+      set({ title });
+    },
+    toggleIsPublished: () => {
+      set((s) => ({ isPublished: !s.isPublished }));
+    },
 
     updateNodeData: (id, patch) => {
       set((s) => ({

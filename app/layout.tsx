@@ -16,8 +16,7 @@ import type { User } from "@entities/user";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "App name",
-  description: "An AI-powered lead generation platform",
+  title: "Speech assistant",
 };
 
 export default async function RootLayout({

@@ -1,11 +1,9 @@
 import { ThemeSelect } from "@entities/theme";
-import { Button } from "@shared/ui/button";
 import { Layout } from "@shared/ui/layout";
-import { SidebarProvider, SidebarTrigger } from "@shared/ui/sidebar";
-import Image from "next/image";
-import Link from "next/link";
+import { SidebarProvider } from "@shared/ui/sidebar";
 import { Sidebar } from "./ui/Sidebar";
 import { UserDropdownMenu } from "./ui/UserDropdownMenu";
+import { SidebarTrigger } from "./ui/SidebarTrigger";
 
 type Props = {
   children?: React.ReactNode;
@@ -13,16 +11,13 @@ type Props = {
 
 export const LandingLayout: React.FC<Props> = ({ children }) => {
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
       <Layout
         headerClassName="justify-between"
         renderHeader={
           <>
             <SidebarTrigger />
-            <div className="flex items-center gap-2">
-              <ThemeSelect />
-              <UserDropdownMenu />
-            </div>
+            <UserDropdownMenu />
           </>
         }
       >

@@ -1,5 +1,5 @@
 export const COLLECTIONS = {
-  dialogTree: "dialog_tree",
+  scenarios: "scenarios",
   sessions: "sessions",
   userAccess: "user_access",
 } as const;

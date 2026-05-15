@@ -1,7 +1,11 @@
-import { DialogTreeEditorWithDemo } from "@widgets/DialogTreeEditorWithDemo";
+import { ScenariosTable } from "@widgets/ScenariosTable";
 
-export const ScenariosPage = () => {
-  return <DialogTreeEditorWithDemo className="p-1 h-full w-full" />;
+const ScenariosPage = async () => {
+  return (
+    <main className="flex-1 p-2">
+      <ScenariosTable />
+    </main>
+  );
 };
 
 export default ScenariosPage;
