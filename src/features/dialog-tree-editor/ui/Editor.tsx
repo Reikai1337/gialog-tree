@@ -14,14 +14,14 @@ import { Toolbar, type ToolbarProps } from "./Toolbar";
 import { edgeTypes } from "./Edges";
 import type { RFAnyNode } from "@entities/dialog-tree";
 
-type DialogTreeEditorProps = Pick<EditorState, "onSubmitCallback"> &
+export type DialogTreeEditorProps = Pick<EditorState, "onSubmit"> &
   Pick<ToolbarProps, "rightPanelSlot"> & {
     className?: string;
   };
 
 export const DialogTreeEditor: FC<DialogTreeEditorProps> = ({
   className,
-  onSubmitCallback,
+  onSubmit,
   rightPanelSlot,
 }) => {
   const edges = useEditorStore((s) => s.edges);
@@ -32,8 +32,8 @@ export const DialogTreeEditor: FC<DialogTreeEditorProps> = ({
   const api = useEditorStoreApi();
 
   useEffect(() => {
-    api.setState({ onSubmitCallback });
-  }, [onSubmitCallback, api]);
+    api.setState({ onSubmit });
+  }, [onSubmit, api]);
 
   return (
     <Card className={cn("h-full w-full p-0", className)}>

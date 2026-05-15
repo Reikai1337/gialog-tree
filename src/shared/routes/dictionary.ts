@@ -7,6 +7,7 @@ type StaticRoute = {
 
 type DynamicRoute = {
   href: HrefGetterFn;
+  label: string;
 };
 
 const HOME: StaticRoute = {
@@ -28,9 +29,19 @@ const SCENARIOS: StaticRoute = {
   label: "Scenarios",
 };
 
-const SPEECH: StaticRoute = {
-  href: "/speech/uid",
-  label: "Speech",
+const SCENARIOS_CREATE: StaticRoute = {
+  href: "/studio/scenarios/create",
+  label: "Scenarios",
+};
+
+const SCENARIOS_EDIT: DynamicRoute = {
+  href: (id) => `/studio/scenarios/${id}`,
+  label: "Scenarios",
+};
+
+const SCENARIOS_USE: DynamicRoute = {
+  href: (id) => `/scenarios/${id}`,
+  label: "Scenarios use",
 };
 
 const NO_ACCESS: StaticRoute = {
@@ -48,12 +59,14 @@ export const PUBLIC_ROUTES = {
 };
 
 export const AUTH_ROUTES = {
-  SPEECH,
+  SCENARIOS_USE,
 };
 
 export const ADMIN_ROUTES = {
   ACCESS_MANAGEMENT,
   SCENARIOS,
+  SCENARIOS_CREATE,
+  SCENARIOS_EDIT,
 };
 
 export const FALLBACK_ROUTES = {

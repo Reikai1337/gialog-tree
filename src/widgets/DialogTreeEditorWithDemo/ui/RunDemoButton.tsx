@@ -8,6 +8,7 @@ import {
   DialogTrigger,
 } from "@shared/ui/dialog";
 import {
+  CurrentSpeechHint,
   CurrentSpeechText,
   EditMetaButton,
   GoBackButton,
@@ -46,6 +47,7 @@ export const RunDemoButton = () => {
                 <GoBackButton />
                 <EditMetaButton />
               </div>
+              <CurrentSpeechHint />
               <RestartButton />
             </Card>
             <OutcomesList />

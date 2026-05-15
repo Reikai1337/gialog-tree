@@ -16,8 +16,8 @@ import type { StoreApi } from "zustand/vanilla";
  *  - useStoreApi: access raw StoreApi (set/get/subscribe)
  *  - Context: контекст для возможной продвинутой интеграции
  */
-export const createZustandContext = <S, State extends object>(
-  createStoreFactory: (initState: State) => StoreApi<S>,
+export const createZustandContext = <S, InitState extends object>(
+  createStoreFactory: (initState: InitState) => StoreApi<S>,
   name: string = "ZustandContext",
 ) => {
   type Store = StoreApi<S>;
@@ -25,7 +25,7 @@ export const createZustandContext = <S, State extends object>(
 
   const Provider: React.FC<{
     children: React.ReactNode;
-    initState: State;
+    initState: InitState;
   }> = ({ children, initState }) => {
     // храним созданную инстанцию в useState, чтобы создать её только один раз на клиенте per-provider
     const [store] = useState<Store>(() => createStoreFactory(initState));

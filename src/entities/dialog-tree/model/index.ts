@@ -1,4 +1,4 @@
-import type { Node } from "@xyflow/react";
+import type { Node, Edge } from "@xyflow/react";
 import * as z from "zod";
 
 const NodeMetaSchema = z.object({
@@ -37,8 +37,6 @@ export const OutcomeNodeSchema = z.object({
   meta: z.array(NodeMetaSchema),
 });
 
-export type Scenario = z.infer<typeof ScenarioSchema>;
-
 export type NodeMeta = z.infer<typeof NodeMetaSchema>;
 
 export type OutcomeNodeColor = z.infer<typeof OutcomeNodeColorKeySchema>;
@@ -52,3 +50,20 @@ export type RFOutcomeNode = Node<OutcomeNode, OutcomeNode["type"]>;
 export type RFSpeechNode = Node<SpeechNode, SpeechNode["type"]>;
 
 export type RFAnyNode = RFOutcomeNode | RFSpeechNode;
+export type RFAnyEdge = Edge;
+
+type AppNodeFields = "type" | "id" | "position" | "data";
+type AppEdgeFields = "source" | "target" | "id";
+
+type AppNode<T extends RFAnyNode> = Pick<T, AppNodeFields>;
+type AppEdge = Pick<RFAnyEdge, AppEdgeFields>;
+
+export type AppOutcomeNode = AppNode<RFOutcomeNode>;
+export type AppSpeechNode = AppNode<RFSpeechNode>;
+export type AnyAppNode = AppOutcomeNode | AppSpeechNode;
+export type AnyAppEdge = AppEdge;
+
+export type Scenario = z.infer<typeof ScenarioSchema> & {
+  nodes: AnyAppNode[];
+  edges: AppEdge[];
+};

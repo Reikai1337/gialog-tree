@@ -13,8 +13,6 @@ export const {
   useStoreApi: useRuntimeStoreApi,
 } = createZustandContext<RuntimeStore, Pick<RuntimeState, "edges" | "nodes">>(
   (init) => {
-    console.log("Creating Runtime store with init:", init);
-
     return createRuntimeStore(init);
   },
   "RuntimeStore",
