@@ -1,10 +1,10 @@
 "use client";
 
-import { createScenario } from "@shared/firebase/scenarios";
 import { ADMIN_ROUTES } from "@shared/routes";
 import { DialogTreeEditorWithDemo } from "@widgets/DialogTreeEditorWithDemo";
 import { useRouter } from "next/navigation";
 import { revalidateScenarios } from "./actions";
+import { createScenario } from "@shared/new-fb/services/scenarios";
 
 export const Editor = () => {
   const router = useRouter();
@@ -12,9 +12,11 @@ export const Editor = () => {
   return (
     <DialogTreeEditorWithDemo
       onSubmit={async (data) => {
-        const id = await createScenario(data);
-        revalidateScenarios();
-        router.replace(ADMIN_ROUTES.SCENARIOS.href);
+        const res = await createScenario(data);
+        if (res.ok) {
+          revalidateScenarios();
+          router.replace(ADMIN_ROUTES.SCENARIOS.href);
+        } else console.log("Create Scenario error:", res.error);
       }}
     />
   );

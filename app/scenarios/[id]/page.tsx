@@ -1,4 +1,3 @@
-import { getScenario } from "@shared/firebase/scenarios/queries.server";
 import {
   getAuthenticatedAppForUser,
   getSessionToken,
@@ -16,6 +15,7 @@ import {
   CurrentSpeechHint,
 } from "@features/dialog-tree-runtime";
 import { Card } from "@shared/ui/card";
+import { getScenario } from "@shared/new-fb/services/scenarios";
 
 export const dynamic = "force-dynamic";
 
@@ -30,15 +30,16 @@ const Page = async ({ params }: Props) => {
 
   const { firebaseServerApp } = await getAuthenticatedAppForUser(authIdToken);
 
-  const scenario = await getScenario(id, getFirestore(firebaseServerApp));
-  if (!scenario || !scenario.isPublished)
+  const res = await getScenario(id, getFirestore(firebaseServerApp));
+
+  if (!res.ok || !res.data.isPublished)
     redirect(FALLBACK_ROUTES.NOT_FOUND.href);
 
   return (
     <RuntimeStoreProvider
       initState={{
-        edges: scenario.edges,
-        nodes: scenario.nodes,
+        edges: res.data.edges,
+        nodes: res.data.nodes,
       }}
     >
       <main className="p-2 flex-1 min-h-0 grid grid-rows-[1fr_auto_190px] grid-cols-1 gap-2">

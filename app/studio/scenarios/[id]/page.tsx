@@ -1,4 +1,3 @@
-import { getScenario } from "@shared/firebase/scenarios/queries.server";
 import {
   getAuthenticatedAppForUser,
   getSessionToken,
@@ -7,6 +6,7 @@ import { PUBLIC_ROUTES, FALLBACK_ROUTES } from "@shared/routes";
 import { getFirestore } from "firebase/firestore";
 import { redirect } from "next/navigation";
 import { Editor } from "./Editor";
+import { getScenario } from "@shared/new-fb/services/scenarios";
 
 export const dynamic = "force-dynamic";
 
@@ -21,12 +21,13 @@ const Page = async ({ params }: Props) => {
 
   const { firebaseServerApp } = await getAuthenticatedAppForUser(authIdToken);
 
-  const scenario = await getScenario(id, getFirestore(firebaseServerApp));
-  if (!scenario) redirect(FALLBACK_ROUTES.NOT_FOUND.href);
+  const res = await getScenario(id, getFirestore(firebaseServerApp));
+
+  if (!res.ok) redirect(FALLBACK_ROUTES.NOT_FOUND.href);
 
   return (
     <div className="p-1 h-full w-full">
-      <Editor scenario={scenario} />
+      <Editor scenario={res.data} />
     </div>
   );
 };

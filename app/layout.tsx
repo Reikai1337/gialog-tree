@@ -12,6 +12,8 @@ import { geistSans, geistMono } from "@app/styles/fonts";
 import "@app/styles/globals.css";
 import "@xyflow/react/dist/style.css";
 import type { User } from "@entities/user";
+import { getUser } from "@shared/new-fb/services/users";
+import { getFirestore } from "firebase/firestore";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +27,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const authIdToken = await getSessionToken();
-  const { currentUser } = await getAuthenticatedAppForUser(authIdToken);
+  const { currentUser, firebaseServerApp } =
+    await getAuthenticatedAppForUser(authIdToken);
 
   let user: User | null = null;
 
@@ -36,6 +39,11 @@ export default async function RootLayout({
       email: currentUser.email as string,
       photoURL: currentUser.photoURL,
     };
+    // const res = await getUser(currentUser.uid, getFirestore(firebaseServerApp));
+
+    // if (res.ok) {
+    //   console.log("res", res.data.createdAt.toDate());
+    // }
   }
 
   return (

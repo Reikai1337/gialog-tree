@@ -28,13 +28,8 @@ export const COLUMNS: ColumnDef<UserAccess>[] = [
     header: "Created",
     meta: { className: "hidden sm:table-cell" },
     cell: ({ row }) => {
-      const date: Date = row.getValue("createdAt");
-
-      return new Intl.DateTimeFormat("uk-UA", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      }).format(date);
+      const date: string = row.getValue("createdAt");
+      return date;
     },
   },
 ];
@@ -48,7 +43,7 @@ function AccessToggleCell({ row }: CellContext<UserAccess, unknown>) {
       variant="outline"
       size="icon"
       className="max-sm:w-fit max-sm:h-fit max-sm:p-0.5"
-      onClick={() => updateUserAccess(row.original.uid, !hasAccess)}
+      onClick={() => updateUserAccess(row.original.id, !hasAccess)}
     >
       {hasAccess ? (
         <Check className="text-green-500" />

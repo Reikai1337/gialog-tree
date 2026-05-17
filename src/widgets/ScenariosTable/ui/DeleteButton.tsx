@@ -13,7 +13,7 @@ import {
 import { DropdownMenuItem } from "@shared/ui/dropdown-menu";
 import { Button } from "@shared/ui/button";
 import { useState } from "react";
-import { deleteScenario } from "@shared/firebase/scenarios";
+import { deleteScenario } from "@shared/new-fb/services/scenarios";
 
 type Props = {
   scenario: Scenario;
@@ -26,9 +26,11 @@ export const DeleteButton = ({ scenario, onDeleted }: Props) => {
 
   const handleDelete = async () => {
     setLoading(true);
-    await deleteScenario(scenario.id);
+    const res = await deleteScenario(scenario.id);
     setOpen(false);
-    onDeleted(scenario.id);
+
+    if (res.ok) onDeleted(scenario.id);
+
     setLoading(false);
   };
 

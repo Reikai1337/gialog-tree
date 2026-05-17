@@ -65,5 +65,5 @@ export type AnyAppEdge = AppEdge;
 
 export type Scenario = z.infer<typeof ScenarioSchema> & {
   nodes: AnyAppNode[];
-  edges: AppEdge[];
+  edges: AnyAppEdge[];
 };

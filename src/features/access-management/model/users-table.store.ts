@@ -1,29 +1,24 @@
 import { createStore } from "zustand/vanilla";
-import type { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
-import {
-  getUsers,
-  changeUserAccess,
-  type UserAccess,
-  type SortOrder,
-} from "@shared/firebase/user-access";
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
+import type {
+  OrderByDirection,
+  QueryDocumentSnapshot,
+} from "firebase/firestore";
+import { changeUserAccess, getUsers } from "@shared/new-fb/services/users";
+import type { User } from "@shared/new-fb/types/models";
 
 export type UsersTableState = {
-  users: UserAccess[];
+  users: User[];
   isLoading: boolean;
   error: string | null;
   search: string;
-  accessSort: SortOrder;
+  accessSort: OrderByDirection;
   pageSize: number;
   page: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
   // Внутреннее состояние пагинации — не нужно пробрасывать в UI
-  _cursorStack: Array<QueryDocumentSnapshot<DocumentData> | undefined>;
-  _lastDoc: QueryDocumentSnapshot<DocumentData> | null;
+  _cursorStack: Array<QueryDocumentSnapshot | undefined>;
+  _lastDoc: QueryDocumentSnapshot | null;
 };
 
 export type UsersTableActions = {
@@ -31,7 +26,7 @@ export type UsersTableActions = {
   fetchNextPage: () => Promise<void>;
   fetchPrevPage: () => Promise<void>;
   setSearch: (search: string) => void;
-  setAccessSort: (sort: SortOrder) => void;
+  setAccessSort: (sort: OrderByDirection) => void;
   updateUserAccess: (uid: string, hasAccess: boolean) => Promise<void>;
 };
 
@@ -70,25 +65,23 @@ export const createUsersTableStore = (
     fetchFirstPage: async () => {
       const { search, pageSize, accessSort } = get();
       set({ isLoading: true, error: null });
-      try {
-        const result = await getUsers({ search, pageSize, accessSort });
-        console.log("result", result);
-
+      const res = await getUsers({ search, pageSize, accessSort });
+      if (res.ok) {
+        const { users, hasNextPage, lastDoc } = res.data;
         set({
-          users: result.users,
-          hasNextPage: result.hasNextPage,
+          users: users,
+          hasNextPage: hasNextPage,
           hasPrevPage: false,
           page: 1,
           _cursorStack: [undefined],
-          _lastDoc: result.lastDoc,
+          _lastDoc: lastDoc,
         });
-      } catch (e) {
+      } else {
         set({
-          error: e instanceof Error ? e.message : "Failed to fetch users",
+          error: res.error,
         });
-      } finally {
-        set({ isLoading: false });
       }
+      set({ isLoading: false });
     },
 
     fetchNextPage: async () => {
@@ -105,29 +98,30 @@ export const createUsersTableStore = (
       if (isLoading || !hasNextPage || !_lastDoc) return;
 
       set({ isLoading: true, error: null });
-      try {
-        const result = await getUsers({
-          search,
-          pageSize,
-          accessSort,
-          afterDoc: _lastDoc,
-        });
+      const res = await getUsers({
+        search,
+        pageSize,
+        accessSort,
+        afterDoc: _lastDoc,
+      });
+      if (res.ok) {
+        const { users, hasNextPage, lastDoc, firstDoc } = res.data;
+
         set({
-          users: result.users,
-          hasNextPage: result.hasNextPage,
+          users: users,
+          hasNextPage: hasNextPage,
           hasPrevPage: true,
           page: page + 1,
           // Сохраняем lastDoc текущей страницы как курсор следующей
-          _cursorStack: [..._cursorStack, result.firstDoc ?? undefined],
-          _lastDoc: result.lastDoc,
+          _cursorStack: [..._cursorStack, firstDoc ?? undefined],
+          _lastDoc: lastDoc,
         });
-      } catch (e) {
+      } else {
         set({
-          error: e instanceof Error ? e.message : "Failed to fetch next page",
+          error: res.error,
         });
-      } finally {
-        set({ isLoading: false });
       }
+      set({ isLoading: false });
     },
 
     fetchPrevPage: async () => {
@@ -147,29 +141,29 @@ export const createUsersTableStore = (
       const prevCursor = newStack[newStack.length - 1];
 
       set({ isLoading: true, error: null });
-      try {
-        const result = await getUsers({
-          search,
-          pageSize,
-          accessSort,
-          // Первая страница — без курсора, иначе endBefore
-          ...(prevCursor ? { startAtDoc: prevCursor } : {}), // было beforeDoc
-        });
+      const res = await getUsers({
+        search,
+        pageSize,
+        accessSort,
+        // Первая страница — без курсора, иначе endBefore
+        ...(prevCursor ? { startAtDoc: prevCursor } : {}), // было beforeDoc
+      });
+      if (res.ok) {
+        const { users, lastDoc } = res.data;
         set({
-          users: result.users,
+          users: users,
           hasNextPage: true, // раз идём назад — следующая точно есть
           hasPrevPage: newStack.length > 1,
           page: page - 1,
           _cursorStack: newStack,
-          _lastDoc: result.lastDoc,
+          _lastDoc: lastDoc,
         });
-      } catch (e) {
+      } else {
         set({
-          error: e instanceof Error ? e.message : "Failed to fetch prev page",
+          error: res.error,
         });
-      } finally {
-        set({ isLoading: false });
       }
+      set({ isLoading: false });
     },
 
     // Сброс пагинации при новом поиске
@@ -184,23 +178,18 @@ export const createUsersTableStore = (
       get().fetchFirstPage();
     },
 
-    updateUserAccess: async (uid, hasAccess) => {
-      // Оптимистичное обновление — UI реагирует мгновенно
+    updateUserAccess: async (id, hasAccess) => {
+      set((state) => ({
+        users: state.users.map((u) => (u.id === id ? { ...u, hasAccess } : u)),
+      }));
+      const res = await changeUserAccess(id, hasAccess);
+      if (res.ok) return;
+
       set((state) => ({
         users: state.users.map((u) =>
-          u.uid === uid ? { ...u, hasAccess } : u,
+          u.id === id ? { ...u, hasAccess: !hasAccess } : u,
         ),
+        error: res.error,
       }));
-      try {
-        await changeUserAccess(uid, hasAccess);
-      } catch (e) {
-        // Откат при ошибке
-        set((state) => ({
-          users: state.users.map((u) =>
-            u.uid === uid ? { ...u, hasAccess: !hasAccess } : u,
-          ),
-          error: e instanceof Error ? e.message : "Failed to update access",
-        }));
-      }
     },
   }));

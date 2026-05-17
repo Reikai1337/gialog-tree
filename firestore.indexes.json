@@ -52,6 +52,60 @@
         { "fieldPath": "email", "order": "ASCENDING" },
         { "fieldPath": "hasAccess", "order": "DESCENDING" }
       ]
+    },
+
+    {
+      "collectionGroup": "new_users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "hasAccess", "order": "ASCENDING" },
+        { "fieldPath": "email", "order": "ASCENDING" }
+      ]
+    },
+
+    {
+      "collectionGroup": "new_users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "hasAccess", "order": "DESCENDING" },
+        { "fieldPath": "email", "order": "ASCENDING" }
+      ]
+    },
+
+    {
+      "collectionGroup": "new_users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "hasAccess", "order": "ASCENDING" },
+        { "fieldPath": "email", "order": "DESCENDING" }
+      ]
+    },
+
+    {
+      "collectionGroup": "new_users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "hasAccess", "order": "DESCENDING" },
+        { "fieldPath": "email", "order": "DESCENDING" }
+      ]
+    },
+
+    {
+      "collectionGroup": "new_users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "email", "order": "ASCENDING" },
+        { "fieldPath": "hasAccess", "order": "ASCENDING" }
+      ]
+    },
+
+    {
+      "collectionGroup": "new_users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "email", "order": "ASCENDING" },
+        { "fieldPath": "hasAccess", "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []

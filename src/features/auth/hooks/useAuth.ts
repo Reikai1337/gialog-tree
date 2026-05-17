@@ -4,7 +4,7 @@ import { useUserStore } from "@entities/user";
 import {
   signInWithGoogle,
   signOut as signOutFB,
-} from "@shared/firebase/auth.client";
+} from "@shared/new-fb/services/auth";
 import { useCallback } from "react";
 
 export const useAuth = () => {

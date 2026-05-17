@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 
 import { useEffect, useState } from "react";
 import type { Scenario } from "@entities/dialog-tree";
-import { getPublishedScenarios } from "@shared/firebase/scenarios";
+import { getPublishedScenarios } from "@shared/new-fb/services/scenarios";
 
 export function ScenariosRoutesGroup() {
   const user = useUserStore((s) => s.user);
@@ -37,9 +37,12 @@ function List() {
   const pathname = usePathname();
 
   useEffect(() => {
-    getPublishedScenarios()
-      .then(setScenarios)
-      .finally(() => setLoading(false));
+    const fetch = async () => {
+      const res = await getPublishedScenarios();
+      if (res.ok) setScenarios(res.data);
+      setLoading(false);
+    };
+    fetch();
   }, []);
 
   if (loading) return <div>Loading...</div>;
