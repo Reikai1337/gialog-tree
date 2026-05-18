@@ -8,12 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@shared/ui/dialog";
-import type { AnyNode } from "@entities/dialog-tree";
+import type { AnyNodeType, AnyNodeData } from "@entities/dialog-tree";
 import { useEditorStore } from "../../providers/EditorStoreProvider";
 import { uuid } from "@shared/lib/utils/uuid";
 import { EDIT_NODE_FORM } from "../EditNodeForm";
-
-type AnyNodeType = AnyNode["type"];
 
 type EditNodeDialog = {
   type: AnyNodeType;
@@ -21,7 +19,7 @@ type EditNodeDialog = {
     text: string;
     icon: ReactNode;
   };
-  ContentForm: FC<{ onSubmit: (node: AnyNode) => void }>;
+  ContentForm: FC<{ onSubmit: (node: AnyNodeData) => void }>;
 };
 
 const EDIT_NODE_DIALOGS: EditNodeDialog[] = [
@@ -58,7 +56,7 @@ export const AddNodeButtons = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    (formData: AnyNode) => {
+    (formData: AnyNodeData) => {
       const { width, height } = document
         .querySelector(".react-flow")!
         .getBoundingClientRect();

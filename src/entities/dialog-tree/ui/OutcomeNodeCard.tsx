@@ -1,13 +1,8 @@
-import { Layers } from "lucide-react";
 import { cn } from "@shared/lib/utils";
-import type {
-  OutcomeNodeColor,
-  OutcomeNode as OutcomeNodeType,
-} from "../model";
+import type { OutcomeNodeColor, OutcomeNodeData } from "../model";
 import type { ReactNode } from "react";
 import { NodeMetaBadgesList } from "./NodeMetaBadgesList";
 import { Separator } from "@shared/ui/separator";
-import { Card } from "@shared/ui/card";
 
 type Palette = {
   bg: string;
@@ -55,7 +50,7 @@ const OUTCOME_COLORS: Record<OutcomeNodeColor, Palette> = {
   },
 };
 
-type Props = OutcomeNodeType & {
+type Props = OutcomeNodeData & {
   beforeSlot?: ReactNode;
   afterSlot?: ReactNode;
   selected?: boolean;

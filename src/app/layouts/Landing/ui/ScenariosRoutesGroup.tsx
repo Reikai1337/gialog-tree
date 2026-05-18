@@ -37,9 +37,12 @@ function List() {
   const pathname = usePathname();
 
   useEffect(() => {
-    getPublishedScenarios()
-      .then(setScenarios)
-      .finally(() => setLoading(false));
+    const fetch = async () => {
+      const res = await getPublishedScenarios();
+      if (res.ok) setScenarios(res.data);
+      setLoading(false);
+    };
+    fetch();
   }, []);
 
   if (loading) return <div>Loading...</div>;

@@ -1,5 +1,5 @@
 import { Item, ItemActions, ItemContent, ItemTitle } from "@shared/ui/item";
-import type { NodeMeta } from "@entities/dialog-tree/model";
+import type { NodeMeta } from "@entities/dialog-tree";
 import {
   useForm,
   useWatch,

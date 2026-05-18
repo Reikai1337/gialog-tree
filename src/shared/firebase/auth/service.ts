@@ -6,9 +6,9 @@ import {
   type NextOrObserver,
   type User,
 } from "firebase/auth";
-
-import { auth } from "./clientApp";
-import { syncUserAccess } from "./user-access";
+import { auth } from "../clientApp";
+import { okResponse, errResponse, type Response } from "../lib";
+import { ensureUser } from "../users";
 
 export function onAuthStateChanged(cb: NextOrObserver<User>) {
   return _onAuthStateChanged(auth, cb);
@@ -18,26 +18,28 @@ export function onIdTokenChanged(cb: NextOrObserver<User>) {
   return _onIdTokenChanged(auth, cb);
 }
 
-export async function signInWithGoogle() {
+export async function signInWithGoogle(): Response<void> {
   const provider = new GoogleAuthProvider();
 
   try {
     const { user } = await signInWithPopup(auth, provider);
-    await syncUserAccess({
-      uid: user.uid,
+    await ensureUser({
+      id: user.uid,
       email: user.email as string,
-      displayName: user.displayName,
+      displayName: user.displayName as string,
     });
-  } catch (error) {
-    console.log("ER", error instanceof Error ? error.message : "asd");
+    return okResponse(undefined);
+  } catch (e) {
+    return errResponse(e);
   }
 }
 
-export async function signOut() {
+export async function signOut(): Response<void> {
   try {
-    return auth.signOut();
-  } catch (error) {
-    console.error("Error signing out with Google", error);
+    await auth.signOut();
+    return okResponse(undefined);
+  } catch (e) {
+    return errResponse(e);
   }
 }
 

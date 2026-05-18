@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@app/providers/theme";
 import { TooltipProvider } from "@shared/ui/tooltip";
 import { LandingLayout } from "@app/layouts/Landing";
-import { UserStoreProvider } from "@entities/user/providers";
 import {
   getAuthenticatedAppForUser,
   getSessionToken,
 } from "@shared/firebase/serverApp";
 import { UserSessionProvider } from "@features/auth";
 import { geistSans, geistMono } from "@app/styles/fonts";
+import { type User, UserStoreProvider } from "@entities/user";
+
 import "@app/styles/globals.css";
 import "@xyflow/react/dist/style.css";
-import type { User } from "@entities/user";
 
 export const dynamic = "force-dynamic";
 

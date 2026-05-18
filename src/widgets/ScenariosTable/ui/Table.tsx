@@ -24,12 +24,18 @@ import Link from "next/link";
 import { ADMIN_ROUTES } from "@shared/routes";
 import { DeleteButton } from "./DeleteButton";
 import { getScenarios } from "@shared/firebase/scenarios";
+import { timeAgo } from "@shared/lib/utils/date";
 
 export const ScenariosTable = () => {
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
 
   useEffect(() => {
-    getScenarios().then(setScenarios);
+    const fetch = async () => {
+      const res = await getScenarios();
+      if (res.ok) setScenarios(res.data);
+    };
+
+    fetch();
   }, []);
 
   const handleDelete = (id: string) => {
@@ -43,6 +49,7 @@ export const ScenariosTable = () => {
           <TableRow>
             <TableHead>Title</TableHead>
             <TableHead>Status</TableHead>
+            <TableHead>Updated</TableHead>
             <TableHead className="flex justify-end gap-2 text-right items-center">
               Actions
               <Button variant={"outline"} size="icon-sm" asChild>
@@ -60,6 +67,7 @@ export const ScenariosTable = () => {
               <TableCell>
                 <PublishBadge isPublished={s.isPublished} />
               </TableCell>
+              <TableCell>{timeAgo(s.updatedAt)}</TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

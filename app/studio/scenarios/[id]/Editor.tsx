@@ -1,10 +1,10 @@
 "use client";
 
-import { type Scenario, updateScenario } from "@shared/firebase/scenarios";
 import { ADMIN_ROUTES } from "@shared/routes";
 import { DialogTreeEditorWithDemo } from "@widgets/DialogTreeEditorWithDemo";
 import { useRouter } from "next/navigation";
 import { revalidateScenario } from "./actions";
+import { updateScenario, type Scenario } from "@shared/firebase/scenarios";
 
 type Props = {
   scenario: Scenario;

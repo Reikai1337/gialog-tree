@@ -26,9 +26,11 @@ export const DeleteButton = ({ scenario, onDeleted }: Props) => {
 
   const handleDelete = async () => {
     setLoading(true);
-    await deleteScenario(scenario.id);
+    const res = await deleteScenario(scenario.id);
     setOpen(false);
-    onDeleted(scenario.id);
+
+    if (res.ok) onDeleted(scenario.id);
+
     setLoading(false);
   };
 

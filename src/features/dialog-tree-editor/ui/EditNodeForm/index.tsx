@@ -1,8 +1,8 @@
 import {
   OutcomeNodeSchema,
-  type OutcomeNode,
+  type OutcomeNodeData,
   SpeechNodeSchema,
-  type SpeechNode,
+  type SpeechNodeData,
 } from "@entities/dialog-tree";
 import {
   Form,
@@ -19,7 +19,7 @@ type FormProps<T> = {
   defaults?: T;
 };
 
-const OUTCOME_COLOR_OPTIONS: SelectFieldOption<OutcomeNode["color"]>[] = [
+const OUTCOME_COLOR_OPTIONS: SelectFieldOption<OutcomeNodeData["color"]>[] = [
   { value: "default", label: "Default" },
   { value: "purple", label: "Purple" },
   { value: "green", label: "Green" },
@@ -27,7 +27,7 @@ const OUTCOME_COLOR_OPTIONS: SelectFieldOption<OutcomeNode["color"]>[] = [
   { value: "red", label: "Red" },
 ];
 
-const OUTCOME_INTERNAL_DEFAULTS: OutcomeNode = {
+const OUTCOME_INTERNAL_DEFAULTS: OutcomeNodeData = {
   type: "outcome",
   text: "",
   hint: "",
@@ -35,7 +35,10 @@ const OUTCOME_INTERNAL_DEFAULTS: OutcomeNode = {
   meta: [],
 };
 
-const OutcomeNodeForm = ({ onSubmit, defaults }: FormProps<OutcomeNode>) => {
+const OutcomeNodeForm = ({
+  onSubmit,
+  defaults,
+}: FormProps<OutcomeNodeData>) => {
   return (
     <Form
       schema={OutcomeNodeSchema}
@@ -43,18 +46,18 @@ const OutcomeNodeForm = ({ onSubmit, defaults }: FormProps<OutcomeNode>) => {
       onSubmit={onSubmit}
       className="flex flex-col gap-4"
     >
-      <TextField<OutcomeNode>
+      <TextField<OutcomeNodeData>
         name="text"
         label="Text"
         placeholder="Not now, im busy"
       />
-      <TextField<OutcomeNode>
+      <TextField<OutcomeNodeData>
         name="hint"
         label="Hint"
         placeholder="Try to persuade"
       />
 
-      <SelectField<OutcomeNode, OutcomeNode["color"]>
+      <SelectField<OutcomeNodeData, OutcomeNodeData["color"]>
         name="color"
         label="Color"
         options={OUTCOME_COLOR_OPTIONS}
@@ -67,14 +70,14 @@ const OutcomeNodeForm = ({ onSubmit, defaults }: FormProps<OutcomeNode>) => {
   );
 };
 
-const SPEECH_INTERNAL_DEFAULTS: SpeechNode = {
+const SPEECH_INTERNAL_DEFAULTS: SpeechNodeData = {
   type: "speech",
   hint: "",
   text: "",
   meta: [],
 };
 
-const SpeechNodeForm = ({ onSubmit, defaults }: FormProps<SpeechNode>) => {
+const SpeechNodeForm = ({ onSubmit, defaults }: FormProps<SpeechNodeData>) => {
   return (
     <Form
       schema={SpeechNodeSchema}
@@ -82,14 +85,14 @@ const SpeechNodeForm = ({ onSubmit, defaults }: FormProps<SpeechNode>) => {
       onSubmit={onSubmit}
       className="flex flex-col gap-4"
     >
-      <TextareaField<SpeechNode>
+      <TextareaField<SpeechNodeData>
         name="text"
         label="What needs to be said"
         placeholder="Hello, what about some money?"
         className="max-h-60"
       />
 
-      <TextField<SpeechNode>
+      <TextField<SpeechNodeData>
         name="hint"
         label="Hint"
         placeholder="Don`t forget give coco to client"

@@ -1,13 +1,21 @@
 export { OutcomeNodeSchema, SpeechNodeSchema, ScenarioSchema } from "./model";
 export type {
-  AnyNode,
-  OutcomeNode,
   RFOutcomeNode,
   RFSpeechNode,
   RFAnyNode,
-  SpeechNode,
   OutcomeNodeColor,
   Scenario,
+  AnyAppEdge,
+  AnyAppNode,
+  AnyNodeData,
+  AnyNodeType,
+  AppEdge,
+  AppOutcomeNode,
+  AppSpeechNode,
+  NodeMeta,
+  OutcomeNodeData,
+  SpeechNodeData,
+  RFAnyEdge,
 } from "./model";
 export { ALLOWED_NODE_CONNECTION_MAP } from "./model/const";
 export { OutcomeNodeCard } from "./ui/OutcomeNodeCard";
