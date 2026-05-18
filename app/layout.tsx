@@ -2,18 +2,16 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@app/providers/theme";
 import { TooltipProvider } from "@shared/ui/tooltip";
 import { LandingLayout } from "@app/layouts/Landing";
-import { UserStoreProvider } from "@entities/user/providers";
 import {
   getAuthenticatedAppForUser,
   getSessionToken,
 } from "@shared/firebase/serverApp";
 import { UserSessionProvider } from "@features/auth";
 import { geistSans, geistMono } from "@app/styles/fonts";
+import { type User, UserStoreProvider } from "@entities/user";
+
 import "@app/styles/globals.css";
 import "@xyflow/react/dist/style.css";
-import type { User } from "@entities/user";
-import { getUser } from "@shared/new-fb/services/users";
-import { getFirestore } from "firebase/firestore";
 
 export const dynamic = "force-dynamic";
 
@@ -27,8 +25,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const authIdToken = await getSessionToken();
-  const { currentUser, firebaseServerApp } =
-    await getAuthenticatedAppForUser(authIdToken);
+  const { currentUser } = await getAuthenticatedAppForUser(authIdToken);
 
   let user: User | null = null;
 
@@ -39,11 +36,6 @@ export default async function RootLayout({
       email: currentUser.email as string,
       photoURL: currentUser.photoURL,
     };
-    // const res = await getUser(currentUser.uid, getFirestore(firebaseServerApp));
-
-    // if (res.ok) {
-    //   console.log("res", res.data.createdAt.toDate());
-    // }
   }
 
   return (

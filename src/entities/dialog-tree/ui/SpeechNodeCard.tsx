@@ -1,11 +1,10 @@
-import { ChevronRight, MessageSquareReply } from "lucide-react";
 import { cn } from "@shared/lib/utils";
-import type { SpeechNode as SpeechNodeType } from "../model";
+import type { SpeechNodeData } from "../model";
 import type { ReactNode } from "react";
 import { NodeMetaBadgesList } from "./NodeMetaBadgesList";
 import { Separator } from "@shared/ui/separator";
 
-type Props = SpeechNodeType & {
+type Props = SpeechNodeData & {
   selected?: boolean;
   beforeSlot?: ReactNode;
   afterSlot?: ReactNode;

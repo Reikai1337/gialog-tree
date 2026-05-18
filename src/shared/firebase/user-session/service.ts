@@ -5,10 +5,15 @@ import {
   collection,
   doc,
 } from "firebase/firestore";
-import type { UserSessionDoc, UserSession } from "../types/models";
-import { createConverter, COLLECTIONS, okResponse, errResponse } from "../lib";
+import {
+  createConverter,
+  COLLECTIONS,
+  okResponse,
+  errResponse,
+  type Response,
+} from "../lib";
+import type { UserSessionDoc, UserSession } from "./types";
 import { db as clientDB } from "../clientApp";
-import type { Response } from "../types/utils";
 
 const userSessionConverter = createConverter<UserSessionDoc, UserSession>();
 

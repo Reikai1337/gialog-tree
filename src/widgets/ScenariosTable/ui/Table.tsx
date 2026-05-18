@@ -23,7 +23,7 @@ import { PublishBadge, type Scenario } from "@entities/dialog-tree";
 import Link from "next/link";
 import { ADMIN_ROUTES } from "@shared/routes";
 import { DeleteButton } from "./DeleteButton";
-import { getScenarios } from "@shared/new-fb/services/scenarios";
+import { getScenarios } from "@shared/firebase/scenarios";
 import { timeAgo } from "@shared/lib/utils/date";
 
 export const ScenariosTable = () => {

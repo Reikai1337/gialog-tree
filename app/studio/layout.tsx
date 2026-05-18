@@ -4,7 +4,7 @@ import {
   getAuthenticatedAppForUser,
   getSessionToken,
 } from "@shared/firebase/serverApp";
-import { isAdmin } from "@shared/firebase/auth.server";
+import { isAdmin } from "@shared/firebase/auth";
 
 export const dynamic = "force-dynamic";
 

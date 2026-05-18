@@ -5,16 +5,12 @@ import { type PropsWithChildren, useEffect, useRef } from "react";
 import { deleteCookie, setCookie } from "cookies-next";
 import { uuid } from "@shared/lib/utils/uuid";
 import { SESSION_UUID_STORAGE_KEY } from "../constants";
-import {
-  isAdmin,
-  onIdTokenChanged,
-  signOut,
-} from "@shared/new-fb/services/auth";
+import { isAdmin, onIdTokenChanged, signOut } from "@shared/firebase/auth";
 import {
   subscribeToUserSession,
   upsertUserSession,
-} from "@shared/new-fb/services/user-session";
-import { SESSION_COOKIE_NAME } from "@shared/new-fb/lib";
+} from "@shared/firebase/user-session";
+import { SESSION_COOKIE_NAME } from "@shared/firebase/lib";
 
 export const UserSessionProvider = ({ children }: PropsWithChildren) => {
   const setUser = useUserStore((s) => s.setUser);

@@ -26,7 +26,9 @@ export type EditorState = {
   edges: Edge[];
   selectedNodeId: string | null;
   selectedEdgeId: string | null;
-  onSubmit?: (state: Omit<Scenario, "id">) => Promise<void>;
+  onSubmit?: (
+    state: Omit<Scenario, "id" | "createdAt" | "updatedAt">,
+  ) => Promise<void>;
 };
 
 export type EditorActions = {

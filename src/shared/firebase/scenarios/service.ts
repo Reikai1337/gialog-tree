@@ -1,6 +1,4 @@
 import {
-  setDoc,
-  onSnapshot,
   Firestore,
   collection,
   query,
@@ -13,10 +11,15 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import type { Scenario, ScenarioDoc } from "../types/models";
-import { createConverter, COLLECTIONS, errResponse, okResponse } from "../lib";
+import {
+  createConverter,
+  COLLECTIONS,
+  errResponse,
+  okResponse,
+  type Response,
+} from "../lib";
 import { db as clientDB } from "../clientApp";
-import type { Response } from "../types/utils";
+import type { Scenario, ScenarioDoc } from "./types";
 
 const scenarioConverter = createConverter<ScenarioDoc, Scenario>({
   createdAt: (ts) => ts.toDate().toISOString(),

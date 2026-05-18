@@ -1,12 +1,11 @@
 import type {
   DocumentData,
   FirestoreDataConverter,
-  PartialWithFieldValue,
   QueryDocumentSnapshot,
   SnapshotOptions,
   WithFieldValue,
 } from "firebase/firestore";
-import type { WithId } from "../types/utils";
+import type { WithId } from "./utility-types";
 
 type FieldTransformers<TDoc, TModel> = {
   [K in keyof TDoc]?: (

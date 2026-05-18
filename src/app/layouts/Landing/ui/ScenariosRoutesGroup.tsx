@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 
 import { useEffect, useState } from "react";
 import type { Scenario } from "@entities/dialog-tree";
-import { getPublishedScenarios } from "@shared/new-fb/services/scenarios";
+import { getPublishedScenarios } from "@shared/firebase/scenarios";
 
 export function ScenariosRoutesGroup() {
   const user = useUserStore((s) => s.user);

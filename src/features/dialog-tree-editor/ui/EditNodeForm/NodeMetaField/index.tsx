@@ -2,7 +2,7 @@ import { Field, FieldGroup, FieldLabel } from "@shared/ui/field";
 import { ScrollArea } from "@shared/ui/scroll-area";
 import { useFormCtx } from "@shared/components/form";
 import { useFieldArray } from "react-hook-form";
-import type { NodeMeta } from "@entities/dialog-tree/model";
+import type { NodeMeta } from "@entities/dialog-tree";
 import { MetaItem } from "./Item";
 import { CreateItemSection } from "./CreateItemSection";
 import { uuid } from "@shared/lib/utils/uuid";

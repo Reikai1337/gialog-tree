@@ -13,7 +13,7 @@ import {
 import { DropdownMenuItem } from "@shared/ui/dropdown-menu";
 import { Button } from "@shared/ui/button";
 import { useState } from "react";
-import { deleteScenario } from "@shared/new-fb/services/scenarios";
+import { deleteScenario } from "@shared/firebase/scenarios";
 
 type Props = {
   scenario: Scenario;

@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@shared/ui/dialog";
-import type { AnyNode, RFAnyNode } from "@entities/dialog-tree";
+import type { AnyNodeData, RFAnyNode } from "@entities/dialog-tree";
 import { useMemo, useState, type ReactNode } from "react";
 import { EDIT_NODE_FORM } from "../EditNodeForm";
 
@@ -23,7 +23,7 @@ export const EditNodeButton = () => {
     if (!selectedNodeId || !nodeData) return;
     if (!EDIT_NODE_FORM[nodeData.type]) return null;
 
-    const onSubmit = (d: AnyNode) => {
+    const onSubmit = (d: AnyNodeData) => {
       updateNodeData(selectedNodeId, d);
       setIsOpen(false);
     };

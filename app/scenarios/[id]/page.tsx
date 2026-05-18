@@ -15,7 +15,7 @@ import {
   CurrentSpeechHint,
 } from "@features/dialog-tree-runtime";
 import { Card } from "@shared/ui/card";
-import { getScenario } from "@shared/new-fb/services/scenarios";
+import { getScenario } from "@shared/firebase/scenarios";
 
 export const dynamic = "force-dynamic";
 

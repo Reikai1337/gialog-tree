@@ -1,5 +1,8 @@
-import type { ErrorResponse, SuccessResponse } from "../types/utils";
-import { extractErrMsg } from "./extractErrMsg";
+import type { ErrorResponse, SuccessResponse } from "./utility-types";
+
+const extractErrMsg = (e: unknown) => {
+  return e instanceof Error ? e.message : "Unknown error";
+};
 
 export const okResponse = <T>(data: T): SuccessResponse<T> => ({
   ok: true,

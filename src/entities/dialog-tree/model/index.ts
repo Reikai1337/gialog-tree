@@ -1,3 +1,17 @@
+import type {
+  OutcomeNodeData,
+  SpeechNodeData,
+  Scenario,
+  AnyAppEdge,
+  AnyAppNode,
+  AnyNodeData,
+  AnyNodeType,
+  AppEdge,
+  AppOutcomeNode,
+  AppSpeechNode,
+  NodeMeta,
+  OutcomeNodeColor,
+} from "@shared/firebase/scenarios";
 import type { Node, Edge } from "@xyflow/react";
 import * as z from "zod";
 
@@ -37,33 +51,48 @@ export const OutcomeNodeSchema = z.object({
   meta: z.array(NodeMetaSchema),
 });
 
-export type NodeMeta = z.infer<typeof NodeMetaSchema>;
+// export type NodeMeta = z.infer<typeof NodeMetaSchema>;
 
-export type OutcomeNodeColor = z.infer<typeof OutcomeNodeColorKeySchema>;
-export type OutcomeNode = z.infer<typeof OutcomeNodeSchema>;
-export type SpeechNode = z.infer<typeof SpeechNodeSchema>;
+// export type OutcomeNodeColor = z.infer<typeof OutcomeNodeColorKeySchema>;
+// export type OutcomeNode = z.infer<typeof OutcomeNodeSchema>;
+// export type SpeechNode = z.infer<typeof SpeechNodeSchema>;
 
-export type AnyNode = SpeechNode | OutcomeNode;
-export type AnyNodeType = AnyNode["type"];
+// export type AnyNode = SpeechNode | OutcomeNode;
+// export type AnyNodeType = AnyNode["type"];
 
-export type RFOutcomeNode = Node<OutcomeNode, OutcomeNode["type"]>;
-export type RFSpeechNode = Node<SpeechNode, SpeechNode["type"]>;
+export type RFOutcomeNode = Node<OutcomeNodeData, OutcomeNodeData["type"]>;
+export type RFSpeechNode = Node<SpeechNodeData, SpeechNodeData["type"]>;
 
 export type RFAnyNode = RFOutcomeNode | RFSpeechNode;
 export type RFAnyEdge = Edge;
 
-type AppNodeFields = "type" | "id" | "position" | "data";
-type AppEdgeFields = "source" | "target" | "id";
+// type AppNodeFields = "type" | "id" | "position" | "data";
+// type AppEdgeFields = "source" | "target" | "id";
 
-type AppNode<T extends RFAnyNode> = Pick<T, AppNodeFields>;
-type AppEdge = Pick<RFAnyEdge, AppEdgeFields>;
+// type AppNode<T extends RFAnyNode> = Pick<T, AppNodeFields>;
+// type AppEdge = Pick<RFAnyEdge, AppEdgeFields>;
 
-export type AppOutcomeNode = AppNode<RFOutcomeNode>;
-export type AppSpeechNode = AppNode<RFSpeechNode>;
-export type AnyAppNode = AppOutcomeNode | AppSpeechNode;
-export type AnyAppEdge = AppEdge;
+// export type AppOutcomeNode = AppNode<RFOutcomeNode>;
+// export type AppSpeechNode = AppNode<RFSpeechNode>;
+// export type AnyAppNode = AppOutcomeNode | AppSpeechNode;
+// export type AnyAppEdge = AppEdge;
 
-export type Scenario = z.infer<typeof ScenarioSchema> & {
-  nodes: AnyAppNode[];
-  edges: AnyAppEdge[];
+// export type Scenario = z.infer<typeof ScenarioSchema> & {
+//   nodes: AnyAppNode[];
+//   edges: AnyAppEdge[];
+// };
+
+export type {
+  Scenario,
+  AnyAppEdge,
+  AnyAppNode,
+  AnyNodeData,
+  AnyNodeType,
+  AppEdge,
+  AppOutcomeNode,
+  AppSpeechNode,
+  NodeMeta,
+  OutcomeNodeColor,
+  OutcomeNodeData,
+  SpeechNodeData,
 };

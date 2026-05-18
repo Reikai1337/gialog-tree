@@ -11,16 +11,20 @@ import {
   orderBy,
   QueryDocumentSnapshot,
   type OrderByDirection,
-  Query,
   startAt,
   limit,
   startAfter,
   updateDoc,
 } from "firebase/firestore";
 import { db as clientDB } from "../clientApp";
-import type { User, UserDoc } from "../types/models";
-import type { Response } from "../types/utils";
-import { errResponse, okResponse, COLLECTIONS, createConverter } from "../lib";
+import type { User, UserDoc } from "./types";
+import {
+  type Response,
+  errResponse,
+  okResponse,
+  COLLECTIONS,
+  createConverter,
+} from "../lib";
 
 const userConverter = createConverter<UserDoc, User>({
   createdAt: (ts) => ts.toDate().toISOString(),
@@ -39,6 +43,7 @@ export async function getUser(
   try {
     const snap = await getDoc(userDoc(uid, db));
     if (!snap.exists()) return { ok: false, error: "Record not found" };
+
     return okResponse(snap.data());
   } catch (e) {
     return errResponse(e);

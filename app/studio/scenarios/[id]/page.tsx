@@ -6,7 +6,7 @@ import { PUBLIC_ROUTES, FALLBACK_ROUTES } from "@shared/routes";
 import { getFirestore } from "firebase/firestore";
 import { redirect } from "next/navigation";
 import { Editor } from "./Editor";
-import { getScenario } from "@shared/new-fb/services/scenarios";
+import { getScenario } from "@shared/firebase/scenarios";
 
 export const dynamic = "force-dynamic";
 

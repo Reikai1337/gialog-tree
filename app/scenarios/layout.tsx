@@ -1,11 +1,11 @@
 import { FALLBACK_ROUTES, PUBLIC_ROUTES } from "@shared/routes";
 import { redirect } from "next/navigation";
-import { checkUserAccess } from "@shared/firebase/user-access/queries.server";
 import {
   getAuthenticatedAppForUser,
   getSessionToken,
 } from "@shared/firebase/serverApp";
 import { getFirestore } from "firebase/firestore";
+import { getUser } from "@shared/firebase/users";
 
 export const dynamic = "force-dynamic";
 
@@ -21,11 +21,9 @@ export default async function AccessLayout({
     await getAuthenticatedAppForUser(authIdToken);
   if (!currentUser) redirect(PUBLIC_ROUTES.LOGIN.href);
 
-  const hasAccess = await checkUserAccess(
-    currentUser.uid,
-    getFirestore(firebaseServerApp),
-  );
-  if (!hasAccess) redirect(FALLBACK_ROUTES.NO_ACCESS.href);
+  const res = await getUser(currentUser.uid, getFirestore(firebaseServerApp));
+
+  if (!res.ok || !res.data.hasAccess) redirect(FALLBACK_ROUTES.NO_ACCESS.href);
 
   return <>{children}</>;
 }

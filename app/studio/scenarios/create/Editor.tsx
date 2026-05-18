@@ -4,7 +4,7 @@ import { ADMIN_ROUTES } from "@shared/routes";
 import { DialogTreeEditorWithDemo } from "@widgets/DialogTreeEditorWithDemo";
 import { useRouter } from "next/navigation";
 import { revalidateScenarios } from "./actions";
-import { createScenario } from "@shared/new-fb/services/scenarios";
+import { createScenario } from "@shared/firebase/scenarios";
 
 export const Editor = () => {
   const router = useRouter();

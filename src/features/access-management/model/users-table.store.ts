@@ -3,8 +3,7 @@ import type {
   OrderByDirection,
   QueryDocumentSnapshot,
 } from "firebase/firestore";
-import { changeUserAccess, getUsers } from "@shared/new-fb/services/users";
-import type { User } from "@shared/new-fb/types/models";
+import { changeUserAccess, getUsers, type User } from "@shared/firebase/users";
 
 export type UsersTableState = {
   users: User[];
